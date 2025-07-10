@@ -1,0 +1,9 @@
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/obj/Debug/net8.0/AspireApp.WeatherAPI.csproj.AssemblyReference.cache
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/obj/Debug/net8.0/rpswa.dswa.cache.json
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/obj/Debug/net8.0/AspireApp.WeatherAPI.GeneratedMSBuildEditorConfig.editorconfig
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/obj/Debug/net8.0/AspireApp.WeatherAPI.AssemblyInfoInputs.cache
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/obj/Debug/net8.0/AspireApp.WeatherAPI.AssemblyInfo.cs
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/obj/Debug/net8.0/AspireApp.WeatherAPI.csproj.CoreCompileInputs.cache
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/obj/Debug/net8.0/AspireApp.WeatherAPI.MvcApplicationPartsAssemblyInfo.cs
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/obj/Debug/net8.0/AspireApp.WeatherAPI.MvcApplicationPartsAssemblyInfo.cache
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/obj/Debug/net8.0/AspireApp.WeatherAPI.sourcelink.json

@@ -127,8 +127,8 @@
 /Users/tim/Documents/projects/AspireApp/AspireApp.Web/obj/Debug/net9.0/ref/AspireApp.Web.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/appsettings.Development.json
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/appsettings.json
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.Web.staticwebassets.endpoints.json
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.Web.staticwebassets.runtime.json
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.Web.staticwebassets.endpoints.json
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.Web
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.Web.deps.json
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.Web.runtimeconfig.json
