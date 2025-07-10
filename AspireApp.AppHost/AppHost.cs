@@ -1,8 +1,11 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var cache = builder.AddRedis("cache")
+//Add Cache
+var cachePassword = builder.AddParameter("CachePassword");
+var cache = builder.AddRedis("cache", 6379, cachePassword)
     .WithRedisInsight()
-    .WithLifetime(ContainerLifetime.Persistent);
+    .WithLifetime(ContainerLifetime.Persistent)
+    .WithEnvironment("REDIS_ARGS", "--requirepass \"\""); // disables auth
 
 //Add SQL
 var dbPassword = builder.AddParameter("DbPassword");
