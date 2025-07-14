@@ -179,6 +179,7 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/Polly.Extensions.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/Polly.RateLimiting.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/StackExchange.Redis.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/System.IO.Pipelines.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.ServiceDefaults.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.ServiceDefaults.pdb
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/obj/Debug/net9.0/AspireApp.Web.csproj.AssemblyReference.cache
