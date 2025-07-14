@@ -1,14 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "08pyY+floLw=",
+  "dgSpecHash": "XOqPMOlgqic=",
   "success": true,
   "projectFilePath": "/Users/tim/Documents/projects/Aspire-With-Friends/YarpGateway/YarpGateway.csproj",
   "expectedPackageFiles": [
     "/Users/tim/.nuget/packages/system.io.hashing/8.0.0/system.io.hashing.8.0.0.nupkg.sha512",
-    "/Users/tim/.nuget/packages/yarp.reverseproxy/2.3.0/yarp.reverseproxy.2.3.0.nupkg.sha512",
-    "/Users/tim/.nuget/packages/microsoft.netcore.app.ref/8.0.17/microsoft.netcore.app.ref.8.0.17.nupkg.sha512",
-    "/Users/tim/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.17/microsoft.aspnetcore.app.ref.8.0.17.nupkg.sha512",
-    "/Users/tim/.nuget/packages/microsoft.netcore.app.host.osx-arm64/8.0.17/microsoft.netcore.app.host.osx-arm64.8.0.17.nupkg.sha512"
+    "/Users/tim/.nuget/packages/yarp.reverseproxy/2.3.0/yarp.reverseproxy.2.3.0.nupkg.sha512"
   ],
   "logs": []
 }

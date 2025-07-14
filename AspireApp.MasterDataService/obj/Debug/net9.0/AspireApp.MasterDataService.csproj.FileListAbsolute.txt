@@ -89,6 +89,8 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Dapper.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Microsoft.AspNetCore.OpenApi.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Microsoft.Extensions.AmbientMetadata.Application.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Microsoft.Extensions.Caching.Abstractions.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Microsoft.Extensions.Caching.StackExchangeRedis.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Microsoft.Extensions.Compliance.Abstractions.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Microsoft.Extensions.Configuration.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Abstractions.dll
@@ -125,10 +127,13 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Instrumentation.AspNetCore.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Instrumentation.Http.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Instrumentation.Runtime.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Pipelines.Sockets.Unofficial.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Polly.Core.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Polly.Extensions.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Polly.RateLimiting.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/StackExchange.Redis.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/System.Data.SqlClient.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/System.Diagnostics.DiagnosticSource.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/runtimes/win-arm64/native/sni.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/runtimes/win-x64/native/sni.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/runtimes/win-x86/native/sni.dll
@@ -159,8 +164,3 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/obj/Debug/net9.0/AspireApp.MasterDataService.pdb
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/obj/Debug/net9.0/AspireApp.MasterDataService.genruntimeconfig.cache
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/obj/Debug/net9.0/ref/AspireApp.MasterDataService.dll
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Microsoft.Extensions.Caching.Abstractions.dll
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Microsoft.Extensions.Caching.StackExchangeRedis.dll
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Pipelines.Sockets.Unofficial.dll
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/StackExchange.Redis.dll
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/System.Diagnostics.DiagnosticSource.dll
