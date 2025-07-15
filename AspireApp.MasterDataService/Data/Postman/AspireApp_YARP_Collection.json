@@ -1,0 +1,49 @@
+{
+  "info": {
+    "name": "AspireApp YARP Collection",
+    "_postman_id": "b3f8894a-9fcd-41d7-99c1-9b6c9d4d1234",
+    "description": "Postman collection to test AspireApp via YARP proxy",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Weather (via YARP)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/myweather-api/weatherforecast",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "myweather-api",
+            "weatherforecast"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Locations (via YARP)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/masterdata-api/api/locations",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "masterdata-api",
+            "api",
+            "locations"
+          ]
+        }
+      }
+    }
+  ]
+}

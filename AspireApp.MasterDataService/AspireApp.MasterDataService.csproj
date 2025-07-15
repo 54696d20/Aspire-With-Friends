@@ -20,4 +20,8 @@
     <PackageReference Include="WolverineFx.RabbitMQ" Version="4.5.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Postman\" />
+  </ItemGroup>
+
 </Project>
