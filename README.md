@@ -94,7 +94,7 @@ DELETE http://localhost:5273/masterdata-api/api/locations/{id}
 
 Use the provided Postman collection:
 
-1. [Download AspireApp_YARP_Collection.zip](./AspireApp_YARP_Collection.zip)
+1. JSON is located in MasterDataService/Data/Postman
 2. Import into Postman.
 3. Run the requests for Weather and MasterData through the proxy.
 
