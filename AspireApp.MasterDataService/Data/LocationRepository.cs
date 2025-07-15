@@ -62,4 +62,19 @@ public class LocationRepository
         
         await db.ExecuteAsync(sql, location);
     }
+    
+    public async Task UpdateAsync(Location location)
+    {
+        const string sql = "UPDATE Locations SET Name = @Name, Description = @Description WHERE Id = @Id";
+        using var db = Connection;
+        await db.ExecuteAsync(sql, location);
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        const string sql = "DELETE FROM Locations WHERE Id = @Id";
+        using var db = Connection;
+        await db.ExecuteAsync(sql, new { Id = id });
+    }
+
 }

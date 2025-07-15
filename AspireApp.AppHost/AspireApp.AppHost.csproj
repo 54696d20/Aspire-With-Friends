@@ -20,8 +20,11 @@
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="9.3.1" />
     <PackageReference Include="Aspire.Hosting.Docker" Version="9.3.1-preview.1.25305.6" />
+    <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="9.3.1" />
     <PackageReference Include="Aspire.Hosting.Redis" Version="9.3.1" />
     <PackageReference Include="Aspire.Hosting.SqlServer" Version="9.3.2" />
+    <PackageReference Include="WolverineFx" Version="4.5.3" />
+    <PackageReference Include="WolverineFx.RabbitMQ" Version="4.5.3" />
   </ItemGroup>
 
 </Project>

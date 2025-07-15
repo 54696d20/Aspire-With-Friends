@@ -1,3 +1,6 @@
+using Wolverine;
+using Wolverine.RabbitMQ;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
 //Add Cache
@@ -9,13 +12,21 @@ var cache = builder.AddRedis("cache", 6379, cachePassword)
 
 //Add SQL
 var dbPassword = builder.AddParameter("DbPassword");
-var sqlServer = builder.AddSqlServer("sqlserver", dbPassword, port:1433)
+var sqlServer = builder.AddSqlServer("sql", dbPassword, port:1433)
     .WithEnvironment("ACCEPT_EULA", "Y")
-    .WithEnvironment("MSSQL_SA_PASSWORD", dbPassword)
     .WithVolume("sql-data", "/var/opt/mssql")
     .AddDatabase("masterdatadb");
 
+//Add RabbbitMQ
+var rabbitUser = builder.AddParameter("RabbitUser");
+var rabbitPass = builder.AddParameter("RabbitPass");
+var rabbit = builder.AddRabbitMQ("rabbitmq", rabbitUser, rabbitPass)
+    .WithImage("rabbitmq:3-management");
+
+
 var masterDataService = builder.AddProject<Projects.AspireApp_MasterDataService>("masterdataservice")
+    .WithReference(rabbit)
+    .WaitFor(rabbit)
     .WithReference(sqlServer);
     //.WithHttpHealthCheck("/health");
 

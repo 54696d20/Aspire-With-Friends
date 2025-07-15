@@ -52,6 +52,10 @@
               "target": "Package",
               "version": "[2.1.66, )"
             },
+            "Microsoft.AspNetCore.Mvc": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.7, )"
@@ -63,6 +67,14 @@
             "System.Data.SqlClient": {
               "target": "Package",
               "version": "[4.9.0, )"
+            },
+            "WolverineFx": {
+              "target": "Package",
+              "version": "[4.5.3, )"
+            },
+            "WolverineFx.RabbitMQ": {
+              "target": "Package",
+              "version": "[4.5.3, )"
             }
           },
           "imports": [

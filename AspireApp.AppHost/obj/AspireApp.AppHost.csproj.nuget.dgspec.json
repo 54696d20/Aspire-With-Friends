@@ -62,6 +62,10 @@
               "version": "[9.3.1, )",
               "autoReferenced": true
             },
+            "Aspire.Hosting.RabbitMQ": {
+              "target": "Package",
+              "version": "[9.3.1, )"
+            },
             "Aspire.Hosting.Redis": {
               "target": "Package",
               "version": "[9.3.1, )"
@@ -69,6 +73,14 @@
             "Aspire.Hosting.SqlServer": {
               "target": "Package",
               "version": "[9.3.2, )"
+            },
+            "WolverineFx": {
+              "target": "Package",
+              "version": "[4.5.3, )"
+            },
+            "WolverineFx.RabbitMQ": {
+              "target": "Package",
+              "version": "[4.5.3, )"
             }
           },
           "imports": [
