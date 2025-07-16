@@ -1,118 +1,122 @@
 # Aspire-With-Friends
 
-This is a distributed microservice solution built using .NET Aspire, with the following components:
-
-- **AspireApp.AppHost**: Entry point orchestrator using Aspire hosting.
-- **AspireApp.MasterDataService**: Handles location data using a SQL Server backend and Wolverine messaging.
-- **AspireApp.Web**: Frontend Blazor WebAssembly UI.
-- **AspireApp.YARP**: YARP reverse proxy to route API traffic.
-- **RabbitMQ**: Event-based messaging using Wolverine.
-- **SQL Server**: Dockerized SQL instance for persistent data.
+**Aspire-With-Friends** is a microservices-based, event-driven application built using .NET Aspire and a modern cloud-native stack. It demonstrates modular service design with asynchronous messaging, real-time client notifications, and distributed application composition using the Aspire framework.
 
 ---
 
-## 🧱 Project Structure
+## 🛠️ Tech Stack
+
+### Core Technologies:
+- **.NET Aspire** (.NET 9 distributed application orchestration)
+- **.NET 9** for all projects
+- **Blazor WebAssembly** (Client UI)
+- **Web API with Controllers** (MasterDataService)
+- **WolverineFx** (Messaging and Middleware)
+- **RabbitMQ** (Message broker for asynchronous communication)
+- **SignalR** (Real-time messaging between server and client)
+- **Redis** (Caching)
+- **SQL Server** (Data persistence)
+- **YARP** (Reverse proxy to route traffic to services)
+- **Docker** (Containerized environment)
+- **Aspire Dashboard** (Distributed service visibility)
+
+### Additional/Planned Integrations:
+- **Keycloak** (Authentication/Authorization)
+- **Handlebars** (Templating)
+- **Prometheus + Grafana** (Metrics and monitoring)
+- **Serilog** (Structured logging)
+- **Elsa Workflows** (Workflow engine)
+
+---
+
+## 📐 Project Structure
 
 ```
 Aspire-With-Friends/
-├── AspireApp.AppHost/
-├── AspireApp.MasterDataService/
-├── AspireApp.Web/
-├── AspireApp.YARP/
-└── docker-compose.yml (via Aspire AppHost)
+│
+├── AspireApp.AppHost/           # Aspire AppHost (entrypoint and container orchestration)
+├── AspireApp.MasterDataService/ # API with SQL Server + Wolverine
+├── AspireApp.WebWasm/           # Blazor WebAssembly frontend with SignalR integration
+├── AspireApp.Yarp/              # Reverse proxy using YARP
+├── AspireApp.Cache/             # Redis integration
+└── AspireApp.RabbitMQ/          # RabbitMQ container configuration
 ```
+
+---
+
+## 📤 Message Flow Diagram
+
+```
++---------------------+           RabbitMQ            +----------------------+
+| MasterDataService   |  -------------------------->  |   Web App (Blazor)   |
+| (Publishes Events)  |         Wolverine            | (Subscribes to Events)|
++---------------------+                              +----------------------+
+     |                                                          |
+     |              SignalR                                     |
+     |             Notification  ---------------------------->  |
+     |                                                          |
+     |                    Blazor UI Updates                     |
+     |                                                          |
+```
+
+---
+
+## ✅ Features Implemented
+
+- [x] MasterDataService migrated to use Controllers, Services, and Interfaces
+- [x] Asynchronous publishing using Wolverine + RabbitMQ
+- [x] Real-time client updates via SignalR
+- [x] Blazor WebAssembly frontend
+- [x] Docker-based container orchestration
+- [x] YARP reverse proxy configured
+- [x] Redis caching connected
+- [x] Aspire Dashboard integration
+- [x] Working Publish/Subscribe pattern between services
+
+---
+
+## 🧪 Testing
+
+- Postman collections included for testing the API.
+- Logs and events verified in `MasterDataService`, `RabbitMQ`, and `WebWasm`.
+- Web clients receive updates upon database changes.
+
+---
+
+## 🧭 Future Enhancements
+
+- Authentication via **Keycloak**
+- Monitoring dashboards via **Prometheus/Grafana**
+- Logging improvements via **Serilog**
+- Custom workflow support with **Elsa**
+- Shared contracts and message schemas between services
+- Environment-specific configurations
+- Unit + Integration tests
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
-
-- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- Optional: [JetBrains Rider](https://www.jetbrains.com/rider/) or [Visual Studio 2022+]
-
----
-
-### 🏁 Running the App
-
-1. **Set Docker Runtime**  
-   If you're on macOS, ensure Docker is used:
-   ```bash
-   export DOTNET_HOSTING_CONTAINER_RUNTIME=docker
-   ```
-
-2. **Run AppHost**  
-   Start everything from the AppHost project:
-   ```bash
-   dotnet run --project AspireApp.AppHost
-   ```
-
-3. **Access the Web App**  
-   Navigate to: [http://localhost:5273](http://localhost:5273)
+1. Clone the repository
+2. Restore NuGet packages and build with `.NET 9 SDK`
+3. Start the app via `AspireApp.AppHost`
+4. You need Docker Desktop to run Aspire
+4. Use Postman to test API (Json files are in the MasterDataService/Data/Postman)
+5. Observe real-time notifications in the Blazor WebAssembly app
+6. View service health and metrics in the Aspire Dashboard
 
 ---
 
-## 📦 Services & Endpoints
+## 🧩 Notes
 
-### Reverse Proxy (YARP)
-
-#### Weather API
-```
-GET http://localhost:5273/myweather-api/weatherforecast
-```
-
-#### Master Data API
-```
-GET    http://localhost:5273/masterdata-api/api/locations
-POST   http://localhost:5273/masterdata-api/api/locations
-PUT    http://localhost:5273/masterdata-api/api/locations/{id}
-DELETE http://localhost:5273/masterdata-api/api/locations/{id}
-```
-
-> The routes are configured via `appsettings.json` in the YARP project.
+- RabbitMQ must be healthy and use correct credentials (default `guest/guest` works only with localhost).
+- Blazor WebAssembly requires signalR endpoints exposed in reverse proxy or direct.
+- Aspire Dashboard runs automatically when using AppHost.
 
 ---
 
-## 🐇 RabbitMQ
+## 🧠 Author
 
-- Management UI: [http://localhost:15672](http://localhost:15672)  
-- Default credentials:
-  - **User**: `guest`
-  - **Password**: `guest`
+This project was assembled step-by-step to understand different tech, Wolverine messaging, and real-time event propagation using the Aspire ecosystem.
 
 ---
-
-## 📬 Messaging (Wolverine)
-
-- Wolverine is set up in MasterDataService to support message-based communication (future Sagas or async event publishing).
-- The service uses `.AutoProvision()` to configure necessary queues.
-
----
-
-## 🧪 Testing with Postman
-
-Use the provided Postman collection:
-
-1. JSON is located in MasterDataService/Data/Postman
-2. Import into Postman.
-3. Run the requests for Weather and MasterData through the proxy.
-
----
-
-## ⚠️ Troubleshooting
-
-- **Docker containers not running**:
-  - Ensure Docker Desktop is started.
-  - Clean build: `docker system prune -af`
-- **RabbitMQ errors**:
-  - Check if ports `5672` and `15672` are available.
-  - Restart the container via Docker Desktop if necessary.
-- **SQL Connection Errors**:
-  - Confirm that `localhost` is used in connection strings during development (inside the container, use `sqlserver` hostname).
-
----
-
-## 📝 License
-
-MIT License

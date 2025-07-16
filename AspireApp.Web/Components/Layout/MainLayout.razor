@@ -1,10 +1,11 @@
-﻿@inherits LayoutComponentBase
+﻿@using AspireApp.Web.Services
+@inherits LayoutComponentBase
 
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
-
+    
     <main>
         <div class="top-row px-4">
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
@@ -12,6 +13,7 @@
 
         <article class="content px-4">
             @Body
+            <Notification />
         </article>
     </main>
 </div>
@@ -21,3 +23,19 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+@code {
+    [Inject] private NotificationService NotificationService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        NotificationService.OnNotificationReceived += async (msg) =>
+        {
+            // TODO: Show toast or alert
+            Console.WriteLine($"Notification: {msg}");
+            await InvokeAsync(StateHasChanged);
+        };
+
+        await NotificationService.StartAsync();
+    }
+}

@@ -1,5 +1,11 @@
+using AspireApp.MasterDataService.Messages;
 using AspireApp.Web;
 using AspireApp.Web.Components;
+using AspireApp.Web.Handlers;
+using AspireApp.Web.Hubs;
+using AspireApp.Web.Services;
+using Wolverine;
+using Wolverine.RabbitMQ;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,13 +18,31 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddHttpClient<WeatherApiClient>(client =>
-    {
-        // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
-        // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
-        client.BaseAddress = new("https+http://apiservice");
-    });
+{
+    // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
+    // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
+    client.BaseAddress = new("https+http://apiservice");
+});
+
+builder.Services.AddSignalR();
+builder.Services.AddSingleton<NotificationService>();
+
+builder.Services.AddWolverine(opts =>
+{
+    opts.UseRabbitMq(builder.Configuration.GetConnectionString("RabbitMQ"))
+        .AutoProvision()
+        .AutoPurgeOnStartup();
+
+    opts.ListenToRabbitQueue("wolverine")
+        .UseForReplies();
+
+    opts.Discovery.IncludeAssembly(typeof(LocationNotificationHandler).Assembly);
+
+});
 
 var app = builder.Build();
+
+app.MapHub<NotificationHub>("/notifications");
 
 if (!app.Environment.IsDevelopment())
 {

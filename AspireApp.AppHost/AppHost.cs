@@ -1,6 +1,3 @@
-using Wolverine;
-using Wolverine.RabbitMQ;
-
 var builder = DistributedApplication.CreateBuilder(args);
 
 //Add Cache
@@ -20,9 +17,8 @@ var sqlServer = builder.AddSqlServer("sql", dbPassword, port:1433)
 //Add RabbbitMQ
 var rabbitUser = builder.AddParameter("RabbitUser");
 var rabbitPass = builder.AddParameter("RabbitPass");
-var rabbit = builder.AddRabbitMQ("rabbitmq", rabbitUser, rabbitPass)
+var rabbit = builder.AddRabbitMQ("rabbitmq", rabbitUser, rabbitPass, 5672)
     .WithImage("rabbitmq:3-management");
-
 
 var masterDataService = builder.AddProject<Projects.AspireApp_MasterDataService>("masterdataservice")
     .WithReference(rabbit)
@@ -34,12 +30,14 @@ builder.AddProject<Projects.AspireApp_WeatherAPI>("weatherapi");
 
 builder.AddProject<Projects.YarpGateway>("gateway");
 
-builder.AddProject<Projects.AspireApp_Web>("webfrontend")
-    .WithExternalHttpEndpoints()
+builder.AddProject<Projects.AspireApp_WebWasm>("aspireapp-webwasm")
     .WithHttpHealthCheck("/health")
     .WithReference(cache)
     .WaitFor(cache)
     .WithReference(masterDataService)
-    .WaitFor(masterDataService);
+    .WaitFor(masterDataService)
+    .WaitFor(rabbit);
+
+builder.AddProject<Projects.AspireApp_NotificationHubService>("notificationhubservice");
 
 builder.Build().Run();
