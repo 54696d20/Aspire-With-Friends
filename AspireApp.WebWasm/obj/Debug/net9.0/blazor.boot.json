@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "AspireApp.WebWasm",
   "resources": {
-    "hash": "sha256-lTro69vrehCXJyBmzd5+ceSyUjXH/8FCrW0CN+2yd0k=",
+    "hash": "sha256-ejirXa3LEzjYxAGRRuVwgyROC6RiztwNBil8ZfPr42w=",
     "fingerprinting": {
       "Microsoft.AspNetCore.Authorization.phaa9r44xv.wasm": "Microsoft.AspNetCore.Authorization.wasm",
       "Microsoft.AspNetCore.Components.4o2vz6uw5j.wasm": "Microsoft.AspNetCore.Components.wasm",
@@ -201,8 +201,8 @@
       "icudt_CJK.tjcz0u77k5.dat": "icudt_CJK.dat",
       "icudt_EFIGS.tptq2av103.dat": "icudt_EFIGS.dat",
       "icudt_no_CJK.lfu7j35m59.dat": "icudt_no_CJK.dat",
-      "AspireApp.WebWasm.lmjqtv7src.wasm": "AspireApp.WebWasm.wasm",
-      "AspireApp.WebWasm.n1r0pc0tqq.pdb": "AspireApp.WebWasm.pdb"
+      "AspireApp.WebWasm.zbhv1t3ven.wasm": "AspireApp.WebWasm.wasm",
+      "AspireApp.WebWasm.k3259bildz.pdb": "AspireApp.WebWasm.pdb"
     },
     "jsModuleNative": {
       "dotnet.native.st0ovrfdhi.js": "sha256-MBW/zayfv+YU6mhH7y4b8NNU4D1EYd7nf9gYrFshnnY="
@@ -412,10 +412,10 @@
       "WindowsBase.pg3o6xzigg.wasm": "sha256-dz62CHynC+zqTkbMOf3vm7YAhiRA8/pIoAwuqHfBL5M=",
       "mscorlib.jl2pswegra.wasm": "sha256-mSoCIDTdCQKTipW8VmFCypW/4AopZauaYRa8LoZdHvY=",
       "netstandard.uriri6ambh.wasm": "sha256-yuH/cvPd6r8N9nfPWihyckFD7hPFP+VQtQQxEqi7HIQ=",
-      "AspireApp.WebWasm.lmjqtv7src.wasm": "sha256-I5Ho0vUwMt+1q8ohbTmKSDT4fJj+bZaLez0LjZRtPTI="
+      "AspireApp.WebWasm.zbhv1t3ven.wasm": "sha256-f471s0G4YzAXr/c360BNprRk/E0Sl4wgm9VINGyXVOI="
     },
     "pdb": {
-      "AspireApp.WebWasm.n1r0pc0tqq.pdb": "sha256-6zGQ6OlmHbRAXItzzfkxsdC19n6KaK9Seh6L2++uvI8="
+      "AspireApp.WebWasm.k3259bildz.pdb": "sha256-4K7CrEWhDIsbptFmCB+mkUV1KkR9MkMHWIk8HBAEcO8="
     }
   },
   "cacheBootResources": true,

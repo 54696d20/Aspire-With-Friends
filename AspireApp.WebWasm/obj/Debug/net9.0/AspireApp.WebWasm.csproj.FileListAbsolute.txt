@@ -199,8 +199,8 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/icudt_CJK.tjcz0u77k5.dat
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/icudt_EFIGS.tptq2av103.dat
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/icudt_no_CJK.lfu7j35m59.dat
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.lmjqtv7src.wasm
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.n1r0pc0tqq.pdb
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.zbhv1t3ven.wasm
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.k3259bildz.pdb
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/blazor.boot.json
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/blazor.webassembly.js.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/Microsoft.AspNetCore.Authorization.phaa9r44xv.wasm.gz
@@ -403,8 +403,8 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/icudt_CJK.tjcz0u77k5.dat.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/icudt_EFIGS.tptq2av103.dat.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/icudt_no_CJK.lfu7j35m59.dat.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.lmjqtv7src.wasm.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.n1r0pc0tqq.pdb.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.zbhv1t3ven.wasm.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.k3259bildz.pdb.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/blazor.boot.json.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/AspireApp.WebWasm.staticwebassets.runtime.json
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/AspireApp.WebWasm.staticwebassets.endpoints.json
@@ -1069,9 +1069,9 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/t09lhb97zs-tjcz0u77k5.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/k9vf6uu758-tptq2av103.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/xffkea3fwr-lfu7j35m59.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/e0vtah2e3k-lmjqtv7src.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/hfortaecdi-n1r0pc0tqq.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/ii5rrksppo-d4rvdmn9zq.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/e0vtah2e3k-zbhv1t3ven.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/hfortaecdi-k3259bildz.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/ii5rrksppo-1lcg996xud.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/staticwebassets.build.json
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/staticwebassets.build.json.cache
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/staticwebassets.development.json

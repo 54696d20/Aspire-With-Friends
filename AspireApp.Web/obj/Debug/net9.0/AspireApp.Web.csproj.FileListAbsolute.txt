@@ -346,8 +346,10 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/runtimes/win/lib/net8.0/System.Data.SqlClient.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.MasterDataService.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.ServiceDefaults.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.Shared.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.MasterDataService.pdb
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.ServiceDefaults.pdb
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/bin/Debug/net9.0/AspireApp.Shared.pdb
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/obj/Debug/net9.0/AspireApp.Web.csproj.AssemblyReference.cache
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/obj/Debug/net9.0/rpswa.dswa.cache.json
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Web/obj/Debug/net9.0/AspireApp.Web.GeneratedMSBuildEditorConfig.editorconfig

@@ -3906,6 +3906,16 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
+      },
+      "AspireApp.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/AspireApp.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AspireApp.Shared.dll": {}
+        }
       }
     }
   },
@@ -10722,11 +10732,17 @@
       "type": "project",
       "path": "../AspireApp.ServiceDefaults/AspireApp.ServiceDefaults.csproj",
       "msbuildProject": "../AspireApp.ServiceDefaults/AspireApp.ServiceDefaults.csproj"
+    },
+    "AspireApp.Shared/1.0.0": {
+      "type": "project",
+      "path": "../AspireApp.Shared/AspireApp.Shared.csproj",
+      "msbuildProject": "../AspireApp.Shared/AspireApp.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net9.0": [
       "AspireApp.ServiceDefaults >= 1.0.0",
+      "AspireApp.Shared >= 1.0.0",
       "Dapper >= 2.1.66",
       "Microsoft.AspNetCore.Mvc >= 2.3.0",
       "Microsoft.AspNetCore.OpenApi >= 9.0.7",
@@ -10763,6 +10779,9 @@
           "projectReferences": {
             "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.ServiceDefaults/AspireApp.ServiceDefaults.csproj": {
               "projectPath": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.ServiceDefaults/AspireApp.ServiceDefaults.csproj"
+            },
+            "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/AspireApp.Shared.csproj": {
+              "projectPath": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/AspireApp.Shared.csproj"
             }
           }
         }

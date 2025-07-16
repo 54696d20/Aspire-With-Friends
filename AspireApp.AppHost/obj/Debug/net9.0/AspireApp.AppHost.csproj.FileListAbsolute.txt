@@ -478,6 +478,7 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.AppHost/obj/Debug/net9.0/AspireApp.AppHost.AssemblyInfo.cs
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.AppHost/obj/Debug/net9.0/AspireApp.AppHost.csproj.CoreCompileInputs.cache
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.AppHost/obj/Debug/net9.0/Aspire/references/AspireApp_MasterDataService.ProjectMetadata.g.cs
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.AppHost/obj/Debug/net9.0/Aspire/references/AspireApp_NotificationHubService.ProjectMetadata.g.cs
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.AppHost/obj/Debug/net9.0/Aspire/references/AspireApp_WeatherAPI.ProjectMetadata.g.cs
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.AppHost/obj/Debug/net9.0/Aspire/references/AspireApp_Web.ProjectMetadata.g.cs
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.AppHost/obj/Debug/net9.0/Aspire/references/YarpGateway.ProjectMetadata.g.cs
@@ -490,4 +491,3 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.AppHost/obj/Debug/net9.0/AspireApp.AppHost.pdb
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.AppHost/obj/Debug/net9.0/AspireApp.AppHost.genruntimeconfig.cache
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.AppHost/obj/Debug/net9.0/ref/AspireApp.AppHost.dll
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.AppHost/obj/Debug/net9.0/Aspire/references/AspireApp_NotificationHubService.ProjectMetadata.g.cs

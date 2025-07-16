@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AspireApp.MasterDataService.Interfaces;
 using AspireApp.MasterDataService.Messages;
 using AspireApp.MasterDataService.Models;
+using AspireApp.Shared.Messaging.Models;
 using Dapper;
 using Wolverine;
 
@@ -50,7 +51,7 @@ namespace AspireApp.MasterDataService.Services
             try
             {
                 var publishTask = _bus.PublishAsync(
-                    new LocationChangedNotification($"Location added: {location.Name}")
+                    new LocationChangedNotificationModel { Name = location.Name }
                 ).AsTask();
 
                 var timeoutTask = Task.Delay(TimeSpan.FromSeconds(3));

@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireApp.WebWasm", "Aspire
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireApp.NotificationHubService", "AspireApp.NotificationHubService\AspireApp.NotificationHubService.csproj", "{BB3BC32F-13D2-4E5C-ADCC-6EA894596BDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireApp.Shared", "AspireApp.Shared\AspireApp.Shared.csproj", "{15EA5996-934C-418E-BD54-722564FFA468}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,18 @@ Global
 		{BB3BC32F-13D2-4E5C-ADCC-6EA894596BDC}.Release|x64.Build.0 = Release|Any CPU
 		{BB3BC32F-13D2-4E5C-ADCC-6EA894596BDC}.Release|x86.ActiveCfg = Release|Any CPU
 		{BB3BC32F-13D2-4E5C-ADCC-6EA894596BDC}.Release|x86.Build.0 = Release|Any CPU
+		{15EA5996-934C-418E-BD54-722564FFA468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15EA5996-934C-418E-BD54-722564FFA468}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15EA5996-934C-418E-BD54-722564FFA468}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{15EA5996-934C-418E-BD54-722564FFA468}.Debug|x64.Build.0 = Debug|Any CPU
+		{15EA5996-934C-418E-BD54-722564FFA468}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{15EA5996-934C-418E-BD54-722564FFA468}.Debug|x86.Build.0 = Debug|Any CPU
+		{15EA5996-934C-418E-BD54-722564FFA468}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15EA5996-934C-418E-BD54-722564FFA468}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15EA5996-934C-418E-BD54-722564FFA468}.Release|x64.ActiveCfg = Release|Any CPU
+		{15EA5996-934C-418E-BD54-722564FFA468}.Release|x64.Build.0 = Release|Any CPU
+		{15EA5996-934C-418E-BD54-722564FFA468}.Release|x86.ActiveCfg = Release|Any CPU
+		{15EA5996-934C-418E-BD54-722564FFA468}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

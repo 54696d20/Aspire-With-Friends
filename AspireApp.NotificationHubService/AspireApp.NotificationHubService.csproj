@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.0" />
+    <PackageReference Include="WolverineFx" Version="4.5.3" />
+    <PackageReference Include="WolverineFx.RabbitMQ" Version="4.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AspireApp.Shared\AspireApp.Shared.csproj" />
   </ItemGroup>
 
 </Project>

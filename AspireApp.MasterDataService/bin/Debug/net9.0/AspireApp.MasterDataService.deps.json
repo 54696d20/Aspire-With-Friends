@@ -9,6 +9,7 @@
       "AspireApp.MasterDataService/1.0.0": {
         "dependencies": {
           "AspireApp.ServiceDefaults": "1.0.0",
+          "AspireApp.Shared": "1.0.0",
           "Dapper": "2.1.66",
           "Microsoft.AspNetCore.Mvc": "2.3.0",
           "Microsoft.AspNetCore.OpenApi": "9.0.7",
@@ -2174,6 +2175,14 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "AspireApp.Shared/1.0.0": {
+        "runtime": {
+          "AspireApp.Shared.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -3584,6 +3593,11 @@
       "hashPath": "wolverinefx.rabbitmq.4.5.3.nupkg.sha512"
     },
     "AspireApp.ServiceDefaults/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AspireApp.Shared/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -38,6 +38,8 @@ builder.AddProject<Projects.AspireApp_WebWasm>("aspireapp-webwasm")
     .WaitFor(masterDataService)
     .WaitFor(rabbit);
 
-builder.AddProject<Projects.AspireApp_NotificationHubService>("notificationhubservice");
+builder.AddProject<Projects.AspireApp_NotificationHubService>("notificationhubservice")
+    .WithReference(rabbit)
+    .WaitFor(rabbit);
 
 builder.Build().Run();
