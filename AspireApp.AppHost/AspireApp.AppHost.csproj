@@ -14,7 +14,6 @@
     <ProjectReference Include="..\AspireApp.MasterDataService\AspireApp.MasterDataService.csproj" />
     <ProjectReference Include="..\AspireApp.NotificationHubService\AspireApp.NotificationHubService.csproj" />
     <ProjectReference Include="..\AspireApp.WeatherAPI\AspireApp.WeatherAPI.csproj" />
-    <ProjectReference Include="..\AspireApp.Web\AspireApp.Web.csproj" />
     <ProjectReference Include="..\YarpGateway\YarpGateway.csproj" />
     <ProjectReference Include="..\AspireApp.WebWasm\AspireApp.WebWasm.csproj" />
   </ItemGroup>

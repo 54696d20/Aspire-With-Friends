@@ -4,14 +4,14 @@
     "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/AspireApp.WebWasm.csproj": {}
   },
   "projects": {
-    "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/AspireApp.WebWasm.csproj": {
+    "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/AspireApp.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/AspireApp.WebWasm.csproj",
-        "projectName": "AspireApp.WebWasm",
-        "projectPath": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/AspireApp.WebWasm.csproj",
+        "projectUniqueName": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/AspireApp.Shared.csproj",
+        "projectName": "AspireApp.Shared",
+        "projectPath": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/AspireApp.Shared.csproj",
         "packagesPath": "/Users/tim/.nuget/packages/",
-        "outputPath": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/",
+        "outputPath": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/tim/.nuget/NuGet/NuGet.Config"
@@ -43,6 +43,69 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.301/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/AspireApp.WebWasm.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/AspireApp.WebWasm.csproj",
+        "projectName": "AspireApp.WebWasm",
+        "projectPath": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/AspireApp.WebWasm.csproj",
+        "packagesPath": "/Users/tim/.nuget/packages/",
+        "outputPath": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/tim/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/AspireApp.Shared.csproj": {
+                "projectPath": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/AspireApp.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
           "dependencies": {
             "Microsoft.AspNetCore.Components.WebAssembly": {
               "target": "Package",
@@ -52,6 +115,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.6, )"
+            },
+            "Microsoft.AspNetCore.SignalR.Client": {
+              "target": "Package",
+              "version": "[9.0.7, )"
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",

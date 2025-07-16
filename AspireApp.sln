@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspireApp.ServiceDefaults",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspireApp.MasterDataService", "AspireApp.MasterDataService\AspireApp.MasterDataService.csproj", "{158343B8-0240-402C-9645-0CBCC7B3F07F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspireApp.Web", "AspireApp.Web\AspireApp.Web.csproj", "{9DB3361A-0864-49D4-A9AA-FC174B3C387E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YarpGateway", "YarpGateway\YarpGateway.csproj", "{7720C372-A045-4CCD-B760-31E6C91A0B0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireApp.WeatherAPI", "AspireApp.WeatherAPI\AspireApp.WeatherAPI.csproj", "{699DEC17-8EA2-4623-A75C-864A3F7CCFEF}"
@@ -67,18 +65,6 @@ Global
 		{158343B8-0240-402C-9645-0CBCC7B3F07F}.Release|x64.Build.0 = Release|Any CPU
 		{158343B8-0240-402C-9645-0CBCC7B3F07F}.Release|x86.ActiveCfg = Release|Any CPU
 		{158343B8-0240-402C-9645-0CBCC7B3F07F}.Release|x86.Build.0 = Release|Any CPU
-		{9DB3361A-0864-49D4-A9AA-FC174B3C387E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9DB3361A-0864-49D4-A9AA-FC174B3C387E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9DB3361A-0864-49D4-A9AA-FC174B3C387E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{9DB3361A-0864-49D4-A9AA-FC174B3C387E}.Debug|x64.Build.0 = Debug|Any CPU
-		{9DB3361A-0864-49D4-A9AA-FC174B3C387E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9DB3361A-0864-49D4-A9AA-FC174B3C387E}.Debug|x86.Build.0 = Debug|Any CPU
-		{9DB3361A-0864-49D4-A9AA-FC174B3C387E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9DB3361A-0864-49D4-A9AA-FC174B3C387E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9DB3361A-0864-49D4-A9AA-FC174B3C387E}.Release|x64.ActiveCfg = Release|Any CPU
-		{9DB3361A-0864-49D4-A9AA-FC174B3C387E}.Release|x64.Build.0 = Release|Any CPU
-		{9DB3361A-0864-49D4-A9AA-FC174B3C387E}.Release|x86.ActiveCfg = Release|Any CPU
-		{9DB3361A-0864-49D4-A9AA-FC174B3C387E}.Release|x86.Build.0 = Release|Any CPU
 		{7720C372-A045-4CCD-B760-31E6C91A0B0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7720C372-A045-4CCD-B760-31E6C91A0B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7720C372-A045-4CCD-B760-31E6C91A0B0D}.Debug|x64.ActiveCfg = Debug|Any CPU

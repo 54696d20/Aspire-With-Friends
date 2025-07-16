@@ -17,8 +17,19 @@ builder.Host.UseWolverine(opts =>
     opts.ListenToRabbitQueue("wolverine");
 });
 
-var app = builder.Build();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:5071")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
+var app = builder.Build();
+app.UseCors();
 app.MapHub<LocationHub>("/hubs/locations");
 
 app.Run();

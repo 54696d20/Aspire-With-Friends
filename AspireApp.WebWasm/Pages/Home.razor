@@ -1,7 +1,36 @@
 ﻿@page "/"
+@using System.Text.Json
 
-<PageTitle>Home</PageTitle>
+@inject AspireApp.WebWasm.Services.LocationHubService HubService
 
-<h1>Hello, world!</h1>
+<h3>Live Locations</h3>
 
-Welcome to your new app.
+@if (locations.Count == 0)
+{
+    <p>No locations received yet.</p>
+}
+else
+{
+    <ul>
+        @foreach (var loc in locations)
+        {
+            <li>@loc</li>
+        }
+    </ul>
+}
+
+@code {
+    private List<string> locations = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        HubService.OnLocationChanged += message =>
+        {
+            Console.WriteLine($"📩 Received message: {JsonSerializer.Serialize(message)}");
+            locations.Add(message.Name);
+            InvokeAsync(StateHasChanged);
+        };
+
+        await HubService.StartAsync();
+    }
+}
