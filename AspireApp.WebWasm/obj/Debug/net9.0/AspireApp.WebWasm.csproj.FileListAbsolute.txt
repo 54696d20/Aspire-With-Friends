@@ -1,5 +1,3 @@
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.Shared.wvlsibrwk8.pdb
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.Shared.9tojy3bhk7.wasm
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/blazor.boot.json
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/blazor.webassembly.js
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/dotnet.js
@@ -347,8 +345,6 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/System.IO.FileSystem.AccessControl.mr9kqgonfr.wasm.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/System.Resources.ResourceManager.vhjl4emd1k.wasm.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/System.ObjectModel.0h2ofj4d0g.wasm.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.Shared.9tojy3bhk7.wasm.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.Shared.wvlsibrwk8.pdb.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/netstandard.uriri6ambh.wasm.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/System.IO.Compression.FileSystem.ej4yzjlwjv.wasm.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/System.Globalization.icrjyztu0b.wasm.gz
@@ -1133,8 +1129,6 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/t09lhb97zs-tjcz0u77k5.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/k9vf6uu758-tptq2av103.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/xffkea3fwr-lfu7j35m59.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/ng2b8pgoqd-9tojy3bhk7.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/nifk90yk8y-wvlsibrwk8.gz
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/staticwebassets.build.json
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/staticwebassets.build.json.cache
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/staticwebassets.development.json
@@ -1145,10 +1139,16 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/AspireApp.WebWasm.pdb
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/ref/AspireApp.WebWasm.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/rqdg5yeud5-c79z9701j0.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.zlrt0vawy0.pdb
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.szyr8dxjsb.wasm
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.szyr8dxjsb.wasm.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.zlrt0vawy0.pdb.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/e0vtah2e3k-szyr8dxjsb.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/hfortaecdi-zlrt0vawy0.gz
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/ii5rrksppo-q72ktiopng.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.Shared.3kswbwgfs7.pdb
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.Shared.8qby10ob7i.wasm
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.a4vtrjc1ui.pdb
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.gh0pntv2z7.wasm
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.gh0pntv2z7.wasm.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.WebWasm.a4vtrjc1ui.pdb.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.Shared.8qby10ob7i.wasm.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/bin/Debug/net9.0/wwwroot/_framework/AspireApp.Shared.3kswbwgfs7.pdb.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/ng2b8pgoqd-8qby10ob7i.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/nifk90yk8y-3kswbwgfs7.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/e0vtah2e3k-gh0pntv2z7.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/hfortaecdi-a4vtrjc1ui.gz
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WebWasm/obj/Debug/net9.0/compressed/ii5rrksppo-u2cn2eji7d.gz

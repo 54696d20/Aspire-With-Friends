@@ -1,13 +1,9 @@
 ﻿@page "/"
 @using System.Text.Json
+@using AspireApp.Shared.Messaging.Models
 @using MudBlazor
 @inject ISnackbar Snackbar
 @inject AspireApp.WebWasm.Services.LocationHubService HubService
-
-
-<MudButton OnClick="@ShowNotification" Variant="Variant.Filled" Color="Color.Primary">
-    Show Test Snackbar
-</MudButton>
 
 <h3>Live Locations</h3>
 
@@ -32,7 +28,7 @@ else
     {
         HubService.OnLocationChanged += message =>
         {
-            Console.WriteLine($"📩 Received message: {JsonSerializer.Serialize(message)}");
+            ShowNotification(message);
             locations.Add(message.Name);
             InvokeAsync(StateHasChanged);
         };
@@ -40,8 +36,8 @@ else
         await HubService.StartAsync();
     }
     
-    void ShowNotification()
+    void ShowNotification(LocationChangedNotificationModel message)
     {
-        Snackbar.Add("New location added!", Severity.Success);
+        Snackbar.Add($"New location {message.Name} added!", Severity.Success);
     }
 }
