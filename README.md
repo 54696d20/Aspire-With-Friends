@@ -9,7 +9,7 @@
 ### Core Technologies:
 - **.NET Aspire** (.NET 9 distributed application orchestration)
 - **.NET 9** for all projects
-- **Blazor WebAssembly** (Client UI)
+- **Blazor WebAssembly** (Client UI) with MudBlazor framework
 - **Web API with Controllers** (MasterDataService)
 - **WolverineFx** (Messaging and Middleware)
 - **RabbitMQ** (Message broker for asynchronous communication)
@@ -47,10 +47,10 @@ Aspire-With-Friends/
 ## 📤 Message Flow Diagram
 
 ```
-+---------------------+           RabbitMQ            +----------------------+
-| MasterDataService   |  -------------------------->  |   Web App (Blazor)   |
++---------------------+           RabbitMQ           +-----------------------+
+| MasterDataService   |  --------------------------> |   Web App (Blazor)    |
 | (Publishes Events)  |         Wolverine            | (Subscribes to Events)|
-+---------------------+                              +----------------------+
++---------------------+                              +-----------------------+
      |                                                          |
      |              SignalR                                     |
      |             Notification  ---------------------------->  |
