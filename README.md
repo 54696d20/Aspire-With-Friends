@@ -1,122 +1,88 @@
-# Aspire-With-Friends
+# Aspire With Friends
 
-**Aspire-With-Friends** is a microservices-based, event-driven application built using .NET Aspire and a modern cloud-native stack. It demonstrates modular service design with asynchronous messaging, real-time client notifications, and distributed application composition using the Aspire framework.
-
----
-
-## 🛠️ Tech Stack
-
-### Core Technologies:
-- **.NET Aspire** (.NET 9 distributed application orchestration)
-- **.NET 9** for all projects
-- **Blazor WebAssembly** (Client UI) with MudBlazor framework
-- **Web API with Controllers** (MasterDataService)
-- **WolverineFx** (Messaging and Middleware)
-- **RabbitMQ** (Message broker for asynchronous communication)
-- **SignalR** (Real-time messaging between server and client)
-- **Redis** (Caching)
-- **SQL Server** (Data persistence)
-- **YARP** (Reverse proxy to route traffic to services)
-- **Docker** (Containerized environment)
-- **Aspire Dashboard** (Distributed service visibility)
-
-### Additional/Planned Integrations:
-- **Keycloak** (Authentication/Authorization)
-- **Handlebars** (Templating)
-- **Prometheus + Grafana** (Metrics and monitoring)
-- **Serilog** (Structured logging)
-- **Elsa Workflows** (Workflow engine)
+**Aspire With Friends** is a sample distributed application built with the .NET Aspire stack. It showcases event‑driven communication and real‑time updates for a Blazor WebAssembly client.
 
 ---
 
-## 📐 Project Structure
+## 🛠 Tech Stack
 
-```
-Aspire-With-Friends/
-│
-├── AspireApp.AppHost/           # Aspire AppHost (entrypoint and container orchestration)
-├── AspireApp.MasterDataService/ # API with SQL Server + Wolverine
-├── AspireApp.WebWasm/           # Blazor WebAssembly frontend with SignalR integration
-├── AspireApp.Yarp/              # Reverse proxy using YARP
-├── AspireApp.Cache/             # Redis integration
-└── AspireApp.RabbitMQ/          # RabbitMQ container configuration
-```
+### Core Technologies
+- **.NET Aspire** on **.NET 9**
+- **Blazor WebAssembly** UI with **MudBlazor**
+- **ASP.NET Web API** services (MasterDataService & WeatherAPI)
+- **WolverineFx** messaging
+- **RabbitMQ** for asynchronous events
+- **SignalR** for client notifications
+- **Redis** cache
+- **SQL Server**
+- **YARP** reverse proxy
+- **Docker** container orchestration
+- **Aspire Dashboard**
 
----
-
-## 📤 Message Flow Diagram
-
-```
-+---------------------+           RabbitMQ           +-----------------------+
-| MasterDataService   |  --------------------------> |   Web App (Blazor)    |
-| (Publishes Events)  |         Wolverine            | (Subscribes to Events)|
-+---------------------+                              +-----------------------+
-     |                                                          |
-     |              SignalR                                     |
-     |             Notification  ---------------------------->  |
-     |                                                          |
-     |                    Blazor UI Updates                     |
-     |                                                          |
-```
-
----
-
-## ✅ Features Implemented
-
-- [x] MasterDataService migrated to use Controllers, Services, and Interfaces
-- [x] Asynchronous publishing using Wolverine + RabbitMQ
-- [x] Real-time client updates via SignalR
-- [x] Blazor WebAssembly frontend
-- [x] Docker-based container orchestration
-- [x] YARP reverse proxy configured
-- [x] Redis caching connected
-- [x] Aspire Dashboard integration
-- [x] Working Publish/Subscribe pattern between services
-
----
-
-## 🧪 Testing
-
-- Postman collections included for testing the API.
-- Logs and events verified in `MasterDataService`, `RabbitMQ`, and `WebWasm`.
-- Web clients receive updates upon database changes.
-
----
-
-## 🧭 Future Enhancements
-
+### Planned Integrations
 - Authentication via **Keycloak**
-- Monitoring dashboards via **Prometheus/Grafana**
-- Logging improvements via **Serilog**
-- Custom workflow support with **Elsa**
-- Shared contracts and message schemas between services
-- Environment-specific configurations
-- Unit + Integration tests
+- **Handlebars** templating
+- **Prometheus** + **Grafana** monitoring
+- **Serilog** logging
+- **Elsa Workflows**
 
 ---
 
-## 🚀 Getting Started
+## 👤 Project Structure
+
+```text
+Aspire-With-Friends/
+├── AspireApp.AppHost/               # Entry point that orchestrates services
+├── AspireApp.MasterDataService/     # API with SQL Server + Wolverine
+├── AspireApp.NotificationHubService/# Publishes SignalR notifications
+├── AspireApp.WeatherAPI/            # Example weather service
+├── AspireApp.ServiceDefaults/       # Shared infrastructure helpers
+├── AspireApp.WebWasm/               # Blazor WebAssembly frontend
+├── YarpGateway/                     # Reverse proxy using YARP
+└── AspireApp.Shared/                # Shared contracts and utilities
+```
+
+---
+
+## 📮 Message Flow
+
+```text
+MasterDataService --(RabbitMQ)--> NotificationHubService --(SignalR)--> WebWasm
+```
+
+---
+
+## ✅ Features
+
+- Modular services with asynchronous messaging
+- Real-time client updates through SignalR
+- Redis caching and SQL Server storage
+- YARP gateway routing
+- Docker-based orchestration via .NET Aspire AppHost
+
+---
+
+## 💻 Getting Started
 
 1. Clone the repository
-2. Restore NuGet packages and build with `.NET 9 SDK`
-3. Start the app via `AspireApp.AppHost`
-4. You need Docker Desktop to run Aspire
-4. Use Postman to test API (Json files are in the MasterDataService/Data/Postman)
-5. Observe real-time notifications in the Blazor WebAssembly app
-6. View service health and metrics in the Aspire Dashboard
+2. Ensure the **.NET 9 SDK** and **Docker Desktop** are installed
+3. Run `dotnet run --project AspireApp.AppHost` to start all services
+4. Use Postman collections under `MasterDataService/Data/Postman` to test APIs
+5. View live updates in the Blazor WebAssembly app
+6. Monitor services using the Aspire Dashboard
 
 ---
 
-## 🧩 Notes
+## 📝 Notes
 
-- RabbitMQ must be healthy and use correct credentials (default `guest/guest` works only with localhost).
-- Blazor WebAssembly requires signalR endpoints exposed in reverse proxy or direct.
-- Aspire Dashboard runs automatically when using AppHost.
+- RabbitMQ uses default `guest/guest` credentials for local development
+- SignalR endpoints must be reachable through the YARP gateway
+- The Aspire Dashboard starts automatically when running the AppHost
 
 ---
 
-## 🧠 Author
+## 🤔 Author
 
-This project was assembled step-by-step to understand different tech, Wolverine messaging, and real-time event propagation using the Aspire ecosystem.
+This project explores microservice messaging and real-time notifications using the Aspire ecosystem.
 
 ---
