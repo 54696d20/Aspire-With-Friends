@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AspireApp.WebWasm")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c4b3a12edf7b44ba274f395a3b56b2e30d8ad6fd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+643150fdfd07be2917ea0948b8eb8d7ece95e588")]
 [assembly: System.Reflection.AssemblyProductAttribute("AspireApp.WebWasm")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AspireApp.WebWasm")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
