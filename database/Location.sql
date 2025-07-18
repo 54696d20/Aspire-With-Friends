@@ -1,3 +1,9 @@
+IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'MasterDataDb')
+BEGIN
+    CREATE DATABASE MasterDataDb;
+END
+GO
+
 USE MasterDataDb;
 GO
 

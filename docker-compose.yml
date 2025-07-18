@@ -108,6 +108,22 @@ services:
       - weatherapi
     ports:
       - "5211:8080"
+        
+  sql-init:
+    image: mcr.microsoft.com/mssql-tools
+    platform: linux/amd64
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ./database:/scripts
+    entrypoint: >
+      bash -c "
+        echo 'Waiting for SQL Server...';
+        sleep 10;
+        /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P P@ssword123! -i /scripts/location.sql;
+        echo 'Database script executed';
+      "
 
 volumes:
   sql-data:
