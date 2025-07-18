@@ -18,9 +18,9 @@
 - **YARP** reverse proxy
 - **Docker** container orchestration
 - **Aspire Dashboard**
+- **Keycloak** authentication provider
 
 ### Planned Integrations
-- Authentication via **Keycloak**
 - **Handlebars** templating
 - **Prometheus** + **Grafana** monitoring
 - **Serilog** logging
