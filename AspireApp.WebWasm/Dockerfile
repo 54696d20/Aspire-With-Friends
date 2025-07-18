@@ -5,8 +5,5 @@ COPY . .
 RUN dotnet publish AspireApp.WebWasm/AspireApp.WebWasm.csproj -c Release -o /app/publish
 
 # runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
-WORKDIR /app
-COPY --from=build /app/publish .
-EXPOSE 8080
-ENTRYPOINT ["dotnet", "AspireApp.WebWasm.dll"]
+FROM nginx:alpine AS final
+COPY --from=build /app/publish/wwwroot /usr/share/nginx/html
