@@ -20,6 +20,15 @@ var rabbitPass = builder.AddParameter("RabbitPass");
 var rabbit = builder.AddRabbitMQ("rabbitmq", rabbitUser, rabbitPass, 5672)
     .WithImage("rabbitmq:3-management");
 
+// Add Keycloak container
+var keycloakUser = builder.AddParameter("KeycloakAdmin");
+var keycloakPass = builder.AddParameter("KeycloakPassword");
+var keycloak = builder.AddContainer("keycloak")
+    .WithImage("quay.io/keycloak/keycloak:24.0.1")
+    .WithEnvironment("KEYCLOAK_ADMIN", keycloakUser)
+    .WithEnvironment("KEYCLOAK_ADMIN_PASSWORD", keycloakPass)
+    .WithEndpoint(containerPort: 8080, hostPort: 8080);
+
 var masterDataService = builder.AddProject<Projects.AspireApp_MasterDataService>("masterdataservice")
     .WithReference(rabbit)
     .WaitFor(rabbit)
@@ -28,7 +37,8 @@ var masterDataService = builder.AddProject<Projects.AspireApp_MasterDataService>
 
 builder.AddProject<Projects.AspireApp_WeatherAPI>("weatherapi");
 
-builder.AddProject<Projects.YarpGateway>("gateway");
+builder.AddProject<Projects.YarpGateway>("gateway")
+    .WaitFor(keycloak);
 
 builder.AddProject<Projects.AspireApp_WebWasm>("aspireapp-webwasm")
     .WithHttpHealthCheck("/health")
@@ -36,7 +46,8 @@ builder.AddProject<Projects.AspireApp_WebWasm>("aspireapp-webwasm")
     .WaitFor(cache)
     .WithReference(masterDataService)
     .WaitFor(masterDataService)
-    .WaitFor(rabbit);
+    .WaitFor(rabbit)
+    .WaitFor(keycloak);
 
 builder.AddProject<Projects.AspireApp_NotificationHubService>("notificationhubservice")
     .WithReference(rabbit)
