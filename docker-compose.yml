@@ -57,7 +57,7 @@ services:
       context: .
       dockerfile: AspireApp.MasterDataService/Dockerfile
     environment:
-      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=MasterDataDb;User Id=sa;Password=MyS3cureP@a$$;"
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=MasterDataDb;User Id=sa;Password=P@ssword123!;"
       ConnectionStrings__Redis: "cache:6379,password=Awe$0meSauce!"
       ConnectionStrings__rabbitmq: "amqp://admin:securepass123@rabbitmq:5672/"
     depends_on:
