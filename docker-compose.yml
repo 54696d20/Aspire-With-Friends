@@ -134,7 +134,7 @@ services:
       sqlserver:
         condition: service_healthy
     volumes:
-      - ./database:/scripts
+      - ./scripts:/scripts
     entrypoint: >
       bash -c "
         echo 'Waiting for SQL Server...';

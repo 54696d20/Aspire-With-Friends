@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AspireApp.NotificationHubService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a24ef3bb26d21d4814a0eceb81a84e79a6ab882")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79077c3947bedce664688a06c85cf79218757b72")]
 [assembly: System.Reflection.AssemblyProductAttribute("AspireApp.NotificationHubService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AspireApp.NotificationHubService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
