@@ -1,0 +1,12 @@
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/bin/Release/net9.0/AspireApp.Shared.deps.json
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/bin/Release/net9.0/AspireApp.Shared.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/bin/Release/net9.0/AspireApp.Shared.pdb
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/obj/Release/net9.0/AspireApp.Shared.GeneratedMSBuildEditorConfig.editorconfig
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/obj/Release/net9.0/AspireApp.Shared.AssemblyInfoInputs.cache
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/obj/Release/net9.0/AspireApp.Shared.AssemblyInfo.cs
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/obj/Release/net9.0/AspireApp.Shared.csproj.CoreCompileInputs.cache
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/obj/Release/net9.0/AspireApp.Shared.sourcelink.json
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/obj/Release/net9.0/AspireApp.Shared.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/obj/Release/net9.0/refint/AspireApp.Shared.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/obj/Release/net9.0/AspireApp.Shared.pdb
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.Shared/obj/Release/net9.0/ref/AspireApp.Shared.dll

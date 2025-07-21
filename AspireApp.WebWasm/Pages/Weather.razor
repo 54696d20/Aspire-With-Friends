@@ -1,6 +1,8 @@
 ﻿@page "/weather"
 @inject HttpClient Http
+@using Microsoft.AspNetCore.Authorization
 @using MudBlazor
+@attribute [Authorize]
 
 <PageTitle>Weather</PageTitle>
 
