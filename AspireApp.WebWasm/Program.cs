@@ -20,11 +20,11 @@ builder.Services.AddOidcAuthentication(options =>
     options.ProviderOptions.ClientId = "aspire-blazor-client";
     options.ProviderOptions.ResponseType = "code";
     options.ProviderOptions.RedirectUri = "http://localhost:5071/authentication/login-callback";
-    options.ProviderOptions.PostLogoutRedirectUri = "/";
+    options.ProviderOptions.PostLogoutRedirectUri = "http://localhost:5071/";
     options.ProviderOptions.DefaultScopes.Add("openid");
     options.ProviderOptions.DefaultScopes.Add("profile");
     options.ProviderOptions.DefaultScopes.Add("email");
-    options.UserOptions.RoleClaim = "roles"; // If using roles later
+    options.UserOptions.RoleClaim = "roles";
 });
 
 await builder.Build().RunAsync();

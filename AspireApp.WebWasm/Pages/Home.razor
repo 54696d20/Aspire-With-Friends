@@ -1,9 +1,11 @@
 ﻿@page "/"
 @using System.Text.Json
 @using AspireApp.Shared.Messaging.Models
+@using Microsoft.AspNetCore.Authorization
 @using MudBlazor
 @inject ISnackbar Snackbar
 @inject AspireApp.WebWasm.Services.LocationHubService HubService
+@attribute [Authorize]
 
 <h3>Live Locations</h3>
 

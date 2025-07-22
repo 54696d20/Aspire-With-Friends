@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("YarpGateway")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79077c3947bedce664688a06c85cf79218757b72")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+279228bbaf549bcb07f3db894d7972c4697023ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("YarpGateway")]
 [assembly: System.Reflection.AssemblyTitleAttribute("YarpGateway")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
