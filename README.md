@@ -18,9 +18,10 @@
 - **YARP** reverse proxy
 - **Docker** container orchestration
 - **Aspire Dashboard**
+- Authentication via **Keycloak**
 
 ### Planned Integrations
-- Authentication via **Keycloak**
+
 - **Handlebars** templating
 - **Prometheus** + **Grafana** monitoring
 - **Serilog** logging
@@ -115,7 +116,7 @@ This project supports two main ways to run the full stack for local development:
 
 - **AppHost (Aspire) Way:**  
   Great for .NET-centric development, debugging, and using Aspire’s orchestration features.  
-  Lets you control which infra services are running.
+  Lets you control which infra services are running. AND... Keycloak at this time doesn't in within Aspire (07/2025)
 - **Docker Compose Way:**  
   Great for full-stack integration testing, demos, or when you want to run everything in containers.  
   Easiest for onboarding or “one command to run it all.”
@@ -128,7 +129,7 @@ This project uses **Keycloak** for authentication and role-based access control 
 
 ### 1. Start Keycloak (via Docker Compose)
 
-Keycloak is included in the `docker-compose.yml`. To start Keycloak:
+Keycloak is included in the `docker-compose.docker.yml`. To start Keycloak:
 
 ```bash
 docker compose up -d keycloak postgres
@@ -143,33 +144,39 @@ docker compose up -d keycloak postgres
 3. **Create a new Client**:
    - Client ID: `aspire-blazor-client`
    - Protocol: `openid-connect`
+   - Next
+   - Authentication flow - only have Standard flow selected
+   - Next 
    - Root URL: `http://localhost:5071`
    - Valid Redirect URIs: `http://localhost:5071/*`
    - Valid Post Logout Redirect URIs: `http://localhost:5071/`
    - Web Origins: `http://localhost:5071`
+   - Save
    - Client authentication: **OFF** (public client)
    - Standard flow: **ON**
    - Save
-4. **Create Realm Roles** (e.g., `godmode`, `user`)
+4. **Create Realm Roles** (`godmode`) (Is casesensitive)
    - Go to Roles > Create Role
    - Name: `godmode` (repeat for other roles as needed)
+   
 5. **Create a Test User**
-   - Go to Users > Add user
+   - Go to Users > Create user
    - Set username, email, etc. and save
    - Go to Credentials tab, set a password, and disable 'Temporary'
    - Go to Role mapping tab, assign `godmode` (or other roles) to the user
 
-6. **(If Using Client Roles) Add a Protocol Mapper**
-   - If you assign roles under the client (not as realm roles), you must add a protocol mapper to include them in the token:
+6. **(If Using Realm Roles) Add a Protocol Mapper**
+   - If you assign roles under the Realm (not as client roles), you must add a protocol mapper to include them in the token:
    1. Go to **Clients** > select your client (`aspire-blazor-client`).
-   2. Go to the **Client scopes** or **Client scopes > Mappers** tab.
-   3. Click **Create** (or **Add built-in**).
+   2. Go to the **Client scopes** tab.
+   3. Clink on aspire-blazor-client-dedicated
+   3. Click **Create Mapper**, by configuration
+   4. Select User Real Role
    4. Set:
-      - **Name:** client roles
+      - **Name:** admin roles
       - **Mapper Type:** User Client Role
-      - **Client ID:** `aspire-blazor-client`
       - **Token Claim Name:** `role`
-      - **Claim JSON Type:** String or Array
+      - **Claim JSON Type:** Array
       - **Add to ID token:** ON
       - **Add to access token:** ON
       - **Add to userinfo:** ON
@@ -177,19 +184,4 @@ docker compose up -d keycloak postgres
 
    Now, roles assigned under the client will appear in the token as a `role` claim.
 
-### 3. Configure the Blazor App
-
-The Blazor WebAssembly app is preconfigured to use Keycloak at `http://localhost:8080/realms/AspireRealm` and expects the client ID `aspire-blazor-client`.
-
-If you change the realm or client name, update `AspireApp.WebWasm/Program.cs` accordingly:
-
-```csharp
-options.ProviderOptions.Authority = "http://localhost:8080/realms/AspireRealm";
-options.ProviderOptions.ClientId = "aspire-blazor-client";
-options.ProviderOptions.RedirectUri = "http://localhost:5071/authentication/login-callback";
-options.ProviderOptions.PostLogoutRedirectUri = "http://localhost:5071/";
-```
-
-### 4. Assigning Roles for Role-Based UI
-
-- Assign realm roles (e.g., `
+At this point you should be able to login with that user
