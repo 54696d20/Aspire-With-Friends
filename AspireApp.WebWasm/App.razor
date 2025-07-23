@@ -7,18 +7,14 @@
 <CascadingAuthenticationState>
     <MudThemeProvider>
         <MudSnackbarProvider MaxDisplayedSnackbars="3" PreventDuplicates="true">
-            <Router AppAssembly="@typeof(App).Assembly" OnNavigateAsync="HandleNavigationAsync">
+            <Router AppAssembly="@typeof(App).Assembly">
                 <Found Context="routeData">
                     <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
-                        <NotAuthorized Context="unauthContext">
-                            @if (unauthContext.User.Identity?.IsAuthenticated != true)
-                            {
-                                <RedirectToLogin />
-                            }
-                            else
-                            {
-                                <p role="alert">You are not authorized to access this resource.</p>
-                            }
+                        <Authorizing>
+                            <div>Checking authentication...</div>
+                        </Authorizing>
+                        <NotAuthorized>
+                            <RedirectToLogin />
                         </NotAuthorized>
                     </AuthorizeRouteView>
                 </Found>
@@ -31,29 +27,3 @@
         </MudSnackbarProvider>
     </MudThemeProvider>
 </CascadingAuthenticationState>
-
-@code {
-    private async Task HandleNavigationAsync(NavigationContext context)
-    {
-        var publicPaths = new[]
-        {
-            "authentication/login",
-            "authentication/login-callback",
-            "authentication/logout",
-            "logout"
-        };
-
-        var path = new Uri(context.Path, UriKind.RelativeOrAbsolute).ToString().TrimStart('/');
-
-        // Don't redirect on login/logout routes
-        if (publicPaths.Any(p => path.StartsWith(p, StringComparison.OrdinalIgnoreCase)))
-            return;
-
-        var result = await TokenProvider.RequestAccessToken();
-
-        if (!result.TryGetToken(out var _))
-        {
-            Navigation.NavigateTo("authentication/login", forceLoad: true);
-        }
-    }
-}
