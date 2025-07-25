@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using AspireApp.MasterDataService.Models;
 using AspireApp.MasterDataService.Interfaces;
+using Wolverine;
+using AspireApp.MasterDataService.Messages.Commands;
+using AspireApp.MasterDataService.Messages.Queries;
 
 namespace AspireApp.MasterDataService.Controllers
 {
@@ -9,16 +12,18 @@ namespace AspireApp.MasterDataService.Controllers
     public class LocationsController : ControllerBase
     {
         private readonly ILocationService _locationService;
+        private readonly IMessageBus _bus;
 
-        public LocationsController(ILocationService locationService)
+        public LocationsController(ILocationService locationService, IMessageBus bus)
         {
             _locationService = locationService;
+            _bus = bus;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var locations = await _locationService.GetAllAsync();
+            var locations = await _bus.InvokeAsync<IEnumerable<Location>>(new GetAllLocationsQuery());
             return Ok(locations);
         }
 
@@ -33,10 +38,10 @@ namespace AspireApp.MasterDataService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Location location)
+        public async Task<IActionResult> Create([FromBody] CreateLocationCommand command)
         {
-            var id = await _locationService.CreateAsync(location);
-            return CreatedAtAction(nameof(GetById), new { id }, location);
+            var id = await _bus.InvokeAsync<int>(command);
+            return CreatedAtAction(nameof(GetById), new { id }, command);
         }
 
         [HttpPut("{id}")]

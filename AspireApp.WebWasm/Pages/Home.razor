@@ -1,39 +1,99 @@
 ﻿@page "/"
-@using System.Text.Json
 @using AspireApp.Shared.Messaging.Models
 @using MudBlazor
+@using Microsoft.AspNetCore.Components.Authorization
 @inject ISnackbar Snackbar
 @inject AspireApp.WebWasm.Services.LocationHubService HubService
 
-<h3>Live Locations</h3>
-
-@if (locations.Count == 0)
-{
-    <p>No locations received yet.</p>
-}
-else
-{
-    <ul>
-        @foreach (var loc in locations)
+<AuthorizeView>
+    <Authorized>
+        @if (isAdmin)
         {
-            <li>@loc</li>
+            <MudAlert Severity="Severity.Success" Class="mb-4">
+                Welcome, @userName! You have access to GodMode-only features.
+            </MudAlert>
+            
+            <h3>Live Locations</h3>
+            
+            @if (locations.Count == 0)
+            {
+                <p>No locations received yet.</p>
+            }
+            else
+            {
+                <ul>
+                    @foreach (var loc in locations)
+                    {
+                        <li>@loc</li>
+                    }
+                </ul>
+            }
         }
-    </ul>
-}
+        else
+        {
+            <MudAlert Severity="Severity.Warning" Class="mb-4">
+                You are logged in, but you're not cool enough.
+            </MudAlert>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <MudPaper Class="pa-6 d-flex flex-column align-items-center" Elevation="6">
+            <MudIcon Icon="@Icons.Material.Filled.Lock" Size="Size.Large" Color="Color.Warning"/>
+            <MudText Typo="Typo.h5" Class="mt-2 mb-2">Access Denied</MudText>
+            <MudText Typo="Typo.body1" Class="mb-4">
+                You must be logged in to view this page.
+            </MudText>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Login">
+                <MudIcon Icon="@Icons.Material.Filled.Login" Class="mr-2"/> Login
+            </MudButton>
+        </MudPaper>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
     private List<string> locations = new();
-
+    [Inject] NavigationManager Navigation { get; set; }
+    [Inject] AuthenticationStateProvider AuthStateProvider { get; set; }
+    private bool isAdmin = false;
+    private string userName = "";
+    
     protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        isAdmin = user.Claims.Any(c => c.Type == "role" && c.Value.Contains("godmode"));
+        userName = user.Claims.FirstOrDefault(c => c.Type == "name")?.Value ?? "Unknown";
+        
+        /*Console.WriteLine("User roles:");
+        foreach (var claim in user.Claims)
+        {
+            if (claim.Type == "role" || claim.Type.EndsWith("/role") || claim.Type.Contains("role"))
+                Console.WriteLine($"{claim.Type}: {claim.Value}");
+        }
+        
+        Console.WriteLine("Clam Types:");
+        foreach (var claim in user.Claims)
+        {
+            Console.WriteLine($"{claim.Type}: {claim.Value}");
+        }*/
+
         HubService.OnLocationChanged += message =>
         {
-            ShowNotification(message);
-            locations.Add(message.Name);
-            InvokeAsync(StateHasChanged);
+            //stop any other users from seeing the alerts
+            if (isAdmin)
+            {
+                ShowNotification(message);
+                locations.Add(message.Name);
+                InvokeAsync(StateHasChanged);
+            }
         };
 
         await HubService.StartAsync();
+    }
+    
+    private void Login()
+    {
+        Navigation.NavigateTo("authentication/login");
     }
     
     void ShowNotification(LocationChangedNotificationModel message)

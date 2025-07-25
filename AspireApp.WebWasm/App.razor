@@ -1,14 +1,29 @@
-﻿<MudThemeProvider>
-    <MudSnackbarProvider MaxDisplayedSnackbars="3" PreventDuplicates="true">
-        <Router AppAssembly="@typeof(App).Assembly">
-            <Found Context="routeData">
-                <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-            </Found>
-            <NotFound>
-                <LayoutView Layout="@typeof(MainLayout)">
-                    <p>Sorry, there's nothing at this address.</p>
-                </LayoutView>
-            </NotFound>
-        </Router>
-    </MudSnackbarProvider>
-</MudThemeProvider>
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject NavigationManager Navigation
+@inject IAccessTokenProvider TokenProvider
+@inject ILogger<App> Logger
+
+<CascadingAuthenticationState>
+    <MudThemeProvider>
+        <MudSnackbarProvider MaxDisplayedSnackbars="3" PreventDuplicates="true">
+            <Router AppAssembly="@typeof(App).Assembly">
+                <Found Context="routeData">
+                    <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                        <Authorizing>
+                            <div>Checking authentication...</div>
+                        </Authorizing>
+                        <NotAuthorized>
+                            <RedirectToLogin />
+                        </NotAuthorized>
+                    </AuthorizeRouteView>
+                </Found>
+                <NotFound>
+                    <LayoutView Layout="@typeof(MainLayout)">
+                        <p>Sorry, there's nothing at this address.</p>
+                    </LayoutView>
+                </NotFound>
+            </Router>
+        </MudSnackbarProvider>
+    </MudThemeProvider>
+</CascadingAuthenticationState>

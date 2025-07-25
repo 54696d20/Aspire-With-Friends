@@ -1,5 +1,8 @@
 ﻿@inherits LayoutComponentBase
 @using MudBlazor
+@using Microsoft.AspNetCore.Components.Authorization
+<NavLink href="/authentication/login-callback" style="display:none" />
+
 <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
 <MudPopoverProvider />
 <MudDialogProvider />
@@ -10,14 +13,28 @@
         <MudText Typo="Typo.h5" Class="ml-3">Application</MudText>
         <MudSpacer />
         <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Inherit" OnClick="@DarkModeToggle" />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+        <AuthorizeView>
+            <Authorized Context="auth">
+                <MudText Typo="Typo.subtitle2" Class="mr-2">
+                    Hello, @auth.User.Identity?.Name!
+                </MudText>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Logout">
+                    Logout
+                </MudButton>
+            </Authorized>
+            <NotAuthorized>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Login">
+                    Login
+                </MudButton>
+            </NotAuthorized>
+        </AuthorizeView>
     </MudAppBar>
     <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu />
     </MudDrawer>
     <MudMainContent Class="pt-16 pa-4">
         @Body
-    </MudMainContent>
+    </MudMainContent>z
 </MudLayout>
 
 
@@ -31,7 +48,8 @@
     private bool _drawerOpen = true;
     private bool _isDarkMode = true;
     private MudTheme? _theme = null;
-
+    [Inject] NavigationManager Navigation { get; set; }
+    
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -42,6 +60,16 @@
             PaletteDark = _darkPalette,
             LayoutProperties = new LayoutProperties()
         };
+    }
+    
+    private void Login()
+    {
+        Navigation.NavigateTo("authentication/login");
+    }
+
+    private void Logout()
+    {
+        Navigation.NavigateTo("/logout");
     }
 
     private void DrawerToggle()

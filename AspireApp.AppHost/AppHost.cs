@@ -8,11 +8,11 @@ var cache = builder.AddRedis("cache", 6379, cachePassword)
     .WithEnvironment("REDIS_ARGS", "--requirepass \"\""); // disables auth
 
 //Add SQL
-var dbPassword = builder.AddParameter("DbPassword");
-var sqlServer = builder.AddSqlServer("sql", dbPassword, port:1433)
-    .WithEnvironment("ACCEPT_EULA", "Y")
-    .WithVolume("sql-data", "/var/opt/mssql")
-    .AddDatabase("masterdatadb");
+// var dbPassword = builder.AddParameter("DbPassword");
+// var sqlServer = builder.AddSqlServer("sqlserver", dbPassword, port:1433)
+//     .WithEnvironment("ACCEPT_EULA", "Y")
+//     .WithVolume("sql-data", "/var/opt/mssql")
+//     .AddDatabase("masterdatadb");
 
 //Add RabbbitMQ
 var rabbitUser = builder.AddParameter("RabbitUser");
@@ -22,8 +22,7 @@ var rabbit = builder.AddRabbitMQ("rabbitmq", rabbitUser, rabbitPass, 5672)
 
 var masterDataService = builder.AddProject<Projects.AspireApp_MasterDataService>("masterdataservice")
     .WithReference(rabbit)
-    .WaitFor(rabbit)
-    .WithReference(sqlServer);
+    .WaitFor(rabbit);
     //.WithHttpHealthCheck("/health");
 
 builder.AddProject<Projects.AspireApp_WeatherAPI>("weatherapi");
