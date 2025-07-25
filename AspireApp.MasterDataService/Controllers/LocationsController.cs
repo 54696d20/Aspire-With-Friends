@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using AspireApp.MasterDataService.Models;
-using AspireApp.MasterDataService.Interfaces;
 using Wolverine;
 using AspireApp.MasterDataService.Messages.Commands;
 using AspireApp.MasterDataService.Messages.Queries;
@@ -11,12 +10,10 @@ namespace AspireApp.MasterDataService.Controllers
     [Route("api/[controller]")]
     public class LocationsController : ControllerBase
     {
-        private readonly ILocationService _locationService;
         private readonly IMessageBus _bus;
 
-        public LocationsController(ILocationService locationService, IMessageBus bus)
+        public LocationsController(IMessageBus bus)
         {
-            _locationService = locationService;
             _bus = bus;
         }
 
@@ -45,12 +42,12 @@ namespace AspireApp.MasterDataService.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Location location)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateLocationCommand command)
         {
-            if (id != location.Id)
+            if (id != command.Id)
                 return BadRequest();
 
-            var updated = await _locationService.UpdateAsync(location);
+            var updated = await _bus.InvokeAsync<bool>(command);
             if (!updated)
                 return NotFound();
 
@@ -60,7 +57,7 @@ namespace AspireApp.MasterDataService.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var deleted = await _locationService.DeleteAsync(id);
+            var deleted = await _bus.InvokeAsync<bool>(new DeleteLocationCommand(id));
             if (!deleted)
                 return NotFound();
 

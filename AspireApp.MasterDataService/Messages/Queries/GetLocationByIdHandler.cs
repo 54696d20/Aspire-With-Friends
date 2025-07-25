@@ -1,5 +1,6 @@
 using AspireApp.MasterDataService.Data;
 using AspireApp.MasterDataService.Models;
+using Dapper;
 
 namespace AspireApp.MasterDataService.Messages.Queries;
 

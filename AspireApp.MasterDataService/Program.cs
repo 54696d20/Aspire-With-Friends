@@ -1,9 +1,4 @@
 using AspireApp.MasterDataService.Data;
-using AspireApp.MasterDataService.Interfaces;
-using AspireApp.MasterDataService.Models;
-using AspireApp.MasterDataService.Services;
-using AspireApp.MasterDataService.Data;
-using AspireApp.MasterDataService.Messages;
 using Wolverine;
 using Wolverine.RabbitMQ;
 using AspireApp.Shared.Messaging;
@@ -43,7 +38,6 @@ builder.Services.AddWolverine(opts =>
 });
 
 builder.Services.AddScoped<IDbConnectionFactory, SqlConnectionFactory>();
-builder.Services.AddScoped<ILocationService, LocationService>();
 
 builder.Services.AddControllers();
 
