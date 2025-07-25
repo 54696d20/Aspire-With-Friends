@@ -30,7 +30,7 @@ namespace AspireApp.MasterDataService.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var location = await _locationService.GetByIdAsync(id);
+            var location = await _bus.InvokeAsync<Location?>(new GetLocationByIdQuery(id));
             if (location == null)
                 return NotFound();
 
