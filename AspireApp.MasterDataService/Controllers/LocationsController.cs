@@ -3,6 +3,7 @@ using AspireApp.MasterDataService.Models;
 using AspireApp.MasterDataService.Interfaces;
 using Wolverine;
 using AspireApp.MasterDataService.Messages.Commands;
+using AspireApp.MasterDataService.Messages.Queries;
 
 namespace AspireApp.MasterDataService.Controllers
 {
@@ -22,7 +23,7 @@ namespace AspireApp.MasterDataService.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var locations = await _locationService.GetAllAsync();
+            var locations = await _bus.InvokeAsync<IEnumerable<Location>>(new GetAllLocationsQuery());
             return Ok(locations);
         }
 
