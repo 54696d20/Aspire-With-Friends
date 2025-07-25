@@ -24,6 +24,40 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+  
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "P@ssword123!"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql-data:/var/opt/mssql
+    healthcheck:
+      test: [ "CMD-SHELL", "timeout 1 bash -c '</dev/tcp/localhost/1433' || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s  
+      
+  sql-init:
+    image: mcr.microsoft.com/mssql-tools
+    platform: linux/amd64
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ./scripts:/scripts
+    entrypoint: >
+      bash -c "
+        echo 'Waiting for SQL Server...';
+        sleep 10;
+        /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P P@ssword123! -i /scripts/location.sql;
+        echo 'Database script executed';
+      "
 
 volumes:
+  sql-data:
   postgres-data:

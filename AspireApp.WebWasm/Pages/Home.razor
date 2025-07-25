@@ -10,7 +10,7 @@
         @if (isAdmin)
         {
             <MudAlert Severity="Severity.Success" Class="mb-4">
-                Welcome, God! You have access to GodMode-only features.
+                Welcome, @userName! You have access to GodMode-only features.
             </MudAlert>
             
             <h3>Live Locations</h3>
@@ -55,12 +55,14 @@
     [Inject] NavigationManager Navigation { get; set; }
     [Inject] AuthenticationStateProvider AuthStateProvider { get; set; }
     private bool isAdmin = false;
+    private string userName = "";
     
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
         isAdmin = user.Claims.Any(c => c.Type == "role" && c.Value.Contains("godmode"));
+        userName = user.Claims.FirstOrDefault(c => c.Type == "name")?.Value ?? "Unknown";
         
         /*Console.WriteLine("User roles:");
         foreach (var claim in user.Claims)
