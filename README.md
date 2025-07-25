@@ -185,3 +185,62 @@ docker compose up -d keycloak postgres
    Now, roles assigned under the client will appear in the token as a `role` claim.
 
 At this point you should be able to login with that user
+
+---
+
+## 🏗 CQRS & Wolverine Architecture
+
+This project uses the **CQRS (Command Query Responsibility Segregation)** pattern for all API endpoints, powered by [Wolverine](https://wolverine.netlify.app/):
+
+- **Commands** (e.g., `CreateLocationCommand`) change state and are handled by dedicated handler classes.
+- **Queries** (e.g., `GetAllLocationsQuery`) read state and are handled by their own handlers.
+- **Wolverine** is used as the mediator to dispatch commands/queries to their handlers, and to publish events for real-time updates.
+
+### Why CQRS?
+- Clear separation of read and write logic
+- Easier to test and maintain
+- Handlers encapsulate all business logic and side effects (like event publishing)
+
+### How it Works
+- **Controller** receives an HTTP request and sends a command/query via Wolverine’s bus:
+  ```csharp
+  var result = await _bus.InvokeAsync<TResult>(commandOrQuery);
+  ```
+- **Wolverine** automatically finds and invokes the correct handler based on the message type.
+- **Handler** performs the business logic and (if needed) publishes events for other services or the UI.
+
+### Example
+
+**Command:**
+```csharp
+public record CreateLocationCommand(string Name, string Type, int? ParentId);
+```
+**Handler:**
+```csharp
+public class CreateLocationHandler
+{
+    // ... constructor with DI
+
+    public async Task<int> Handle(CreateLocationCommand command)
+    {
+        // Insert into DB, publish event, return new ID
+    }
+}
+```
+**Controller:**
+```csharp
+[HttpPost]
+public async Task<IActionResult> Create([FromBody] CreateLocationCommand command)
+{
+    var id = await _bus.InvokeAsync<int>(command);
+    return CreatedAtAction(nameof(GetById), new { id }, command);
+}
+```
+
+### Adding a New Command or Query
+
+1. Create a record for your command/query in `Messages/Commands` or `Messages/Queries`.
+2. Create a handler class with a `Handle` method for your command/query.
+3. In your controller, use `_bus.InvokeAsync<TResult>(commandOrQuery)` to dispatch.
+
+---
