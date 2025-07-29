@@ -55,6 +55,14 @@
               "target": "Package",
               "version": "[2.1.66, )"
             },
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[12.0.0, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[12.0.0, )"
+            },
             "Microsoft.AspNetCore.Mvc": {
               "target": "Package",
               "version": "[2.3.0, )"
@@ -73,11 +81,15 @@
             },
             "WolverineFx": {
               "target": "Package",
-              "version": "[4.5.3, )"
+              "version": "[4.7.0, )"
+            },
+            "WolverineFx.FluentValidation": {
+              "target": "Package",
+              "version": "[4.7.0, )"
             },
             "WolverineFx.RabbitMQ": {
               "target": "Package",
-              "version": "[4.5.3, )"
+              "version": "[4.7.0, )"
             }
           },
           "imports": [

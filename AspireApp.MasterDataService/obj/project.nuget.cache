@@ -1,14 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "3VOzlPYuFPI=",
+  "dgSpecHash": "ezklDkrVtIA=",
   "success": true,
   "projectFilePath": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/AspireApp.MasterDataService.csproj",
   "expectedPackageFiles": [
     "/Users/tim/.nuget/packages/dapper/2.1.66/dapper.2.1.66.nupkg.sha512",
     "/Users/tim/.nuget/packages/fastexpressioncompiler/5.1.1/fastexpressioncompiler.5.1.1.nupkg.sha512",
+    "/Users/tim/.nuget/packages/fluentvalidation/12.0.0/fluentvalidation.12.0.0.nupkg.sha512",
+    "/Users/tim/.nuget/packages/fluentvalidation.dependencyinjectionextensions/12.0.0/fluentvalidation.dependencyinjectionextensions.12.0.0.nupkg.sha512",
     "/Users/tim/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/tim/.nuget/packages/imtools/4.0.0/imtools.4.0.0.nupkg.sha512",
-    "/Users/tim/.nuget/packages/jasperfx/1.2.2/jasperfx.1.2.2.nupkg.sha512",
+    "/Users/tim/.nuget/packages/jasperfx/1.3.1/jasperfx.1.3.1.nupkg.sha512",
     "/Users/tim/.nuget/packages/jasperfx.runtimecompiler/4.0.0/jasperfx.runtimecompiler.4.0.0.nupkg.sha512",
     "/Users/tim/.nuget/packages/microsoft.aspnetcore.antiforgery/2.3.0/microsoft.aspnetcore.antiforgery.2.3.0.nupkg.sha512",
     "/Users/tim/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.3.0/microsoft.aspnetcore.authentication.abstractions.2.3.0.nupkg.sha512",
@@ -202,8 +204,9 @@
     "/Users/tim/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512",
     "/Users/tim/.nuget/packages/system.threading.tasks.dataflow/9.0.5/system.threading.tasks.dataflow.9.0.5.nupkg.sha512",
     "/Users/tim/.nuget/packages/system.threading.tasks.extensions/4.6.0/system.threading.tasks.extensions.4.6.0.nupkg.sha512",
-    "/Users/tim/.nuget/packages/wolverinefx/4.5.3/wolverinefx.4.5.3.nupkg.sha512",
-    "/Users/tim/.nuget/packages/wolverinefx.rabbitmq/4.5.3/wolverinefx.rabbitmq.4.5.3.nupkg.sha512"
+    "/Users/tim/.nuget/packages/wolverinefx/4.7.0/wolverinefx.4.7.0.nupkg.sha512",
+    "/Users/tim/.nuget/packages/wolverinefx.fluentvalidation/4.7.0/wolverinefx.fluentvalidation.4.7.0.nupkg.sha512",
+    "/Users/tim/.nuget/packages/wolverinefx.rabbitmq/4.7.0/wolverinefx.rabbitmq.4.7.0.nupkg.sha512"
   ],
   "logs": []
 }

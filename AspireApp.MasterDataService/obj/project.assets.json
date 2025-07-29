@@ -28,6 +28,36 @@
           }
         }
       },
+      "FluentValidation/12.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "FluentValidation.DependencyInjectionExtensions/12.0.0": {
+        "type": "package",
+        "dependencies": {
+          "FluentValidation": "12.0.0",
+          "Microsoft.Extensions.Dependencyinjection.Abstractions": "2.1.0"
+        },
+        "compile": {
+          "lib/net8.0/FluentValidation.DependencyInjectionExtensions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/FluentValidation.DependencyInjectionExtensions.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Humanizer.Core/2.14.1": {
         "type": "package",
         "compile": {
@@ -51,7 +81,7 @@
           }
         }
       },
-      "JasperFx/1.2.2": {
+      "JasperFx/1.3.1": {
         "type": "package",
         "dependencies": {
           "FastExpressionCompiler": "5.1.1",
@@ -3837,10 +3867,10 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
-      "WolverineFx/4.5.3": {
+      "WolverineFx/4.7.0": {
         "type": "package",
         "dependencies": {
-          "JasperFx": "1.2.2",
+          "JasperFx": "1.3.1",
           "JasperFx.RuntimeCompiler": "4.0.0",
           "Microsoft.Extensions.Caching.Memory": "[9.0.0, 10.0.0)",
           "Microsoft.Extensions.Configuration": "[9.0.0, 10.0.0)",
@@ -3868,11 +3898,28 @@
           }
         }
       },
-      "WolverineFx.RabbitMQ/4.5.3": {
+      "WolverineFx.FluentValidation/4.7.0": {
+        "type": "package",
+        "dependencies": {
+          "FluentValidation": "12.0.0",
+          "WolverineFx": "4.7.0"
+        },
+        "compile": {
+          "lib/net9.0/Wolverine.FluentValidation.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Wolverine.FluentValidation.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "WolverineFx.RabbitMQ/4.7.0": {
         "type": "package",
         "dependencies": {
           "RabbitMQ.Client": "7.1.2",
-          "WolverineFx": "4.5.3"
+          "WolverineFx": "4.7.0"
         },
         "compile": {
           "lib/net9.0/Wolverine.RabbitMQ.dll": {
@@ -3966,6 +4013,36 @@
         "readme.md"
       ]
     },
+    "FluentValidation/12.0.0": {
+      "sha512": "8NVLxtMUXynRHJIX3Hn1ACovaqZIJASufXIIFkD0EUbcd5PmMsL1xUD5h548gCezJ5BzlITaR9CAMrGe29aWpA==",
+      "type": "package",
+      "path": "fluentvalidation/12.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "fluent-validation-icon.png",
+        "fluentvalidation.12.0.0.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net8.0/FluentValidation.dll",
+        "lib/net8.0/FluentValidation.xml"
+      ]
+    },
+    "FluentValidation.DependencyInjectionExtensions/12.0.0": {
+      "sha512": "B28fBRL1UjhGsBC8fwV6YBZosh+SiU1FxdD7l7p5dGPgRlVI7UnM+Lgzmg+unZtV1Zxzpaw96UY2MYfMaAd8cg==",
+      "type": "package",
+      "path": "fluentvalidation.dependencyinjectionextensions/12.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "fluent-validation-icon.png",
+        "fluentvalidation.dependencyinjectionextensions.12.0.0.nupkg.sha512",
+        "fluentvalidation.dependencyinjectionextensions.nuspec",
+        "lib/net8.0/FluentValidation.DependencyInjectionExtensions.dll",
+        "lib/net8.0/FluentValidation.DependencyInjectionExtensions.xml"
+      ]
+    },
     "Humanizer.Core/2.14.1": {
       "sha512": "lQKvtaTDOXnoVJ20ibTuSIOf2i0uO0MPbDhd1jm238I+U/2ZnRENj0cktKZhtchBMtCUSRQ5v4xBCUbKNmyVMw==",
       "type": "package",
@@ -4000,14 +4077,14 @@
         "imtools.nuspec"
       ]
     },
-    "JasperFx/1.2.2": {
-      "sha512": "DRHaYWWs3OvQJIhTPY9q1vmHZrKi+EWIOV/lwcZmj8KFQNsO+RY5A+1vJ3W+rfU/9nM2crQQ1iDQXrKSl6ewTQ==",
+    "JasperFx/1.3.1": {
+      "sha512": "s9bNRNtM4Lkt2LP0cY5WsCaJkKEAFok26bM8KK/gTdesBumGarEqiYObxiMINDnSNJ2mE0LVrzWmkJXAHDAPYg==",
       "type": "package",
-      "path": "jasperfx/1.2.2",
+      "path": "jasperfx/1.3.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "jasperfx.1.2.2.nupkg.sha512",
+        "jasperfx.1.3.1.nupkg.sha512",
         "jasperfx.nuspec",
         "lib/net8.0/JasperFx.dll",
         "lib/net8.0/JasperFx.xml",
@@ -10698,10 +10775,10 @@
         "system.threading.tasks.extensions.nuspec"
       ]
     },
-    "WolverineFx/4.5.3": {
-      "sha512": "ePtsaVUfTIexcvar2i8uDtRKnoE4/SPTvP0V2Hp9M0jOyVSIdMclv9o2R514ANgcXygMK4j0vrposNFyiPII1w==",
+    "WolverineFx/4.7.0": {
+      "sha512": "8Rc3VRJXe4HbsSJVRHb1RVzthtkL7IghyfsAkZ5a4RhtSaZbksoeVKv9y8QII3eSepCaFaRq7WY6eVOc9fW/NQ==",
       "type": "package",
-      "path": "wolverinefx/4.5.3",
+      "path": "wolverinefx/4.7.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -10709,14 +10786,29 @@
         "lib/net8.0/Wolverine.xml",
         "lib/net9.0/Wolverine.dll",
         "lib/net9.0/Wolverine.xml",
-        "wolverinefx.4.5.3.nupkg.sha512",
+        "wolverinefx.4.7.0.nupkg.sha512",
         "wolverinefx.nuspec"
       ]
     },
-    "WolverineFx.RabbitMQ/4.5.3": {
-      "sha512": "J3H5BnV1vPFXfNxcOV1Bx+4ewjhd3y2Okl6cziW4p8xwEQcT0EBg4gj5IDjv6sAhj+lFibutjOT6/SzgoWVstQ==",
+    "WolverineFx.FluentValidation/4.7.0": {
+      "sha512": "lVS/yNrU1slKPuH8zQenLF3Si5ae50ODRLg3JveiYXbJdcl7ZvmbFpfWY476fiv93y7jFlQSo5sD4aaib6wonw==",
       "type": "package",
-      "path": "wolverinefx.rabbitmq/4.5.3",
+      "path": "wolverinefx.fluentvalidation/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net8.0/Wolverine.FluentValidation.dll",
+        "lib/net8.0/Wolverine.FluentValidation.xml",
+        "lib/net9.0/Wolverine.FluentValidation.dll",
+        "lib/net9.0/Wolverine.FluentValidation.xml",
+        "wolverinefx.fluentvalidation.4.7.0.nupkg.sha512",
+        "wolverinefx.fluentvalidation.nuspec"
+      ]
+    },
+    "WolverineFx.RabbitMQ/4.7.0": {
+      "sha512": "K89iI14HphDLbfyjoBxzfSVVL064oqqE5CeK+zj6DlidRpTcG/W6DRZ+BPvGsl4ouOZYrOnJOA6UB8A5JNdOKg==",
+      "type": "package",
+      "path": "wolverinefx.rabbitmq/4.7.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -10724,7 +10816,7 @@
         "lib/net8.0/Wolverine.RabbitMQ.xml",
         "lib/net9.0/Wolverine.RabbitMQ.dll",
         "lib/net9.0/Wolverine.RabbitMQ.xml",
-        "wolverinefx.rabbitmq.4.5.3.nupkg.sha512",
+        "wolverinefx.rabbitmq.4.7.0.nupkg.sha512",
         "wolverinefx.rabbitmq.nuspec"
       ]
     },
@@ -10744,12 +10836,15 @@
       "AspireApp.ServiceDefaults >= 1.0.0",
       "AspireApp.Shared >= 1.0.0",
       "Dapper >= 2.1.66",
+      "FluentValidation >= 12.0.0",
+      "FluentValidation.DependencyInjectionExtensions >= 12.0.0",
       "Microsoft.AspNetCore.Mvc >= 2.3.0",
       "Microsoft.AspNetCore.OpenApi >= 9.0.7",
       "Microsoft.Extensions.Caching.StackExchangeRedis >= 9.0.7",
       "System.Data.SqlClient >= 4.9.0",
-      "WolverineFx >= 4.5.3",
-      "WolverineFx.RabbitMQ >= 4.5.3"
+      "WolverineFx >= 4.7.0",
+      "WolverineFx.FluentValidation >= 4.7.0",
+      "WolverineFx.RabbitMQ >= 4.7.0"
     ]
   },
   "packageFolders": {
@@ -10806,6 +10901,14 @@
             "target": "Package",
             "version": "[2.1.66, )"
           },
+          "FluentValidation": {
+            "target": "Package",
+            "version": "[12.0.0, )"
+          },
+          "FluentValidation.DependencyInjectionExtensions": {
+            "target": "Package",
+            "version": "[12.0.0, )"
+          },
           "Microsoft.AspNetCore.Mvc": {
             "target": "Package",
             "version": "[2.3.0, )"
@@ -10824,11 +10927,15 @@
           },
           "WolverineFx": {
             "target": "Package",
-            "version": "[4.5.3, )"
+            "version": "[4.7.0, )"
+          },
+          "WolverineFx.FluentValidation": {
+            "target": "Package",
+            "version": "[4.7.0, )"
           },
           "WolverineFx.RabbitMQ": {
             "target": "Package",
-            "version": "[4.5.3, )"
+            "version": "[4.7.0, )"
           }
         },
         "imports": [

@@ -3,6 +3,7 @@ using AspireApp.MasterDataService.Models;
 using Wolverine;
 using AspireApp.MasterDataService.Messages.Commands;
 using AspireApp.MasterDataService.Messages.Queries;
+using FluentValidation;
 
 namespace AspireApp.MasterDataService.Controllers
 {
@@ -37,8 +38,16 @@ namespace AspireApp.MasterDataService.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateLocationCommand command)
         {
-            var id = await _bus.InvokeAsync<int>(command);
-            return CreatedAtAction(nameof(GetById), new { id }, command);
+            try
+            {
+                var id = await _bus.InvokeAsync<int>(command);
+                return CreatedAtAction(nameof(GetById), new { id }, command);
+            }
+            catch (ValidationException ex)
+            {
+                var errors = ex.Errors.Select(e => e.ErrorMessage).ToList();
+                return BadRequest(new { errors });
+            }
         }
 
         [HttpPut("{id}")]
@@ -47,11 +56,19 @@ namespace AspireApp.MasterDataService.Controllers
             if (id != command.Id)
                 return BadRequest();
 
-            var updated = await _bus.InvokeAsync<bool>(command);
-            if (!updated)
-                return NotFound();
+            try
+            {
+                var updated = await _bus.InvokeAsync<bool>(command);
+                if (!updated)
+                    return NotFound();
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (ValidationException ex)
+            {
+                var errors = ex.Errors.Select(e => e.ErrorMessage).ToList();
+                return BadRequest(new { errors });
+            }
         }
 
         [HttpDelete("{id}")]
