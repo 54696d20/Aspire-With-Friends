@@ -424,5 +424,3 @@ Blazor WebAssembly receives SignalR notification and updates the UI in real-time
 - [Blazor WebAssembly Documentation](https://learn.microsoft.com/en-us/aspnet/core/blazor/)
 
 ---
-
-*This documentation is automatically generated and should be updated as the architecture evolves.* 
