@@ -60,16 +60,16 @@ The YARP gateway provides:
   - `/myweather-api/*` → WeatherAPI
 - **CORS Support**: Allows Blazor WebAssembly to make cross-origin requests
 - **Request/Response Logging**: Comprehensive logging for debugging
-- **Health Checks**: `/health` endpoint for monitoring
+- **Health Checks**: `/health` endpoint for monitoring (basic health check)
 - **Error Handling**: Proper error handling and logging
 
 **Gateway Endpoints:**
-- `GET /` - Gateway status
-- `GET /health` - Health check
-- `POST /masterdata-api/api/locations` - Create location (with validation)
-- `GET /masterdata-api/api/locations` - Get all locations
-- `PUT /masterdata-api/api/locations/{id}` - Update location (with validation)
-- `DELETE /masterdata-api/api/locations/{id}` - Delete location
+- `GET http://localhost:5211/` - Gateway status
+- `GET http://localhost:5211/health` - Health check
+- `POST http://localhost:5211/masterdata-api/api/locations` - Create location (with validation)
+- `GET http://localhost:5211/masterdata-api/api/locations` - Get all locations
+- `PUT http://localhost:5211/masterdata-api/api/locations/{id}` - Update location (with validation)
+- `DELETE http://localhost:5211/masterdata-api/api/locations/{id}` - Delete location
 
 ---
 
@@ -281,7 +281,7 @@ This project includes comprehensive Postman collections for testing the API endp
   - All CRUD operations for locations
   - Validation test cases (valid and invalid data)
   - Weather API endpoints
-- **Port**: `5000` (YARP Gateway)
+- **Port**: `5211` (YARP Gateway)
 
 **2. AspireApp MasterDataService - Direct API**
 - **Location**: `AspireApp.MasterDataService/Data/Postman/AspireApp_Locations_Postman_Collection.json`
@@ -296,7 +296,7 @@ This project includes comprehensive Postman collections for testing the API endp
 
 1. **Open Postman**
 2. **Import Collection**: File → Import → Select the JSON file
-3. **Set Environment**: The collection uses `localhost:5000` for the YARP gateway
+3. **Set Environment**: The collection uses `localhost:5211` for the YARP gateway
 4. **Test Validation**: Use the "Invalid" test cases to verify FluentValidation works
 
 ### Test Cases Included

@@ -15,12 +15,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/",
+              "raw": "http://localhost:5211/",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "5000",
+              "port": "5211",
               "path": [
                 ""
               ]
@@ -33,12 +33,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/health",
+              "raw": "http://localhost:5211/health",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "5000",
+              "port": "5211",
               "path": [
                 "health"
               ]
@@ -56,12 +56,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/myweather-api/weatherforecast",
+              "raw": "http://localhost:5211/myweather-api/weatherforecast",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "5000",
+              "port": "5211",
               "path": [
                 "myweather-api",
                 "weatherforecast"
@@ -80,7 +80,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/masterdata-api/api/locations",
+              "raw": "http://localhost:5211/masterdata-api/api/locations",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -100,7 +100,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/masterdata-api/api/locations/1",
+              "raw": "http://localhost:5211/masterdata-api/api/locations/1",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -130,7 +130,7 @@
               "raw": "{\n  \"name\": \"Main Building\",\n  \"type\": \"Building\",\n  \"parentId\": null\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/masterdata-api/api/locations",
+              "raw": "http://localhost:5211/masterdata-api/api/locations",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -159,7 +159,7 @@
               "raw": "{\n  \"name\": \"\",\n  \"type\": \"Building\",\n  \"parentId\": null\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/masterdata-api/api/locations",
+              "raw": "http://localhost:5211/masterdata-api/api/locations",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -188,7 +188,7 @@
               "raw": "{\n  \"name\": \"Test Location\",\n  \"type\": \"InvalidType\",\n  \"parentId\": null\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/masterdata-api/api/locations",
+              "raw": "http://localhost:5211/masterdata-api/api/locations",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -217,7 +217,7 @@
               "raw": "{\n  \"id\": 1,\n  \"name\": \"Updated Building\",\n  \"type\": \"Building\",\n  \"parentId\": null\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/masterdata-api/api/locations/1",
+              "raw": "http://localhost:5211/masterdata-api/api/locations/1",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -247,7 +247,7 @@
               "raw": "{\n  \"id\": 1,\n  \"name\": \"Updated Building\",\n  \"type\": \"InvalidType\",\n  \"parentId\": null\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/masterdata-api/api/locations/1",
+              "raw": "http://localhost:5211/masterdata-api/api/locations/1",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -268,7 +268,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/masterdata-api/api/locations/1",
+              "raw": "http://localhost:5211/masterdata-api/api/locations/1",
               "protocol": "http",
               "host": [
                 "localhost"
