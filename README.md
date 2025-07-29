@@ -51,6 +51,26 @@ Aspire-With-Friends/
 MasterDataService --(RabbitMQ)--> NotificationHubService --(SignalR)--> WebWasm
 ```
 
+## 🌐 YARP Gateway
+
+The YARP gateway provides:
+
+- **API Routing**: Routes requests to appropriate microservices
+  - `/masterdata-api/*` → MasterDataService (CQRS with validation)
+  - `/myweather-api/*` → WeatherAPI
+- **CORS Support**: Allows Blazor WebAssembly to make cross-origin requests
+- **Request/Response Logging**: Comprehensive logging for debugging
+- **Health Checks**: `/health` endpoint for monitoring
+- **Error Handling**: Proper error handling and logging
+
+**Gateway Endpoints:**
+- `GET /` - Gateway status
+- `GET /health` - Health check
+- `POST /masterdata-api/api/locations` - Create location (with validation)
+- `GET /masterdata-api/api/locations` - Get all locations
+- `PUT /masterdata-api/api/locations/{id}` - Update location (with validation)
+- `DELETE /masterdata-api/api/locations/{id}` - Delete location
+
 ---
 
 ## ✅ Features
@@ -58,8 +78,10 @@ MasterDataService --(RabbitMQ)--> NotificationHubService --(SignalR)--> WebWasm
 - Modular services with asynchronous messaging
 - Real-time client updates through SignalR
 - Redis caching and SQL Server storage
-- YARP gateway routing
+- **Enhanced YARP gateway** with CORS, logging, and health checks
 - Docker-based orchestration via .NET Aspire AppHost
+- **CQRS pattern** with Wolverine and FluentValidation
+- **Domain events** for event-driven architecture
 
 ---
 
@@ -242,5 +264,81 @@ public async Task<IActionResult> Create([FromBody] CreateLocationCommand command
 1. Create a record for your command/query in `Messages/Commands` or `Messages/Queries`.
 2. Create a handler class with a `Handle` method for your command/query.
 3. In your controller, use `_bus.InvokeAsync<TResult>(commandOrQuery)` to dispatch.
+
+---
+
+## 🧪 Testing with Postman
+
+This project includes comprehensive Postman collections for testing the API endpoints and validation:
+
+### Available Collections
+
+**1. AspireApp YARP Collection - CQRS with Validation** *(Recommended)*
+- **Location**: `AspireApp.MasterDataService/Data/Postman/AspireApp_YARP_Collection.json`
+- **Purpose**: Test all endpoints through the YARP gateway with CQRS and validation
+- **Features**:
+  - Gateway health checks
+  - All CRUD operations for locations
+  - Validation test cases (valid and invalid data)
+  - Weather API endpoints
+- **Port**: `5000` (YARP Gateway)
+
+**2. AspireApp MasterDataService - Direct API**
+- **Location**: `AspireApp.MasterDataService/Data/Postman/AspireApp_Locations_Postman_Collection.json`
+- **Purpose**: Test MasterDataService directly (bypassing YARP)
+- **Features**:
+  - Basic CRUD operations for locations
+  - Direct service testing
+- **Port**: `5001` (MasterDataService directly)
+- **Note**: This collection doesn't include validation test cases and uses the old API structure
+
+### Import Instructions
+
+1. **Open Postman**
+2. **Import Collection**: File → Import → Select the JSON file
+3. **Set Environment**: The collection uses `localhost:5000` for the YARP gateway
+4. **Test Validation**: Use the "Invalid" test cases to verify FluentValidation works
+
+### Test Cases Included
+
+**Gateway Tests:**
+- ✅ Gateway Status (`GET /`)
+- ✅ Health Check (`GET /health`)
+
+**Master Data API Tests:**
+- ✅ Get All Locations
+- ✅ Get Location by ID
+- ✅ Create Location (Valid & Invalid)
+- ✅ Update Location (Valid & Invalid)
+- ✅ Delete Location
+
+**Validation Test Cases:**
+- ❌ Empty name validation
+- ❌ Invalid location type validation
+- ✅ Valid data acceptance
+
+### Expected Responses
+
+**Valid Request:**
+```json
+POST /masterdata-api/api/locations
+{
+  "name": "Main Building",
+  "type": "Building",
+  "parentId": null
+}
+```
+**Response:** `201 Created` with location ID
+
+**Invalid Request:**
+```json
+POST /masterdata-api/api/locations
+{
+  "name": "",
+  "type": "InvalidType",
+  "parentId": null
+}
+```
+**Response:** `400 Bad Request` with validation errors
 
 ---
