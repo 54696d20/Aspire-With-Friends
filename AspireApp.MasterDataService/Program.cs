@@ -1,13 +1,11 @@
 using AspireApp.MasterDataService.Data;
-using AspireApp.MasterDataService.Interfaces;
-using AspireApp.MasterDataService.Models;
-using AspireApp.MasterDataService.Services;
-using AspireApp.MasterDataService.Data;
-using AspireApp.MasterDataService.Messages;
 using Wolverine;
 using Wolverine.RabbitMQ;
 using AspireApp.Shared.Messaging;
 using AspireApp.Shared.Messaging.Models;
+using FluentValidation;
+using AspireApp.MasterDataService.Validators;
+using Wolverine.FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 //Add logging
@@ -40,10 +38,14 @@ builder.Services.AddWolverine(opts =>
     opts.PublishMessage<LocationChangedNotificationModel>()
         .ToRabbitQueue("wolverine");
 
+    // Enable FluentValidation
+    opts.UseFluentValidation();
 });
 
 builder.Services.AddScoped<IDbConnectionFactory, SqlConnectionFactory>();
-builder.Services.AddScoped<ILocationService, LocationService>();
+
+// Add FluentValidation
+builder.Services.AddValidatorsFromAssemblyContaining<CreateLocationCommandValidator>();
 
 builder.Services.AddControllers();
 
