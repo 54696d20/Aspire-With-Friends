@@ -1,0 +1,12 @@
+@using MudBlazor
+
+@if (!string.IsNullOrEmpty(Title))
+{
+    <MudText Typo="Typo.h4" Class="mb-4">@Title</MudText>
+}
+@ChildContent
+
+@code {
+    [Parameter] public string Title { get; set; } = "";
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

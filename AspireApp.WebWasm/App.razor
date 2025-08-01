@@ -11,10 +11,25 @@
                 <Found Context="routeData">
                     <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                         <Authorizing>
-                            <div>Checking authentication...</div>
+                            <div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+                                <div class="spinner"></div>
+                                <span style="margin-left: 1rem; font-size: 1.2rem;">Checking authentication...</span>
+                            </div>
                         </Authorizing>
                         <NotAuthorized>
-                            <RedirectToLogin />
+                            <div style="display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column;">
+                                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 400px; text-align: center;">
+                                    <div style="font-size: 3rem; color: #f57c00; margin-bottom: 1rem;">🔒</div>
+                                    <h2 style="margin-bottom: 1rem; color: #333;">Authentication Required</h2>
+                                    <p style="margin-bottom: 1.5rem; color: #666; line-height: 1.5;">
+                                        You need to be logged in to access this page. Please sign in to continue.
+                                    </p>
+                                    <button style="background: #1976d2; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-size: 1rem;" 
+                                            @onclick="@(() => Navigation.NavigateTo("authentication/login"))">
+                                        Sign In
+                                    </button>
+                                </div>
+                            </div>
                         </NotAuthorized>
                     </AuthorizeRouteView>
                 </Found>
@@ -27,3 +42,19 @@
         </MudSnackbarProvider>
     </MudThemeProvider>
 </CascadingAuthenticationState>
+
+<style>
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #1976d2;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    
+    @@keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>

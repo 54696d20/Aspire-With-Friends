@@ -1,0 +1,81 @@
+@using Microsoft.AspNetCore.Components.Authorization
+@using MudBlazor
+
+<AuthorizeView>
+    <Authorizing>
+        <div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+            <MudProgressCircular Indeterminate="true" Size="Size.Large" Color="Color.Primary" />
+            <span style="margin-left: 1rem; font-size: 1.2rem;">Checking authentication...</span>
+        </div>
+    </Authorizing>
+    <Authorized Context="auth">
+        @{
+            var user = auth.User;
+            var isAdminUser = user.Claims.Any(c => c.Type == "role" && c.Value.Contains("godmode"));
+            
+            Console.WriteLine("=== AUTH CONTEXT PROVIDER DEBUG ===");
+            Console.WriteLine($"User.Identity.Name: {user.Identity?.Name}");
+            Console.WriteLine($"User.Identity.IsAuthenticated: {user.Identity?.IsAuthenticated}");
+            Console.WriteLine("All Claims:");
+            foreach (var claim in user.Claims)
+            {
+                Console.WriteLine($"  {claim.Type}: {claim.Value}");
+            }
+            
+            var userName = user.Claims.FirstOrDefault(c => c.Type == "name")?.Value ?? 
+                          user.Claims.FirstOrDefault(c => c.Type == "preferred_username")?.Value ?? 
+                          user.Claims.FirstOrDefault(c => c.Type == "given_name")?.Value ??
+                          user.Claims.FirstOrDefault(c => c.Type == "email")?.Value ??
+                          user.Identity?.Name ?? 
+                          "User";
+                          
+            Console.WriteLine($"Selected userName: {userName}");
+            Console.WriteLine($"isAdminUser: {isAdminUser}");
+            Console.WriteLine("=== END AUTH CONTEXT PROVIDER DEBUG ===");
+            
+            var authContext = new AuthContext { UserName = userName, IsAdmin = isAdminUser };
+        }
+        
+        <CascadingValue Value="@authContext" IsFixed="false">
+            @if (isAdminUser)
+            {
+                @ChildContent
+            }
+            else
+            {
+                <MudAlert Severity="Severity.Warning" Class="mb-4">
+                    You are logged in, but you're not cool enough.
+                </MudAlert>
+            }
+        </CascadingValue>
+    </Authorized>
+    <NotAuthorized>
+        <MudPaper Class="pa-6 d-flex flex-column align-items-center" Elevation="6">
+            <MudIcon Icon="@Icons.Material.Filled.Lock" Size="Size.Large" Color="Color.Warning"/>
+            <MudText Typo="Typo.h5" Class="mt-2 mb-2">Access Denied</MudText>
+            <MudText Typo="Typo.body1" Class="mb-4">
+                Sorry, you must be logged in to view this page.
+            </MudText>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Login">
+                <MudIcon Icon="@Icons.Material.Filled.Login" Class="mr-2"/> Login
+            </MudButton>
+        </MudPaper>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    [Inject] NavigationManager Navigation { get; set; }
+    
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    
+    private void Login()
+    {
+        Navigation.NavigateTo("authentication/login");
+    }
+    
+    public class AuthContext
+    {
+        public string UserName { get; set; } = "";
+        public bool IsAdmin { get; set; } = false;
+    }
+} 

@@ -1,42 +1,82 @@
 ﻿@inherits LayoutComponentBase
 @using MudBlazor
 @using Microsoft.AspNetCore.Components.Authorization
+@using AspireApp.WebWasm.Authentication
 <NavLink href="/authentication/login-callback" style="display:none" />
 
-<MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
-<MudPopoverProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />
-<MudLayout>
-    <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudText Typo="Typo.h5" Class="ml-3">Application</MudText>
-        <MudSpacer />
-        <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Inherit" OnClick="@DarkModeToggle" />
-        <AuthorizeView>
-            <Authorized Context="auth">
-                <MudText Typo="Typo.subtitle2" Class="mr-2">
-                    Hello, @auth.User.Identity?.Name!
-                </MudText>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Logout">
-                    Logout
-                </MudButton>
-            </Authorized>
-            <NotAuthorized>
+<AuthorizeView>
+    <Authorizing>
+        <div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+            <MudProgressCircular Indeterminate="true" Size="Size.Large" Color="Color.Primary" />
+            <span style="margin-left: 1rem; font-size: 1.2rem;">Checking authentication...</span>
+        </div>
+    </Authorizing>
+    <Authorized Context="auth">
+        @{
+            var user = auth.User;
+            var isAdminUser = user.Claims.Any(c => c.Type == "role" && c.Value.Contains("godmode"));
+            
+            var userName = user.Claims.FirstOrDefault(c => c.Type == "name")?.Value ?? 
+                          user.Claims.FirstOrDefault(c => c.Type == "preferred_username")?.Value ?? 
+                          user.Claims.FirstOrDefault(c => c.Type == "given_name")?.Value ??
+                          user.Claims.FirstOrDefault(c => c.Type == "email")?.Value ??
+                          user.Identity?.Name ?? 
+                          "User";
+            
+            var authContext = new AuthContext { UserName = userName, IsAdmin = isAdminUser };
+        }
+        
+        <CascadingValue Value="@authContext" IsFixed="false">
+            <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
+            <MudPopoverProvider />
+            <MudDialogProvider />
+            <MudSnackbarProvider />
+            <MudLayout>
+                <MudAppBar Elevation="1">
+                    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+                    <MudText Typo="Typo.h5" Class="ml-3">Application</MudText>
+                    <MudSpacer />
+                    <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Inherit" OnClick="@DarkModeToggle" />
+                    <MudText Typo="Typo.subtitle2" Class="mr-2">
+                        Hello, @userName!
+                    </MudText>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Logout">
+                        Logout
+                    </MudButton>
+                </MudAppBar>
+                <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+                    <NavMenu />
+                </MudDrawer>
+                <MudMainContent Class="pt-16 pa-4">
+                    @Body
+                </MudMainContent>
+            </MudLayout>
+        </CascadingValue>
+    </Authorized>
+    <NotAuthorized>
+        <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
+        <MudPopoverProvider />
+        <MudDialogProvider />
+        <MudSnackbarProvider />
+        <MudLayout>
+            <MudAppBar Elevation="1">
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+                <MudText Typo="Typo.h5" Class="ml-3">Application</MudText>
+                <MudSpacer />
+                <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Inherit" OnClick="@DarkModeToggle" />
                 <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Login">
                     Login
                 </MudButton>
-            </NotAuthorized>
-        </AuthorizeView>
-    </MudAppBar>
-    <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
-        <NavMenu />
-    </MudDrawer>
-    <MudMainContent Class="pt-16 pa-4">
-        @Body
-    </MudMainContent>z
-</MudLayout>
-
+            </MudAppBar>
+            <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+                <NavMenu />
+            </MudDrawer>
+            <MudMainContent Class="pt-16 pa-4">
+                @Body
+            </MudMainContent>
+        </MudLayout>
+    </NotAuthorized>
+</AuthorizeView>
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.
@@ -126,4 +166,10 @@
         true => Icons.Material.Rounded.AutoMode,
         false => Icons.Material.Outlined.DarkMode,
     };
+    
+    public class AuthContext
+    {
+        public string UserName { get; set; } = "";
+        public bool IsAdmin { get; set; } = false;
+    }
 }
