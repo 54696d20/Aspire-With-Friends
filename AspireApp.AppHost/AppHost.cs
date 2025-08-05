@@ -22,7 +22,9 @@ var rabbit = builder.AddRabbitMQ("rabbitmq", rabbitUser, rabbitPass, 5672)
 
 var masterDataService = builder.AddProject<Projects.AspireApp_MasterDataService>("masterdataservice")
     .WithReference(rabbit)
-    .WaitFor(rabbit);
+    .WithReference(cache)
+    .WaitFor(rabbit)
+    .WaitFor(cache);
     //.WithHttpHealthCheck("/health");
 
 builder.AddProject<Projects.AspireApp_WeatherAPI>("weatherapi");

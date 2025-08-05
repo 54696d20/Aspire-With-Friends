@@ -1,4 +1,5 @@
 using AspireApp.MasterDataService.Data;
+using AspireApp.MasterDataService.Services;
 using Wolverine;
 using Wolverine.RabbitMQ;
 using AspireApp.Shared.Messaging;
@@ -25,6 +26,9 @@ builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
+
+// Add cache service
+builder.Services.AddScoped<ICacheService, RedisCacheService>();
 
 //Add Wolverine
 builder.Services.AddWolverine(opts =>
