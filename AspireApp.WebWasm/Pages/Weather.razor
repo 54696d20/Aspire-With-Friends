@@ -7,55 +7,20 @@
 
 <PageTitle>Weather</PageTitle>
 
-<AuthBody Title="Weather Forecast">
-    <MudText Typo="Typo.h3" GutterBottom="true">Weather forecast</MudText>
-    <MudText Typo="Typo.body1" Class="mb-8">This component demonstrates fetching data from the server.</MudText>
+<AuthBody Title="Weather Data">
+    <MudAlert Severity="Severity.Info" Class="mb-4">
+        Hello @(authContext?.UserName ?? "User")! Here's the current weather information.
+    </MudAlert>
 
-    @if (_forecasts == null)
-    {
-        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
-    }
-    else
-    {
-        <MudTable Items="_forecasts" Hover="true" SortLabel="Sort By" Elevation="0" AllowUnsorted="false">
-            <HeaderContent>
-                <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<WeatherForecast, object>(x=>x.Date)">Date</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<WeatherForecast, object>(x=>x.TemperatureC)">Temp. (C)</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<WeatherForecast, object>(x=>x.TemperatureF)">Temp. (F)</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<WeatherForecast, object>(x=>x.Summary!)">Summary</MudTableSortLabel></MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Date">@context.Date</MudTd>
-                <MudTd DataLabel="Temp. (C)">@context.TemperatureC</MudTd>
-                <MudTd DataLabel="Temp. (F)">@context.TemperatureF</MudTd>
-                <MudTd DataLabel="Summary">@context.Summary</MudTd>
-            </RowTemplate>
-            <PagerContent>
-                <MudTablePager PageSizeOptions="new int[]{50, 100}" />
-            </PagerContent>
-        </MudTable>
-    }
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h5" Class="mb-3">Weather Forecast</MudText>
+        <MudText Typo="Typo.body1">
+            Weather data will be displayed here when the weather service is implemented.
+        </MudText>
+    </MudPaper>
 </AuthBody>
 
 @code {
-    private WeatherForecast[]? _forecasts;
-
     [CascadingParameter]
-    private AuthBody authContext { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        _forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
-    }
-
-    public class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
+    private MainLayout.AuthContext? authContext { get; set; }
 }

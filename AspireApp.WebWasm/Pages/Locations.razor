@@ -1,0 +1,414 @@
+@page "/locations"
+@using AspireApp.WebWasm.Authentication
+@using AspireApp.WebWasm.Services
+@using MudBlazor
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Authorization
+@using System.Linq
+@attribute [Authorize]
+
+<PageTitle>Locations</PageTitle>
+
+<AuthBody Title="Location Management">
+    <MudAlert Severity="Severity.Info" Class="mb-4">
+        Welcome @(authContext?.UserName ?? "User")! Manage your locations here.
+    </MudAlert>
+
+    @if (isLoading)
+    {
+        <MudProgressCircular Indeterminate="true" Size="Size.Large" Color="Color.Primary" />
+        <MudText Class="ml-3">Loading locations...</MudText>
+    }
+    else
+    {
+        <!-- Action Buttons -->
+        <MudPaper Class="pa-4 mb-4">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" 
+                       OnClick="OpenCreateDialog">
+                Add New Location
+            </MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Refresh" 
+                       OnClick="LoadLocations" Class="ml-2">
+                Refresh
+            </MudButton>
+        </MudPaper>
+
+        <!-- Locations Data Table -->
+        <MudPaper Class="pa-4">
+            <MudTable @ref="mudTable" T="Location" Items="@locations" Dense="true" Hover="true" Striped="true"
+                     Loading="@isLoading" LoadingProgressColor="Color.Primary"
+                     MultiSelection="false" FixedHeader="true"
+                     RowsPerPage="10" @bind-SelectedItem="selectedItem1"
+                     Filter="FilterFunc">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h6">Locations</MudText>
+                    <MudSpacer />
+                    <MudTextField @bind-Value="searchString1" 
+                                 Placeholder="Search locations..." 
+                                 Adornment="Adornment.Start" 
+                                 AdornmentIcon="@Icons.Material.Filled.Search" 
+                                 IconSize="Size.Medium" 
+                                 Class="mt-0"
+                                 Immediate="true"
+                                 Variant="Variant.Outlined"
+                                 Clearable="true" />
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh>ID</MudTh>
+                    <MudTh>Name</MudTh>
+                    <MudTh>Type</MudTh>
+                    <MudTh>Parent ID</MudTh>
+                    <MudTh>Actions</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="ID">@context.Id</MudTd>
+                    <MudTd DataLabel="Name">@context.Name</MudTd>
+                    <MudTd DataLabel="Type">@context.Type</MudTd>
+                    <MudTd DataLabel="Parent ID">@context.ParentId</MudTd>
+                    <MudTd DataLabel="Actions">
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Size="Size.Small"
+                                       OnClick="@(() => OpenEditDialog(context))"/>
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Size="Size.Small"
+                                       OnClick="@(() => OpenDeleteDialog(context))"/>
+                    </MudTd>
+                </RowTemplate>
+                <PagerContent>
+                    <MudTablePager />
+                </PagerContent>
+            </MudTable>
+        </MudPaper>
+
+        <!-- Statistics -->
+        <MudPaper Class="pa-4 mt-4">
+            <MudText Typo="Typo.h6" Class="mb-3">Location Statistics</MudText>
+            <MudGrid>
+                <MudItem xs="3">
+                    <MudPaper Class="pa-3 text-center" Style="background: linear-gradient(45deg, #1976d2, #42a5f5); color: white;">
+                        <MudText Typo="Typo.h4">@totalLocations</MudText>
+                        <MudText Typo="Typo.body2">Total Locations</MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="3">
+                    <MudPaper Class="pa-3 text-center" Style="background: linear-gradient(45deg, #388e3c, #66bb6a); color: white;">
+                        <MudText Typo="Typo.h4">@buildingCount</MudText>
+                        <MudText Typo="Typo.body2">Buildings</MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="3">
+                    <MudPaper Class="pa-3 text-center" Style="background: linear-gradient(45deg, #f57c00, #ff9800); color: white;">
+                        <MudText Typo="Typo.h4">@floorCount</MudText>
+                        <MudText Typo="Typo.body2">Floors</MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="3">
+                    <MudPaper Class="pa-3 text-center" Style="background: linear-gradient(45deg, #7b1fa2, #ab47bc); color: white;">
+                        <MudText Typo="Typo.h4">@roomCount</MudText>
+                        <MudText Typo="Typo.body2">Rooms</MudText>
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    }
+
+    <!-- Create/Edit Dialog -->
+    @if (isDialogOpen)
+    {
+        <MudDrawer Open="true" Anchor="Anchor.Right" Variant="DrawerVariant.Temporary" Elevation="25">
+            <MudPaper Class="pa-4" Style="height: 100%;">
+                <MudText Typo="Typo.h6" Class="mb-4">@(isEditing ? "Edit Location" : "Create New Location")</MudText>
+                
+                <MudForm @ref="form" @bind-IsValid="@isFormValid">
+                    <MudTextField @bind-Value="currentLocation.Name" Label="Location Name" Required="true" 
+                                 Variant="Variant.Outlined" Class="mb-3" />
+                    <MudSelect @bind-Value="currentLocation.Type" Label="Location Type" Required="true" 
+                              Variant="Variant.Outlined" Class="mb-3">
+                        <MudSelectItem Value="@("Site")">Site</MudSelectItem>
+                        <MudSelectItem Value="@("Building")">Building</MudSelectItem>
+                        <MudSelectItem Value="@("Floor")">Floor</MudSelectItem>
+                        <MudSelectItem Value="@("Room")">Room</MudSelectItem>
+                        <MudSelectItem Value="@("Area")">Area</MudSelectItem>
+                    </MudSelect>
+                    <MudNumericField @bind-Value="currentLocation.ParentId" Label="Parent ID (Optional)" 
+                                    Variant="Variant.Outlined" Class="mb-3" />
+                </MudForm>
+                
+                <MudDivider Class="my-4" />
+                
+                <MudStack Row="true" Justify="Justify.FlexEnd" Spacing="2">
+                    <MudButton OnClick="CloseDialog" Variant="Variant.Outlined">Cancel</MudButton>
+                    <MudButton Color="Color.Primary" OnClick="SaveLocation" Disabled="!isFormValid">
+                        @(isEditing ? "Update" : "Create")
+                    </MudButton>
+                </MudStack>
+            </MudPaper>
+        </MudDrawer>
+    }
+
+    <!-- Delete Confirmation Dialog -->
+    @if (isDeleteDialogOpen)
+    {
+        <MudOverlay Visible="true" DarkBackground="true" ZIndex="1000">
+            <MudPaper Class="pa-6" Style="max-width: 400px; margin: 100px auto;">
+                <MudText Typo="Typo.h6" Class="mb-4">Confirm Delete</MudText>
+                <MudText Class="mb-4">Are you sure you want to delete location "@locationToDelete?.Name"?</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Warning" Class="mb-4">This action cannot be undone.</MudText>
+                
+                <MudStack Row="true" Justify="Justify.FlexEnd" Spacing="2">
+                    <MudButton OnClick="CloseDeleteDialog" Variant="Variant.Outlined">Cancel</MudButton>
+                    <MudButton Color="Color.Error" OnClick="ConfirmDelete">Delete</MudButton>
+                </MudStack>
+            </MudPaper>
+        </MudOverlay>
+    }
+</AuthBody>
+
+@code {
+    [CascadingParameter]
+    private MainLayout.AuthContext? authContext { get; set; }
+
+    [Inject]
+    private ILocationService? LocationService { get; set; }
+
+    [Inject]
+    private ISnackbar? Snackbar { get; set; }
+
+    private List<Location> locations = new();
+    private bool isLoading = true;
+    private bool isDialogOpen = false;
+    private bool isDeleteDialogOpen = false;
+    private bool isEditing = false;
+    private bool isFormValid = false;
+    private int totalLocations = 0;
+    private int buildingCount = 0;
+    private int floorCount = 0;
+    private int roomCount = 0;
+
+    // Pagination and filtering
+    private string searchString1 = "";
+    private Location selectedItem1 = null;
+    private int selectedRowNumber = -1;
+    private MudTable<Location> mudTable;
+
+    private Location currentLocation = new();
+    private Location? locationToDelete;
+
+    private MudForm? form;
+    private DialogOptions dialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
+    private DialogOptions deleteDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLocations();
+    }
+
+    private async Task LoadLocations()
+    {
+        try
+        {
+            isLoading = true;
+            StateHasChanged();
+
+            if (LocationService != null)
+            {
+                locations = await LocationService.GetLocationsAsync();
+                
+                // Update statistics
+                totalLocations = locations.Count;
+                buildingCount = locations.Count(l => l.Type == "Building");
+                floorCount = locations.Count(l => l.Type == "Floor");
+                roomCount = locations.Count(l => l.Type == "Room");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowNotification($"Error loading locations: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private bool FilterFunc(Location element)
+    {
+        if (string.IsNullOrWhiteSpace(searchString1))
+            return true;
+        if (element.Name.Contains(searchString1, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.Type.Contains(searchString1, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.Id.ToString().Contains(searchString1, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+
+
+
+
+
+    private void OpenCreateDialog()
+    {
+        currentLocation = new Location();
+        isEditing = false;
+        isDialogOpen = true;
+        isFormValid = false;
+        StateHasChanged();
+    }
+
+    private void OpenEditDialog(Location location)
+    {
+        currentLocation = new Location
+        {
+            Id = location.Id,
+            Name = location.Name,
+            Type = location.Type,
+            ParentId = location.ParentId
+        };
+        isEditing = true;
+        isDialogOpen = true;
+        isFormValid = true;
+        StateHasChanged();
+    }
+
+    private void OpenDeleteDialog(Location location)
+    {
+        locationToDelete = location;
+        isDeleteDialogOpen = true;
+        StateHasChanged();
+    }
+
+    private void CloseDialog()
+    {
+        isDialogOpen = false;
+        currentLocation = new Location();
+        isFormValid = false;
+        StateHasChanged();
+    }
+
+    private void CloseDeleteDialog()
+    {
+        isDeleteDialogOpen = false;
+        locationToDelete = null;
+        StateHasChanged();
+    }
+
+    private async Task SaveLocation()
+    {
+        try
+        {
+            
+            if (LocationService == null)
+            {
+                ShowNotification("LocationService is null!", Severity.Error);
+                return;
+            }
+
+            // Validate form manually
+            if (string.IsNullOrWhiteSpace(currentLocation.Name))
+            {
+                ShowNotification("Location name is required!", Severity.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(currentLocation.Type))
+            {
+                ShowNotification("Location type is required!", Severity.Warning);
+                return;
+            }
+
+            if (isEditing)
+            {
+                var updateRequest = new UpdateLocationRequest
+                {
+                    Id = currentLocation.Id,
+                    Name = currentLocation.Name,
+                    Type = currentLocation.Type,
+                    ParentId = currentLocation.ParentId
+                };
+                
+                var success = await LocationService.UpdateLocationAsync(currentLocation.Id, updateRequest);
+                if (success)
+                {
+                    ShowNotification("Location updated successfully!", Severity.Success);
+                    CloseDialog();
+                    await LoadLocations();
+                }
+                else
+                {
+                    ShowNotification("Location not found for update", Severity.Warning);
+                }
+            }
+            else
+            {
+                var createRequest = new CreateLocationRequest
+                {
+                    Name = currentLocation.Name,
+                    Type = currentLocation.Type,
+                    ParentId = currentLocation.ParentId
+                };
+                
+                var id = await LocationService.CreateLocationAsync(createRequest);
+                ShowNotification($"Location created successfully with ID: {id}!", Severity.Success);
+                CloseDialog();
+                await LoadLocations();
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            ShowNotification($"HTTP Error: {ex.Message}", Severity.Error);
+        }
+        catch (Exception ex)
+        {
+            ShowNotification($"Error {(isEditing ? "updating" : "creating")} location: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task ConfirmDelete()
+    {
+        if (locationToDelete == null || LocationService == null) return;
+
+        try
+        {
+            var success = await LocationService.DeleteLocationAsync(locationToDelete.Id);
+            if (success)
+            {
+                ShowNotification("Location deleted successfully!", Severity.Success);
+                CloseDeleteDialog();
+                await LoadLocations();
+            }
+            else
+            {
+                ShowNotification("Location not found for deletion", Severity.Warning);
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowNotification($"Error deleting location: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void ShowNotification(string message, Severity severity)
+    {
+        Snackbar?.Add(message, severity);
+    }
+
+    private async Task LoadStatistics()
+    {
+        try
+        {
+            if (LocationService != null)
+            {
+                var allLocations = await LocationService.GetLocationsAsync();
+                totalLocations = allLocations.Count;
+                buildingCount = allLocations.Count(l => l.Type == "Building");
+                floorCount = allLocations.Count(l => l.Type == "Floor");
+                roomCount = allLocations.Count(l => l.Type == "Room");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowNotification($"Error loading statistics: {ex.Message}", Severity.Error);
+        }
+    }
+} 

@@ -5,15 +5,18 @@ using AspireApp.WebWasm.Services;
 using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.Services.AddMudServices();
-
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-builder.Services.AddSingleton<LocationHubService>();
+// Add MudBlazor
+builder.Services.AddMudServices();
 
+// Add Location Service
+builder.Services.AddScoped<ILocationService, LocationService>();
+
+// Add OIDC Authentication
 builder.Services.AddOidcAuthentication(options =>
 {
     options.ProviderOptions.Authority = "http://localhost:8080/realms/AspireRealm";

@@ -18,7 +18,7 @@ public class UpdateLocationCommandValidator : AbstractValidator<UpdateLocationCo
         RuleFor(x => x.Type)
             .NotEmpty().WithMessage("Location type is required")
             .MaximumLength(50).WithMessage("Location type cannot exceed 50 characters")
-            .Must(BeValidLocationType).WithMessage("Location type must be one of: Building, Floor, Room, Area");
+            .Must(BeValidLocationType).WithMessage("Location type must be one of: Site, Building, Floor, Room, Area");
 
         RuleFor(x => x.ParentId)
             .GreaterThan(0).When(x => x.ParentId.HasValue)
@@ -28,7 +28,7 @@ public class UpdateLocationCommandValidator : AbstractValidator<UpdateLocationCo
 
     private static bool BeValidLocationType(string type)
     {
-        var validTypes = new[] { "Building", "Floor", "Room", "Area" };
+        var validTypes = new[] { "Site", "Building", "Floor", "Room", "Area" };
         return validTypes.Contains(type, StringComparer.OrdinalIgnoreCase);
     }
 } 

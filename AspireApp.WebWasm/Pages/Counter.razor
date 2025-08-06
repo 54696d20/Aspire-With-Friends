@@ -4,40 +4,59 @@
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 
-<PageTitle>Counter</PageTitle>
-
 <AuthBody Title="Counter Page - Protected Content">
     <MudAlert Severity="Severity.Info" Class="mb-4">
         Hello @(authContext?.UserName ?? "User")! This is a protected counter page.
     </MudAlert>
 
-    <h1>Counter</h1>
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h5" Class="mb-3">Current Count: @currentCount</MudText>
+        
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="IncrementCount" Class="mr-2">
+            Increment
+        </MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="ResetCount">
+            Reset
+        </MudButton>
+    </MudPaper>
 
-    <p role="status">Current count: @currentCount</p>
-
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="IncrementCount" Class="mr-2">
-        Click me
-    </MudButton>
-    
-    <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="DivideByZero">
-        Divide By Zero
-    </MudButton>
+    <MudPaper Class="pa-4 mt-4">
+        <MudText Typo="Typo.h6" Class="mb-3">Counter History</MudText>
+        <MudList T="string">
+            @foreach (var entry in counterHistory)
+            {
+                <MudListItem T="string">
+                    <MudText>@entry</MudText>
+                </MudListItem>
+            }
+        </MudList>
+    </MudPaper>
 </AuthBody>
 
 @code {
-    private int currentCount = 0;
-
     [CascadingParameter]
-    private MainLayout.AuthContext authContext { get; set; }
+    private MainLayout.AuthContext? authContext { get; set; }
+
+    private int currentCount = 0;
+    private List<string> counterHistory = new();
 
     private void IncrementCount()
     {
         currentCount++;
+        counterHistory.Add($"Incremented to {currentCount} at {DateTime.Now:HH:mm:ss}");
+        if (counterHistory.Count > 10)
+        {
+            counterHistory.RemoveAt(0);
+        }
     }
 
-    private void DivideByZero(MouseEventArgs args)
+    private void ResetCount()
     {
-        var zero = 0;
-        var i = 10 / zero;
+        currentCount = 0;
+        counterHistory.Add($"Reset to 0 at {DateTime.Now:HH:mm:ss}");
+        if (counterHistory.Count > 10)
+        {
+            counterHistory.RemoveAt(0);
+        }
     }
 }

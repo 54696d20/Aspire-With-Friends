@@ -1,11 +1,7 @@
 ﻿@page "/"
-@using AspireApp.Shared.Messaging.Models
 @using AspireApp.WebWasm.Authentication
 @using MudBlazor
-@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Authorization
-@inject ISnackbar Snackbar
-@inject AspireApp.WebWasm.Services.LocationHubService HubService
 @attribute [Authorize]
 
 <AuthBody Title="Welcome to Aspire With Friends">
@@ -13,54 +9,83 @@
         Welcome, @(authContext?.UserName ?? "User")! You have access to GodMode-only features.
     </MudAlert>
 
-    <h3>Live Locations</h3>
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h5" Class="mb-3">Project Overview</MudText>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            This is a microservices application built with .NET 9, Aspire, and CQRS patterns.
+            You can manage locations, view weather data, and explore the various features.
+        </MudText>
+        
+        <MudDivider Class="my-4" />
+        
+        <MudText Typo="Typo.h6" Class="mb-3">Quick Actions</MudText>
+        <MudGrid>
+            <MudItem xs="6" md="3">
+                <MudCard Class="text-center">
+                    <MudCardContent>
+                        <MudIcon Icon="@Icons.Material.Filled.LocationOn" Size="Size.Large" Color="Color.Primary" />
+                        <MudText Typo="Typo.h6" Class="mt-2">Locations</MudText>
+                        <MudText Typo="Typo.body2">Manage your locations</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="6" md="3">
+                <MudCard Class="text-center">
+                    <MudCardContent>
+                        <MudIcon Icon="@Icons.Material.Filled.Cloud" Size="Size.Large" Color="Color.Secondary" />
+                        <MudText Typo="Typo.h6" Class="mt-2">Weather</MudText>
+                        <MudText Typo="Typo.body2">Check weather data</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="6" md="3">
+                <MudCard Class="text-center">
+                    <MudCardContent>
+                        <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Large" Color="Color.Tertiary" />
+                        <MudText Typo="Typo.h6" Class="mt-2">Users</MudText>
+                        <MudText Typo="Typo.body2">User management</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="6" md="3">
+                <MudCard Class="text-center">
+                    <MudCardContent>
+                        <MudIcon Icon="@Icons.Material.Filled.Security" Size="Size.Large" Color="Color.Error" />
+                        <MudText Typo="Typo.h6" Class="mt-2">Security</MudText>
+                        <MudText Typo="Typo.body2">Security settings</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
 
-    @if (locations.Count == 0)
+    @if (authContext?.IsAdmin == true)
     {
-        <p>No locations received yet.</p>
-    }
-    else
-    {
-        <ul>
-            @foreach (var loc in locations)
-            {
-                <li>@loc</li>
-            }
-        </ul>
+        <MudPaper Class="pa-4 mt-4">
+            <MudText Typo="Typo.h5" Class="mb-3">Admin Features</MudText>
+            <MudText Typo="Typo.body1" Class="mb-4">
+                As an admin user, you have access to additional features and controls.
+            </MudText>
+            
+            <MudList T="string">
+                <MudListItem T="string" Icon="@Icons.Material.Filled.AdminPanelSettings">
+                    Advanced user management
+                </MudListItem>
+                <MudListItem T="string" Icon="@Icons.Material.Filled.Security">
+                    Security configuration
+                </MudListItem>
+                <MudListItem T="string" Icon="@Icons.Material.Filled.Analytics">
+                    System analytics
+                </MudListItem>
+                <MudListItem T="string" Icon="@Icons.Material.Filled.Settings">
+                    System settings
+                </MudListItem>
+            </MudList>
+        </MudPaper>
     }
 </AuthBody>
-       
-@code {
-    private List<string> locations = new();
-    
-    [Inject] AuthenticationStateProvider AuthStateProvider { get; set; }
-    private bool isAdmin = false;
-    
-    [CascadingParameter]
-    private MainLayout.AuthContext authContext { get; set; }
-    
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-        isAdmin = user.Claims.Any(c => c.Type == "role" && c.Value.Contains("godmode"));
-       
-        HubService.OnLocationChanged += message =>
-        {
-            //stop any other users from seeing the alerts
-            if (isAdmin)
-            {
-                ShowNotification(message);
-                locations.Add(message.Name);
-                InvokeAsync(StateHasChanged);
-            }
-        };
 
-        await HubService.StartAsync();
-    }
-    
-    void ShowNotification(LocationChangedNotificationModel message)
-    {
-        Snackbar.Add($"New location {message.Name} added!", Severity.Success);
-    }
+@code {
+    [CascadingParameter]
+    private MainLayout.AuthContext? authContext { get; set; }
 }
