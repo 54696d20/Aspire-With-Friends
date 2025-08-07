@@ -1,22 +1,8 @@
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Trace;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Exporter;
+// OpenTelemetry using statements removed
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add OpenTelemetry
-builder.Services.AddOpenTelemetry()
-    .ConfigureResource(resource => resource
-        .AddService(serviceName: "YarpGateway", serviceVersion: "1.0.0"))
-    .WithTracing(tracing => tracing
-        .AddAspNetCoreInstrumentation()
-        .AddHttpClientInstrumentation()
-        .AddConsoleExporter()) // For development - see traces in console
-    .WithMetrics(metrics => metrics
-        .AddAspNetCoreInstrumentation()
-        .AddHttpClientInstrumentation()
-        .AddPrometheusExporter());
+// OpenTelemetry temporarily removed for simple working state
 
 // Add logging
 builder.Logging.ClearProviders();
@@ -66,8 +52,7 @@ app.Use(async (context, next) =>
     }
 });
 
-// Map Prometheus metrics endpoint
-app.MapPrometheusScrapingEndpoint();
+// Prometheus endpoint temporarily removed
 
 app.MapGet("/", () => "YARP Gateway - API Gateway for Aspire With Friends");
 

@@ -36,7 +36,7 @@ var grafana = builder.AddContainer("grafana", "grafana/grafana:latest")
 
 //OpenTelemetry Collector temporarily removed - will add back once basic services are working
 
-// Start with basic services only - no dependencies
+// Simple working configuration - no complex dependencies
 builder.AddProject<Projects.AspireApp_MasterDataService>("masterdataservice");
 
 builder.AddProject<Projects.AspireApp_WeatherAPI>("weatherapi");

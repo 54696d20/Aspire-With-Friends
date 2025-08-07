@@ -7,27 +7,11 @@ using AspireApp.Shared.Messaging.Models;
 using FluentValidation;
 using AspireApp.MasterDataService.Validators;
 using Wolverine.FluentValidation;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Trace;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Exporter;
+// OpenTelemetry using statements removed
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add OpenTelemetry
-builder.Services.AddOpenTelemetry()
-    .ConfigureResource(resource => resource
-        .AddService(serviceName: "MasterDataService", serviceVersion: "1.0.0"))
-    .WithTracing(tracing => tracing
-        .AddAspNetCoreInstrumentation()
-        .AddHttpClientInstrumentation()
-        .AddSqlClientInstrumentation()
-        .AddRedisInstrumentation()
-        .AddConsoleExporter()) // For development - see traces in console
-    .WithMetrics(metrics => metrics
-        .AddAspNetCoreInstrumentation()
-        .AddHttpClientInstrumentation()
-        .AddPrometheusExporter());
+// OpenTelemetry temporarily removed for simple working state
 
 //Add logging
 builder.Logging.ClearProviders();
@@ -85,8 +69,7 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-// Map Prometheus metrics endpoint
-app.MapPrometheusScrapingEndpoint();
+// Prometheus endpoint temporarily removed
 
 app.MapControllers();
 app.Run();
