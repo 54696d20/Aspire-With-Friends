@@ -68,3 +68,5 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/YarpGateway/bin/Debug/net9.0/OpenTelemetry.Extensions.Hosting.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/YarpGateway/bin/Debug/net9.0/OpenTelemetry.Instrumentation.AspNetCore.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/YarpGateway/bin/Debug/net9.0/OpenTelemetry.Instrumentation.Http.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/YarpGateway/bin/Debug/net9.0/OpenTelemetry.Exporter.Console.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/YarpGateway/bin/Debug/net9.0/OpenTelemetry.Exporter.Jaeger.dll

@@ -10,6 +10,7 @@ using Wolverine.FluentValidation;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
+using OpenTelemetry.Exporter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,8 @@ builder.Services.AddOpenTelemetry()
         .AddAspNetCoreInstrumentation()
         .AddHttpClientInstrumentation()
         .AddSqlClientInstrumentation()
-        .AddRedisInstrumentation())
+        .AddRedisInstrumentation()
+        .AddConsoleExporter()) // For development - see traces in console
     .WithMetrics(metrics => metrics
         .AddAspNetCoreInstrumentation()
         .AddHttpClientInstrumentation()
@@ -51,14 +53,24 @@ builder.Services.AddScoped<ICacheService, RedisCacheService>();
 //Add Wolverine
 builder.Services.AddWolverine(opts =>
 {
-    opts.UseRabbitMq(rabbitMqConnectionString: builder.Configuration.GetConnectionString("rabbitmq"))
-        .AutoPurgeOnStartup()
-        .AutoProvision();
-    
-    opts.Policies.UseDurableOutboxOnAllSendingEndpoints();
-    opts.Policies.UseDurableInboxOnAllListeners();
-    opts.PublishMessage<LocationChangedNotificationModel>()
-        .ToRabbitQueue("wolverine");
+    var rabbitMqConnectionString = builder.Configuration.GetConnectionString("rabbitmq");
+    if (!string.IsNullOrEmpty(rabbitMqConnectionString))
+    {
+        opts.UseRabbitMq(rabbitMqConnectionString: rabbitMqConnectionString)
+            .AutoPurgeOnStartup()
+            .AutoProvision();
+        
+        opts.Policies.UseDurableOutboxOnAllSendingEndpoints();
+        opts.Policies.UseDurableInboxOnAllListeners();
+        opts.PublishMessage<LocationChangedNotificationModel>()
+            .ToRabbitQueue("wolverine");
+    }
+    else
+    {
+        // Fallback to local queue if RabbitMQ is not available
+        opts.PublishMessage<LocationChangedNotificationModel>()
+            .ToLocalQueue("wolverine");
+    }
 
     // Enable FluentValidation
     opts.UseFluentValidation();

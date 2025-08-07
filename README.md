@@ -131,6 +131,7 @@ This project supports two main ways to run the full stack for local development:
    - **Blazor Web App**: http://localhost:5071
    - **Prometheus**: http://localhost:9090
    - **Grafana**: http://localhost:3000 (admin/admin)
+   - **Jaeger**: http://localhost:16686
 
 ### Observability Setup (First Time Only)
 
@@ -148,6 +149,16 @@ The application includes comprehensive observability with OpenTelemetry, Prometh
    - Upload JSON files from `AspireApp.AppHost/grafana/dashboards/`
 
 For detailed observability documentation, see [OpenTelemetry-README.md](OpenTelemetry-README.md).
+
+### Troubleshooting Port Conflicts
+
+If you encounter port conflicts when restarting the AppHost (especially after stopping it in Rider), run the cleanup script:
+
+```bash
+./scripts/cleanup-aspire.sh
+```
+
+This will stop and remove all Aspire containers and free up the ports.
 
 ---
 
@@ -307,6 +318,7 @@ This application includes comprehensive observability with **OpenTelemetry**, **
 ### Accessing Monitoring Tools
 - **Prometheus**: http://localhost:9090 - Raw metrics and query interface
 - **Grafana**: http://localhost:3000 - Dashboards and visualizations
+- **Jaeger**: http://localhost:16686 - Distributed tracing and request flows
 - **Aspire Dashboard**: http://localhost:15262 - Service health and logs
 
 ### Quick Start

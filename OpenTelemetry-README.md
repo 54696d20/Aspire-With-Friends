@@ -8,6 +8,7 @@ The application now includes comprehensive observability with:
 - **OpenTelemetry** for metrics and tracing
 - **Prometheus** for metrics collection and storage
 - **Grafana** for metrics visualization and dashboards
+- **Jaeger** for distributed tracing and request flow visualization
 
 ## Architecture
 
@@ -20,6 +21,20 @@ The application now includes comprehensive observability with:
 │ • YarpGateway   │    │ • Stores data   │    │ • Alerts        │
 │ • Notification  │    │ • Query engine  │    │                 │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                                              │
+         │                                              │
+         └──────────────┐    ┌─────────────────┐        │
+                        │    │     Jaeger      │        │
+                        └───▶│                 │        │
+                             │ • Trace         │        │
+                             │   collection    │        │
+                             │ • Request       │        │
+                             │   flows         │        │
+                             │ • Performance   │        │
+                             │   analysis      │        │
+                             └─────────────────┘        │
+                                                        │
+                                                        └───▶ **Distributed Tracing**
 ```
 
 ## Services with OpenTelemetry
@@ -27,22 +42,30 @@ The application now includes comprehensive observability with:
 ### 1. MasterDataService
 - **Metrics**: HTTP requests, SQL queries, Redis operations
 - **Tracing**: ASP.NET Core, HTTP client, SQL client, Redis
-- **Endpoint**: `/metrics` (Prometheus format)
+- **Endpoints**: 
+  - `/metrics` (Prometheus format)
+  - Traces sent to Jaeger
 
 ### 2. WeatherAPI
 - **Metrics**: HTTP requests, runtime metrics
 - **Tracing**: ASP.NET Core, HTTP client
-- **Endpoint**: `/metrics` (Prometheus format)
+- **Endpoints**: 
+  - `/metrics` (Prometheus format)
+  - Traces sent to Jaeger
 
 ### 3. YarpGateway
 - **Metrics**: HTTP requests, proxy metrics
 - **Tracing**: ASP.NET Core, HTTP client
-- **Endpoint**: `/metrics` (Prometheus format)
+- **Endpoints**: 
+  - `/metrics` (Prometheus format)
+  - Traces sent to Jaeger
 
 ### 4. NotificationHubService
 - **Metrics**: HTTP requests, SignalR metrics
 - **Tracing**: ASP.NET Core, HTTP client
-- **Endpoint**: `/metrics` (Prometheus format)
+- **Endpoints**: 
+  - `/metrics` (Prometheus format)
+  - Traces sent to Jaeger
 
 ## Running the Application
 
@@ -56,6 +79,7 @@ The application now includes comprehensive observability with:
    - **Aspire Dashboard**: http://localhost:15262
    - **Prometheus**: http://localhost:9090
    - **Grafana**: http://localhost:3000 (admin/admin)
+   - **Jaeger**: http://localhost:16686
 
 ## Initial Setup (First Time Only)
 
@@ -85,6 +109,12 @@ The application now includes comprehensive observability with:
    - `AspireApp.AppHost/grafana/dashboards/aspire-dashboard.json`
 4. Select **Prometheus** as the datasource for each
 5. Click **Import**
+
+### Step 4: View Distributed Traces (Optional)
+1. Go to **Jaeger**: http://localhost:16686
+2. Select a service from the dropdown (e.g., "MasterDataService")
+3. Click **"Find Traces"** to see request flows
+4. Click on any trace to see the detailed request flow and timing
 
 ## Prometheus Configuration
 
@@ -196,7 +226,7 @@ _customCounter.Add(1);
 1. **Add Alerts**: Configure Prometheus alerting rules
 2. **Custom Dashboards**: Create service-specific dashboards
 3. **Log Aggregation**: Add centralized logging (e.g., ELK stack)
-4. **Distributed Tracing**: Add Jaeger or Zipkin for trace visualization
+4. **Trace Analysis**: Use Jaeger to analyze request flows and performance
 5. **Service Mesh**: Consider adding Istio for advanced observability
 
 ## Useful Commands
@@ -225,7 +255,9 @@ curl http://localhost:5062/weatherforecast  # WeatherAPI
 - OpenTelemetry instrumentation in all .NET services
 - Prometheus container with proper scraping configuration
 - Grafana container with manual datasource setup
+- Jaeger container for distributed tracing
 - Metrics endpoints exposed on all services
+- Trace exporters configured for all services
 - Docker networking configured correctly
 
 🔄 **Manual Steps Required:**

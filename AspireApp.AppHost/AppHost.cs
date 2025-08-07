@@ -34,27 +34,18 @@ var grafana = builder.AddContainer("grafana", "grafana/grafana:latest")
     .WithHttpEndpoint(3000, name: "grafana", targetPort: 3000)
     .WithLifetime(ContainerLifetime.Persistent);
 
-var masterDataService = builder.AddProject<Projects.AspireApp_MasterDataService>("masterdataservice")
-    .WithReference(rabbit)
-    .WithReference(cache)
-    .WaitFor(rabbit)
-    .WaitFor(cache);
-    //.WithHttpHealthCheck("/health");
+//OpenTelemetry Collector temporarily removed - will add back once basic services are working
+
+// Start with basic services only - no dependencies
+builder.AddProject<Projects.AspireApp_MasterDataService>("masterdataservice");
 
 builder.AddProject<Projects.AspireApp_WeatherAPI>("weatherapi");
 
 builder.AddProject<Projects.YarpGateway>("gateway");
 
 builder.AddProject<Projects.AspireApp_WebWasm>("aspireapp-webwasm")
-    .WithHttpHealthCheck("/health")
-    .WithReference(cache)
-    .WaitFor(cache)
-    .WithReference(masterDataService)
-    .WaitFor(masterDataService)
-    .WaitFor(rabbit);
+    .WithHttpHealthCheck("/health");
 
-builder.AddProject<Projects.AspireApp_NotificationHubService>("notificationhubservice")
-    .WithReference(rabbit)
-    .WaitFor(rabbit);
+builder.AddProject<Projects.AspireApp_NotificationHubService>("notificationhubservice");
 
 builder.Build().Run();

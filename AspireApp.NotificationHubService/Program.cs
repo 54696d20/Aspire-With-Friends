@@ -4,6 +4,7 @@ using Wolverine.RabbitMQ;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
+using OpenTelemetry.Exporter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,8 @@ builder.Services.AddOpenTelemetry()
         .AddService(serviceName: "NotificationHubService", serviceVersion: "1.0.0"))
     .WithTracing(tracing => tracing
         .AddAspNetCoreInstrumentation()
-        .AddHttpClientInstrumentation())
+        .AddHttpClientInstrumentation()
+        .AddConsoleExporter()) // For development - see traces in console
     .WithMetrics(metrics => metrics
         .AddAspNetCoreInstrumentation()
         .AddHttpClientInstrumentation()
@@ -25,11 +27,20 @@ builder.Services.AddSignalR();
 // Add Wolverine with RabbitMQ
 builder.Host.UseWolverine(opts =>
 {
-    opts.UseRabbitMq(rabbitMqConnectionString: builder.Configuration.GetConnectionString("rabbitmq"))
-        .AutoPurgeOnStartup()
-        .AutoProvision();
-    
-    opts.ListenToRabbitQueue("wolverine");
+    var rabbitMqConnectionString = builder.Configuration.GetConnectionString("rabbitmq");
+    if (!string.IsNullOrEmpty(rabbitMqConnectionString))
+    {
+        opts.UseRabbitMq(rabbitMqConnectionString: rabbitMqConnectionString)
+            .AutoPurgeOnStartup()
+            .AutoProvision();
+        
+        opts.ListenToRabbitQueue("wolverine");
+    }
+    else
+    {
+        // Fallback to local queue if RabbitMQ is not available
+        // Note: Local queue listening is handled automatically by Wolverine
+    }
 });
 
 builder.Services.AddCors(options =>

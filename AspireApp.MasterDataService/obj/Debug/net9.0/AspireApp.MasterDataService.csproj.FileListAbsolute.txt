@@ -310,3 +310,5 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Exporter.Prometheus.AspNetCore.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Instrumentation.SqlClient.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Instrumentation.StackExchangeRedis.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Exporter.Console.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Exporter.Jaeger.dll
