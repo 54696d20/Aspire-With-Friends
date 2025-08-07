@@ -20,6 +20,20 @@ var rabbitPass = builder.AddParameter("RabbitPass");
 var rabbit = builder.AddRabbitMQ("rabbitmq", rabbitUser, rabbitPass, 5672)
     .WithImage("rabbitmq:3-management");
 
+//Add Prometheus
+var prometheus = builder.AddContainer("prometheus", "prom/prometheus:latest")
+    .WithEnvironment("PROMETHEUS_CONFIG_FILE", "/etc/prometheus/prometheus.yml")
+    .WithHttpEndpoint(9090, name: "prometheus", targetPort: 9090)
+    .WithLifetime(ContainerLifetime.Persistent)
+    .WithBindMount(Path.GetFullPath("prometheus"), "/etc/prometheus");
+
+//Add Grafana
+var grafana = builder.AddContainer("grafana", "grafana/grafana:latest")
+    .WithEnvironment("GF_SECURITY_ADMIN_PASSWORD", "admin")
+    .WithEnvironment("GF_USERS_ALLOW_SIGN_UP", "false")
+    .WithHttpEndpoint(3000, name: "grafana", targetPort: 3000)
+    .WithLifetime(ContainerLifetime.Persistent);
+
 var masterDataService = builder.AddProject<Projects.AspireApp_MasterDataService>("masterdataservice")
     .WithReference(rabbit)
     .WithReference(cache)

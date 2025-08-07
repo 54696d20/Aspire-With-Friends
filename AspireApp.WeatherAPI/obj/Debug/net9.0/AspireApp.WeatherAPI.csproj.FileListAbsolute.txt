@@ -63,3 +63,10 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/obj/Debug/net9.0/AspireApp.WeatherAPI.pdb
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/obj/Debug/net9.0/AspireApp.WeatherAPI.genruntimeconfig.cache
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/obj/Debug/net9.0/ref/AspireApp.WeatherAPI.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/bin/Debug/net9.0/OpenTelemetry.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/bin/Debug/net9.0/OpenTelemetry.Api.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/bin/Debug/net9.0/OpenTelemetry.Api.ProviderBuilderExtensions.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/bin/Debug/net9.0/OpenTelemetry.Exporter.Prometheus.AspNetCore.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/bin/Debug/net9.0/OpenTelemetry.Extensions.Hosting.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/bin/Debug/net9.0/OpenTelemetry.Instrumentation.AspNetCore.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.WeatherAPI/bin/Debug/net9.0/OpenTelemetry.Instrumentation.Http.dll

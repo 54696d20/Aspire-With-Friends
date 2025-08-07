@@ -16,6 +16,12 @@
           "Microsoft.AspNetCore.Mvc": "2.3.0",
           "Microsoft.AspNetCore.OpenApi": "9.0.7",
           "Microsoft.Extensions.Caching.StackExchangeRedis": "9.0.7",
+          "OpenTelemetry.Exporter.Prometheus.AspNetCore": "1.10.0-beta.1",
+          "OpenTelemetry.Extensions.Hosting": "1.12.0",
+          "OpenTelemetry.Instrumentation.AspNetCore": "1.12.0",
+          "OpenTelemetry.Instrumentation.Http": "1.12.0",
+          "OpenTelemetry.Instrumentation.SqlClient": "1.10.0-beta.1",
+          "OpenTelemetry.Instrumentation.StackExchangeRedis": "1.10.0-beta.1",
           "System.Data.SqlClient": "4.9.0",
           "WolverineFx": "4.7.0",
           "WolverineFx.FluentValidation": "4.7.0",
@@ -1585,6 +1591,17 @@
           }
         }
       },
+      "OpenTelemetry.Exporter.Prometheus.AspNetCore/1.10.0-beta.1": {
+        "dependencies": {
+          "OpenTelemetry": "1.12.0"
+        },
+        "runtime": {
+          "lib/net9.0/OpenTelemetry.Exporter.Prometheus.AspNetCore.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.10.0.1469"
+          }
+        }
+      },
       "OpenTelemetry.Extensions.Hosting/1.12.0": {
         "dependencies": {
           "Microsoft.Extensions.Hosting.Abstractions": "9.0.7",
@@ -1629,6 +1646,33 @@
           "lib/net8.0/OpenTelemetry.Instrumentation.Runtime.dll": {
             "assemblyVersion": "1.12.0.496",
             "fileVersion": "1.12.0.496"
+          }
+        }
+      },
+      "OpenTelemetry.Instrumentation.SqlClient/1.10.0-beta.1": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "9.0.7",
+          "Microsoft.Extensions.Options": "9.0.7",
+          "OpenTelemetry.Api.ProviderBuilderExtensions": "1.12.0"
+        },
+        "runtime": {
+          "lib/net8.0/OpenTelemetry.Instrumentation.SqlClient.dll": {
+            "assemblyVersion": "1.10.0.267",
+            "fileVersion": "1.10.0.267"
+          }
+        }
+      },
+      "OpenTelemetry.Instrumentation.StackExchangeRedis/1.10.0-beta.1": {
+        "dependencies": {
+          "Microsoft.Extensions.Options": "9.0.7",
+          "OpenTelemetry.Api.ProviderBuilderExtensions": "1.12.0",
+          "StackExchange.Redis": "2.7.27",
+          "System.Reflection.Emit.Lightweight": "4.7.0"
+        },
+        "runtime": {
+          "lib/net8.0/OpenTelemetry.Instrumentation.StackExchangeRedis.dll": {
+            "assemblyVersion": "1.10.0.268",
+            "fileVersion": "1.10.0.268"
           }
         }
       },
@@ -1952,7 +1996,7 @@
           "System.Reflection": "4.3.0",
           "System.Reflection.Emit": "4.0.1",
           "System.Reflection.Emit.ILGeneration": "4.0.1",
-          "System.Reflection.Emit.Lightweight": "4.0.1",
+          "System.Reflection.Emit.Lightweight": "4.7.0",
           "System.Reflection.Extensions": "4.0.1",
           "System.Reflection.Primitives": "4.3.0",
           "System.Reflection.TypeExtensions": "4.1.0",
@@ -2024,14 +2068,7 @@
           "System.Runtime": "4.3.0"
         }
       },
-      "System.Reflection.Emit.Lightweight/4.0.1": {
-        "dependencies": {
-          "System.Reflection": "4.3.0",
-          "System.Reflection.Emit.ILGeneration": "4.0.1",
-          "System.Reflection.Primitives": "4.3.0",
-          "System.Runtime": "4.3.0"
-        }
-      },
+      "System.Reflection.Emit.Lightweight/4.7.0": {},
       "System.Reflection.Extensions/4.0.1": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0",
@@ -3109,6 +3146,13 @@
       "path": "opentelemetry.exporter.opentelemetryprotocol/1.12.0",
       "hashPath": "opentelemetry.exporter.opentelemetryprotocol.1.12.0.nupkg.sha512"
     },
+    "OpenTelemetry.Exporter.Prometheus.AspNetCore/1.10.0-beta.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vrOvwJ9IDybd6Y4iktpRF4xgIwCepVQ1JNaqVb7gKR3whtjUX9DvxXs3EnklpgwUCxQ4RLMeqFcvFLczwqMrWg==",
+      "path": "opentelemetry.exporter.prometheus.aspnetcore/1.10.0-beta.1",
+      "hashPath": "opentelemetry.exporter.prometheus.aspnetcore.1.10.0-beta.1.nupkg.sha512"
+    },
     "OpenTelemetry.Extensions.Hosting/1.12.0": {
       "type": "package",
       "serviceable": true,
@@ -3136,6 +3180,20 @@
       "sha512": "sha512-xmd0TAm2x+T3ztdf5BolIwLPh+Uy6osaBeIQtCXv611PN7h/Pnhsjg5lU2hkAWj7M7ns74U5wtVpS8DXmJ+94w==",
       "path": "opentelemetry.instrumentation.runtime/1.12.0",
       "hashPath": "opentelemetry.instrumentation.runtime.1.12.0.nupkg.sha512"
+    },
+    "OpenTelemetry.Instrumentation.SqlClient/1.10.0-beta.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0ZPMZWrXzWJNdI5vAcghyj9jsxTyrAC/Lc4lV7zkVn0cGHxOglllv2rjLB0xJ1UmB1Ie8OgcdLrtlRVeBf0TjQ==",
+      "path": "opentelemetry.instrumentation.sqlclient/1.10.0-beta.1",
+      "hashPath": "opentelemetry.instrumentation.sqlclient.1.10.0-beta.1.nupkg.sha512"
+    },
+    "OpenTelemetry.Instrumentation.StackExchangeRedis/1.10.0-beta.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Qj2OTvk7XSSH5w0LEyeNiE1fUrz00kCW40Z55Oz2IM8WEB/cP9QHKds6qRKMGvIQcU3jwID77mVrVYz1CXDamw==",
+      "path": "opentelemetry.instrumentation.stackexchangeredis/1.10.0-beta.1",
+      "hashPath": "opentelemetry.instrumentation.stackexchangeredis.1.10.0-beta.1.nupkg.sha512"
     },
     "Pipelines.Sockets.Unofficial/2.2.8": {
       "type": "package",
@@ -3452,12 +3510,12 @@
       "path": "system.reflection.emit.ilgeneration/4.0.1",
       "hashPath": "system.reflection.emit.ilgeneration.4.0.1.nupkg.sha512"
     },
-    "System.Reflection.Emit.Lightweight/4.0.1": {
+    "System.Reflection.Emit.Lightweight/4.7.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-sSzHHXueZ5Uh0OLpUQprhr+ZYJrLPA2Cmr4gn0wj9+FftNKXx8RIMKvO9qnjk2ebPYUjZ+F2ulGdPOsvj+MEjA==",
-      "path": "system.reflection.emit.lightweight/4.0.1",
-      "hashPath": "system.reflection.emit.lightweight.4.0.1.nupkg.sha512"
+      "sha512": "sha512-a4OLB4IITxAXJeV74MDx49Oq2+PsF6Sml54XAFv+2RyWwtDBcabzoxiiJRhdhx+gaohLh4hEGCLQyBozXoQPqA==",
+      "path": "system.reflection.emit.lightweight/4.7.0",
+      "hashPath": "system.reflection.emit.lightweight.4.7.0.nupkg.sha512"
     },
     "System.Reflection.Extensions/4.0.1": {
       "type": "package",

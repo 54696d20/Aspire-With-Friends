@@ -1,4 +1,20 @@
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Add OpenTelemetry
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(resource => resource
+        .AddService(serviceName: "YarpGateway", serviceVersion: "1.0.0"))
+    .WithTracing(tracing => tracing
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation())
+    .WithMetrics(metrics => metrics
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddPrometheusExporter());
 
 // Add logging
 builder.Logging.ClearProviders();
@@ -47,6 +63,9 @@ app.Use(async (context, next) =>
         throw;
     }
 });
+
+// Map Prometheus metrics endpoint
+app.MapPrometheusScrapingEndpoint();
 
 app.MapGet("/", () => "YARP Gateway - API Gateway for Aspire With Friends");
 

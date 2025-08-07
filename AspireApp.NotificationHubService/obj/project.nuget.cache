@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qHwkZ5hTPL0=",
+  "dgSpecHash": "CaGKDMLCpps=",
   "success": true,
   "projectFilePath": "/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.NotificationHubService/AspireApp.NotificationHubService.csproj",
   "expectedPackageFiles": [
@@ -79,6 +79,13 @@
     "/Users/tim/.nuget/packages/microsoft.win32.primitives/4.3.0/microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "/Users/tim/.nuget/packages/newid/4.0.1/newid.4.0.1.nupkg.sha512",
     "/Users/tim/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/Users/tim/.nuget/packages/opentelemetry/1.12.0/opentelemetry.1.12.0.nupkg.sha512",
+    "/Users/tim/.nuget/packages/opentelemetry.api/1.12.0/opentelemetry.api.1.12.0.nupkg.sha512",
+    "/Users/tim/.nuget/packages/opentelemetry.api.providerbuilderextensions/1.12.0/opentelemetry.api.providerbuilderextensions.1.12.0.nupkg.sha512",
+    "/Users/tim/.nuget/packages/opentelemetry.exporter.prometheus.aspnetcore/1.10.0-beta.1/opentelemetry.exporter.prometheus.aspnetcore.1.10.0-beta.1.nupkg.sha512",
+    "/Users/tim/.nuget/packages/opentelemetry.extensions.hosting/1.12.0/opentelemetry.extensions.hosting.1.12.0.nupkg.sha512",
+    "/Users/tim/.nuget/packages/opentelemetry.instrumentation.aspnetcore/1.12.0/opentelemetry.instrumentation.aspnetcore.1.12.0.nupkg.sha512",
+    "/Users/tim/.nuget/packages/opentelemetry.instrumentation.http/1.12.0/opentelemetry.instrumentation.http.1.12.0.nupkg.sha512",
     "/Users/tim/.nuget/packages/polly.core/8.5.2/polly.core.8.5.2.nupkg.sha512",
     "/Users/tim/.nuget/packages/rabbitmq.client/7.1.2/rabbitmq.client.7.1.2.nupkg.sha512",
     "/Users/tim/.nuget/packages/runtime.native.system/4.3.0/runtime.native.system.4.3.0.nupkg.sha512",

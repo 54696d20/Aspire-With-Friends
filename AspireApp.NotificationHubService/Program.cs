@@ -1,8 +1,23 @@
 using AspireApp.NotificationHubService.Hubs;
 using Wolverine;
 using Wolverine.RabbitMQ;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add OpenTelemetry
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(resource => resource
+        .AddService(serviceName: "NotificationHubService", serviceVersion: "1.0.0"))
+    .WithTracing(tracing => tracing
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation())
+    .WithMetrics(metrics => metrics
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddPrometheusExporter());
 
 // Add SignalR
 builder.Services.AddSignalR();
@@ -29,6 +44,10 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+// Map Prometheus metrics endpoint
+app.MapPrometheusScrapingEndpoint();
+
 app.UseCors();
 app.MapHub<LocationHub>("/hubs/locations");
 
