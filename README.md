@@ -20,10 +20,15 @@
 - **Aspire Dashboard**
 - Authentication via **Keycloak**
 
+### Observability & Monitoring
+- **OpenTelemetry** for metrics and tracing
+- **Prometheus** for metrics collection and storage
+- **Grafana** for metrics visualization and dashboards
+- **Real-time monitoring** of all .NET services
+
 ### Planned Integrations
 
 - **Handlebars** templating
-- **Prometheus** + **Grafana** monitoring
 - **Serilog** logging
 - **Elsa Workflows**
 
@@ -82,6 +87,7 @@ The YARP gateway provides:
 - Docker-based orchestration via .NET Aspire AppHost
 - **CQRS pattern** with Wolverine and FluentValidation
 - **Domain events** for event-driven architecture
+- **Comprehensive observability** with OpenTelemetry, Prometheus, and Grafana
 
 ---
 
@@ -120,7 +126,28 @@ This project supports two main ways to run the full stack for local development:
    ```bash
    dotnet run --project AspireApp.AppHost
    ```
-3. Access the Aspire dashboard and Blazor app as described above.
+3. Access the services:
+   - **Aspire Dashboard**: http://localhost:15262
+   - **Blazor Web App**: http://localhost:5071
+   - **Prometheus**: http://localhost:9090
+   - **Grafana**: http://localhost:3000 (admin/admin)
+
+### Observability Setup (First Time Only)
+
+The application includes comprehensive observability with OpenTelemetry, Prometheus, and Grafana. On first run:
+
+1. **Configure Grafana Datasource**:
+   - Go to http://localhost:3000
+   - Login: admin/admin
+   - Configuration → Data Sources → Add data source
+   - Select Prometheus, URL: `http://prometheus:9090`
+   - Save & test
+
+2. **Import Dashboards** (Optional):
+   - Dashboards → Import
+   - Upload JSON files from `AspireApp.AppHost/grafana/dashboards/`
+
+For detailed observability documentation, see [OpenTelemetry-README.md](OpenTelemetry-README.md).
 
 ---
 
@@ -264,6 +291,30 @@ public async Task<IActionResult> Create([FromBody] CreateLocationCommand command
 1. Create a record for your command/query in `Messages/Commands` or `Messages/Queries`.
 2. Create a handler class with a `Handle` method for your command/query.
 3. In your controller, use `_bus.InvokeAsync<TResult>(commandOrQuery)` to dispatch.
+
+---
+
+## 📊 Observability & Monitoring
+
+This application includes comprehensive observability with **OpenTelemetry**, **Prometheus**, and **Grafana**:
+
+### What's Monitored
+- **HTTP Metrics**: Request rates, response times, error rates
+- **Process Metrics**: CPU, memory usage, garbage collection
+- **Runtime Metrics**: Thread pool, exception counts
+- **Custom Metrics**: Business-specific metrics (when added)
+
+### Accessing Monitoring Tools
+- **Prometheus**: http://localhost:9090 - Raw metrics and query interface
+- **Grafana**: http://localhost:3000 - Dashboards and visualizations
+- **Aspire Dashboard**: http://localhost:15262 - Service health and logs
+
+### Quick Start
+1. Start the AppHost: `dotnet run --project AspireApp.AppHost`
+2. Configure Grafana datasource (one-time setup)
+3. Import dashboards for comprehensive monitoring
+
+For detailed setup instructions and troubleshooting, see [OpenTelemetry-README.md](OpenTelemetry-README.md).
 
 ---
 
