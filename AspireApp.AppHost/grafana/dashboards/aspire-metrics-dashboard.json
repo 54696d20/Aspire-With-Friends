@@ -86,7 +86,7 @@
             "uid": "prometheus"
           },
           "expr": "up",
-          "legendFormat": "Service Up - {{instance}}",
+          "legendFormat": "{{job}}",
           "refId": "A"
         }
       ],
@@ -169,8 +169,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "http_server_request_duration_seconds_count",
-          "legendFormat": "{{__name__}} - {{instance}}",
+          "expr": "http_server_request_duration_seconds_count{http_route!=\"/metrics\"}",
+          "legendFormat": "{{job}} - {{method}} {{route}}",
           "refId": "A"
         }
       ],

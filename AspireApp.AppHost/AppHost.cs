@@ -32,7 +32,9 @@ var grafana = builder.AddContainer("grafana", "grafana/grafana:latest")
     .WithEnvironment("GF_SECURITY_ADMIN_PASSWORD", "admin")
     .WithEnvironment("GF_USERS_ALLOW_SIGN_UP", "false")
     .WithHttpEndpoint(3000, name: "grafana", targetPort: 3000)
-    .WithLifetime(ContainerLifetime.Persistent);
+    .WithLifetime(ContainerLifetime.Persistent)
+    .WithBindMount(Path.GetFullPath("grafana/datasources"), "/etc/grafana/provisioning/datasources")
+    .WithBindMount(Path.GetFullPath("grafana/dashboards"), "/etc/grafana/provisioning/dashboards");
 
 //OpenTelemetry Collector temporarily removed - will add back once basic services are working
 

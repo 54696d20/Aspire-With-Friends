@@ -7,11 +7,22 @@ using AspireApp.Shared.Messaging.Models;
 using FluentValidation;
 using AspireApp.MasterDataService.Validators;
 using Wolverine.FluentValidation;
-// OpenTelemetry using statements removed
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// OpenTelemetry temporarily removed for simple working state
+// Add OpenTelemetry
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing => tracing
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddConsoleExporter())
+    .WithMetrics(metrics => metrics
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddPrometheusExporter());
 
 //Add logging
 builder.Logging.ClearProviders();
@@ -23,8 +34,7 @@ var logger = builder.Logging.Services.BuildServiceProvider()
 //logger.LogInformation("✅ MasterDataService is starting up...");
 
 // Add services
-//builder.Configuration.GetConnectionString("masterdatadb");
-//builder.Services.AddScoped<LocationRepository>();
+builder.Services.AddScoped<LocationRepository>();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -69,7 +79,8 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-// Prometheus endpoint temporarily removed
+// Map Prometheus metrics endpoint
+app.MapPrometheusScrapingEndpoint();
 
 app.MapControllers();
 app.Run();
