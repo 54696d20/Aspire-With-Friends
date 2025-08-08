@@ -1,26 +1,264 @@
 ﻿@page "/weather"
-@inject HttpClient Http
-@using Microsoft.AspNetCore.Authorization
+@using AspireApp.WebWasm.Services
 @using MudBlazor
-@using AspireApp.WebWasm.Authentication
-@attribute [Authorize]
+@inject IWeatherService WeatherService
+@inject ISnackbar Snackbar
 
-<PageTitle>Weather</PageTitle>
+<PageTitle>Weather - Aspire App</PageTitle>
 
-<AuthBody Title="Weather Data">
-    <MudAlert Severity="Severity.Info" Class="mb-4">
-        Hello @(authContext?.UserName ?? "User")! Here's the current weather information.
-    </MudAlert>
+<MudContainer MaxWidth="MaxWidth.Large" Class="pa-4">
+    <MudText Typo="Typo.h3" Class="mb-4">
+        <MudIcon Icon="@Icons.Material.Filled.WbSunny" Class="mr-2" />
+        Weather Dashboard
+    </MudText>
 
-    <MudPaper Class="pa-4">
-        <MudText Typo="Typo.h5" Class="mb-3">Weather Forecast</MudText>
-        <MudText Typo="Typo.body1">
-            Weather data will be displayed here when the weather service is implemented.
-        </MudText>
+    <!-- Search Section -->
+    <MudPaper Class="pa-4 mb-4" Elevation="2">
+        <MudGrid>
+            <MudItem xs="12" md="8">
+                <MudTextField @bind-Value="searchQuery" 
+                             Label="Search for a city, zip code, or location"
+                             Variant="Variant.Outlined"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.Search"
+                             Immediate="true"
+                             Clearable="true"
+                             @onkeypress="@(async (e) => { if (e.Key == "Enter") await SearchWeather(); })" />
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudButton Variant="Variant.Filled" 
+                           Color="Color.Primary" 
+                           StartIcon="@Icons.Material.Filled.Search"
+                           OnClick="SearchWeather"
+                           Disabled="@(string.IsNullOrWhiteSpace(searchQuery))"
+                           Class="mt-4 mt-md-0">
+                    Get Weather
+                </MudButton>
+            </MudItem>
+        </MudGrid>
     </MudPaper>
-</AuthBody>
+
+    @if (isLoading)
+    {
+        <MudPaper Class="pa-4 mb-4" Elevation="2">
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            <MudText Class="ml-3">Loading weather data...</MudText>
+        </MudPaper>
+    }
+
+    @if (weatherData != null && weatherData.Current != null)
+    {
+        <!-- Current Weather Card -->
+        <MudPaper Class="pa-4 mb-4" Elevation="3">
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.h4" Class="mb-2">
+                        @weatherData.Location?.Name, @weatherData.Location?.Country
+                    </MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                        @weatherData.Location?.Region
+                    </MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                        Last updated: @weatherData.Current.LastUpdated
+                    </MudText>
+                </MudItem>
+                <MudItem xs="12" md="6" Class="text-right">
+                    <MudText Typo="Typo.h2" Class="mb-2">
+                        @weatherData.Current.TempF°F (@weatherData.Current.TempC°C)
+                    </MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Secondary">
+                        Feels like @weatherData.Current.FeelslikeF°F (@weatherData.Current.FeelslikeC°C)
+                    </MudText>
+                    <MudText Typo="Typo.body1">
+                        @weatherData.Current.Condition?.Text
+                    </MudText>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+        <!-- Weather Details Grid -->
+        <MudGrid Class="mb-4">
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Class="pa-3 text-center" Elevation="2">
+                    <MudIcon Icon="@Icons.Material.Filled.Air" Color="Color.Info" />
+                    <MudText Typo="Typo.h6">Wind</MudText>
+                    <MudText Typo="Typo.body1">@weatherData.Current.WindKph km/h</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">@weatherData.Current.WindDir</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Class="pa-3 text-center" Elevation="2">
+                    <MudIcon Icon="@Icons.Material.Filled.Opacity" Color="Color.Info" />
+                    <MudText Typo="Typo.h6">Humidity</MudText>
+                    <MudText Typo="Typo.body1">@weatherData.Current.Humidity%</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Class="pa-3 text-center" Elevation="2">
+                    <MudIcon Icon="@Icons.Material.Filled.Visibility" Color="Color.Info" />
+                    <MudText Typo="Typo.h6">Visibility</MudText>
+                    <MudText Typo="Typo.body1">@weatherData.Current.VisKm km</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Class="pa-3 text-center" Elevation="2">
+                    <MudIcon Icon="@Icons.Material.Filled.Compress" Color="Color.Info" />
+                    <MudText Typo="Typo.h6">Pressure</MudText>
+                    <MudText Typo="Typo.body1">@weatherData.Current.PressureMb mb</MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+
+        @if (weatherData.Forecast?.Forecastday != null && weatherData.Forecast.Forecastday.Any())
+        {
+            <!-- Forecast Section -->
+            <MudPaper Class="pa-4" Elevation="2">
+                <MudText Typo="Typo.h5" Class="mb-3">
+                    <MudIcon Icon="@Icons.Material.Filled.CalendarToday" Class="mr-2" />
+                    7-Day Forecast
+                </MudText>
+                <MudGrid>
+                    @foreach (var day in weatherData.Forecast.Forecastday.Take(7))
+                    {
+                        <MudItem xs="12" sm="6" md="3" lg="2">
+                            <MudPaper Class="pa-3 text-center" Elevation="1">
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                    @(DateTime.Parse(day.Date ?? "").ToString("ddd"))
+                                </MudText>
+                                <MudText Typo="Typo.body1" Class="mb-2">
+                                    @day.Day?.Condition?.Text
+                                </MudText>
+                                <MudText Typo="Typo.h6">
+                                    @day.Day?.MaxtempF°F
+                                </MudText>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                    @day.Day?.MintempF°F
+                                </MudText>
+                                @if (day.Day?.TotalprecipMm > 0)
+                                {
+                                    <MudText Typo="Typo.body2" Color="Color.Info" Class="mt-2">
+                                        @($"{day.Day.TotalprecipMm} mm")
+                                    </MudText>
+                                }
+                            </MudPaper>
+                        </MudItem>
+                    }
+                </MudGrid>
+            </MudPaper>
+        }
+
+        @if (weatherData.Current.AirQuality != null)
+        {
+            <!-- Air Quality Section -->
+            <MudPaper Class="pa-4 mt-4" Elevation="2">
+                <MudText Typo="Typo.h5" Class="mb-3">
+                    <MudIcon Icon="@Icons.Material.Filled.Air" Class="mr-2" />
+                    Air Quality
+                </MudText>
+                <MudGrid>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudText Typo="Typo.body2">US EPA Index</MudText>
+                        <MudText Typo="Typo.body1" Color="@GetAirQualityColor(weatherData.Current.AirQuality.UsEpaIndex)">
+                            @GetAirQualityText(weatherData.Current.AirQuality.UsEpaIndex)
+                        </MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudText Typo="Typo.body2">PM2.5</MudText>
+                        <MudText Typo="Typo.body1">@weatherData.Current.AirQuality.Pm25 µg/m³</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudText Typo="Typo.body2">PM10</MudText>
+                        <MudText Typo="Typo.body1">@weatherData.Current.AirQuality.Pm10 µg/m³</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudText Typo="Typo.body2">Ozone (O₃)</MudText>
+                        <MudText Typo="Typo.body1">@weatherData.Current.AirQuality.O3 µg/m³</MudText>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        }
+    }
+
+    @if (errorMessage != null)
+    {
+        <MudAlert Severity="Severity.Error" Class="mt-4">
+            @errorMessage
+        </MudAlert>
+    }
+</MudContainer>
 
 @code {
-    [CascadingParameter]
-    private MainLayout.AuthContext? authContext { get; set; }
+    private string searchQuery = "";
+    private WeatherResponse? weatherData;
+    private bool isLoading = false;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Default to area code 23323
+        searchQuery = "23323";
+        await SearchWeather();
+    }
+
+    private async Task SearchWeather()
+    {
+        if (string.IsNullOrWhiteSpace(searchQuery))
+            return;
+
+        isLoading = true;
+        errorMessage = null;
+        weatherData = null;
+
+        try
+        {
+            weatherData = await WeatherService.GetForecastAsync(searchQuery, 7);
+            
+            if (weatherData == null)
+            {
+                errorMessage = "Unable to fetch weather data. Please check the location and try again.";
+                Snackbar.Add("Weather data not found", Severity.Warning);
+            }
+            else
+            {
+                Snackbar.Add($"Weather data loaded for {weatherData.Location?.Name}", Severity.Success);
+            }
+        }
+        catch (Exception)
+        {
+            errorMessage = "An error occurred while fetching weather data.";
+            Snackbar.Add("Error loading weather data", Severity.Error);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private Color GetAirQualityColor(int index)
+    {
+        return index switch
+        {
+            1 => Color.Success,   // Good
+            2 => Color.Warning,   // Moderate
+            3 => Color.Error,     // Unhealthy for Sensitive Groups
+            4 => Color.Error,     // Unhealthy
+            5 => Color.Error,     // Very Unhealthy
+            6 => Color.Error,     // Hazardous
+            _ => Color.Default
+        };
+    }
+
+    private string GetAirQualityText(int index)
+    {
+        return index switch
+        {
+            1 => "Good",
+            2 => "Moderate",
+            3 => "Unhealthy for Sensitive Groups",
+            4 => "Unhealthy",
+            5 => "Very Unhealthy",
+            6 => "Hazardous",
+            _ => "Unknown"
+        };
+    }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AspireApp.MasterDataService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a81c2ae13f2ae83e4003161c40e59c4f1343f7a7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12cd3ac2bb0a936edd6c79a30df198b357bc35f4")]
 [assembly: System.Reflection.AssemblyProductAttribute("AspireApp.MasterDataService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AspireApp.MasterDataService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

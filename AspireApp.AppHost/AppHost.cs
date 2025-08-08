@@ -41,7 +41,8 @@ var grafana = builder.AddContainer("grafana", "grafana/grafana:latest")
 // Simple working configuration - no complex dependencies
 builder.AddProject<Projects.AspireApp_MasterDataService>("masterdataservice");
 
-builder.AddProject<Projects.AspireApp_WeatherAPI>("weatherapi");
+builder.AddProject<Projects.AspireApp_WeatherAPI>("weatherapi")
+    .WithHttpHealthCheck("/api/weather/health");
 
 builder.AddProject<Projects.YarpGateway>("gateway");
 

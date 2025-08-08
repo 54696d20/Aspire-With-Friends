@@ -149,11 +149,16 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Api.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Api.ProviderBuilderExtensions.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Exporter.Console.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Exporter.Jaeger.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Exporter.OpenTelemetryProtocol.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Exporter.Prometheus.AspNetCore.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Extensions.Hosting.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Instrumentation.AspNetCore.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Instrumentation.Http.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Instrumentation.Runtime.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Instrumentation.SqlClient.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Instrumentation.StackExchangeRedis.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Pipelines.Sockets.Unofficial.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Polly.Core.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Polly.Extensions.dll
@@ -169,6 +174,7 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/System.Data.SqlClient.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/System.IO.Pipelines.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Wolverine.dll
+/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Wolverine.FluentValidation.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Wolverine.RabbitMQ.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.resources.dll
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.resources.dll
@@ -306,9 +312,3 @@
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/obj/Debug/net9.0/AspireApp.MasterDataService.pdb
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/obj/Debug/net9.0/AspireApp.MasterDataService.genruntimeconfig.cache
 /Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/obj/Debug/net9.0/ref/AspireApp.MasterDataService.dll
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/Wolverine.FluentValidation.dll
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Exporter.Prometheus.AspNetCore.dll
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Instrumentation.SqlClient.dll
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Instrumentation.StackExchangeRedis.dll
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Exporter.Console.dll
-/Users/tim/Documents/projects/Aspire-With-Friends/AspireApp.MasterDataService/bin/Debug/net9.0/OpenTelemetry.Exporter.Jaeger.dll
