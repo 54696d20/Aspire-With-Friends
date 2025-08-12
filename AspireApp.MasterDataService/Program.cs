@@ -75,12 +75,23 @@ builder.Services.AddScoped<IDbConnectionFactory, SqlConnectionFactory>();
 // Add FluentValidation
 builder.Services.AddValidatorsFromAssemblyContaining<CreateLocationCommandValidator>();
 
+// Add health checks
+builder.Services.AddHealthChecks()
+    .AddCheck("self", () => Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy(), ["live"]);
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
 // Map Prometheus metrics endpoint
 app.MapPrometheusScrapingEndpoint();
+
+// Map health checks
+app.MapHealthChecks("/health");
+app.MapHealthChecks("/health/live", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    Predicate = r => r.Tags.Contains("live")
+});
 
 app.MapControllers();
 app.Run();

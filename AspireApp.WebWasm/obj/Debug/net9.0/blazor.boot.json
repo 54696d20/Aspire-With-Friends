@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "AspireApp.WebWasm",
   "resources": {
-    "hash": "sha256-aVk+WETp62VhRp830+9H+tW9cy7wE6mTNxkq1PU9/v4=",
+    "hash": "sha256-jsWY4M+pQLE4F+0izer2I4zP6nxoi7OqZcbllz/Doew=",
     "fingerprinting": {
       "Microsoft.AspNetCore.Authorization.bvu82j4ad3.wasm": "Microsoft.AspNetCore.Authorization.wasm",
       "Microsoft.AspNetCore.Components.ptfrz3fits.wasm": "Microsoft.AspNetCore.Components.wasm",
@@ -215,10 +215,10 @@
       "icudt_CJK.tjcz0u77k5.dat": "icudt_CJK.dat",
       "icudt_EFIGS.tptq2av103.dat": "icudt_EFIGS.dat",
       "icudt_no_CJK.lfu7j35m59.dat": "icudt_no_CJK.dat",
-      "AspireApp.Shared.038hjijdpq.wasm": "AspireApp.Shared.wasm",
-      "AspireApp.Shared.bop6tjxa0w.pdb": "AspireApp.Shared.pdb",
-      "AspireApp.WebWasm.b0pc05z5f2.wasm": "AspireApp.WebWasm.wasm",
-      "AspireApp.WebWasm.xrgvrfiw1v.pdb": "AspireApp.WebWasm.pdb"
+      "AspireApp.Shared.1x5qqw1flx.wasm": "AspireApp.Shared.wasm",
+      "AspireApp.Shared.8ay5bkgl5u.pdb": "AspireApp.Shared.pdb",
+      "AspireApp.WebWasm.moizv7w0up.wasm": "AspireApp.WebWasm.wasm",
+      "AspireApp.WebWasm.ed585v7085.pdb": "AspireApp.WebWasm.pdb"
     },
     "jsModuleNative": {
       "dotnet.native.st0ovrfdhi.js": "sha256-MBW/zayfv+YU6mhH7y4b8NNU4D1EYd7nf9gYrFshnnY="
@@ -442,12 +442,12 @@
       "WindowsBase.pg3o6xzigg.wasm": "sha256-dz62CHynC+zqTkbMOf3vm7YAhiRA8/pIoAwuqHfBL5M=",
       "mscorlib.jl2pswegra.wasm": "sha256-mSoCIDTdCQKTipW8VmFCypW/4AopZauaYRa8LoZdHvY=",
       "netstandard.uriri6ambh.wasm": "sha256-yuH/cvPd6r8N9nfPWihyckFD7hPFP+VQtQQxEqi7HIQ=",
-      "AspireApp.Shared.038hjijdpq.wasm": "sha256-1NEEEzUtXy2uDq6ck5t+A/HlD2WGSVxrMH+q5CGdvFc=",
-      "AspireApp.WebWasm.b0pc05z5f2.wasm": "sha256-m61Lkv6X9GEJ7xeuVkD01mwy13P0yH4K04ckezrDMZ8="
+      "AspireApp.Shared.1x5qqw1flx.wasm": "sha256-i7WQHR0FnDKJ9GjJ+Yq7F6Qf4TaXEGdKWJzej9fQD7Q=",
+      "AspireApp.WebWasm.moizv7w0up.wasm": "sha256-VkSCjSYin0kZCo26u6jgopyh0CzS9h/Koq1MfDzV1zE="
     },
     "pdb": {
-      "AspireApp.Shared.bop6tjxa0w.pdb": "sha256-hT/aikyuEYT+hXJ6VzQVA8fziesdUiMptudisSaHK/w=",
-      "AspireApp.WebWasm.xrgvrfiw1v.pdb": "sha256-U+IBIZ3ykebznXh4JkGL9l+ufSa/KIgy0I3K7UpcZIM="
+      "AspireApp.Shared.8ay5bkgl5u.pdb": "sha256-MMjj5b3Cz6r1LaLNm/jcW9bvMCexD9U4wHjwSjJMwKI=",
+      "AspireApp.WebWasm.ed585v7085.pdb": "sha256-Mj51c+yyadVsobnSQ94PEWPiDztcN5cQ+BpKyHL3M9A="
     }
   },
   "cacheBootResources": true,

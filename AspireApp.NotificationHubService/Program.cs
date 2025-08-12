@@ -29,6 +29,7 @@ builder.Host.UseWolverine(opts =>
     }
 });
 
+// Add CORS
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -40,11 +41,23 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Add health checks
+builder.Services.AddHealthChecks()
+    .AddCheck("self", () => Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy(), ["live"]);
+
 var app = builder.Build();
 
 // Prometheus endpoint temporarily removed
 
 app.UseCors();
+
+// Map health checks
+app.MapHealthChecks("/health");
+app.MapHealthChecks("/health/live", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    Predicate = r => r.Tags.Contains("live")
+});
+
 app.MapHub<LocationHub>("/hubs/locations");
 
 app.Run();
