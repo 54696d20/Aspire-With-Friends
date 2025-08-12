@@ -141,6 +141,7 @@ The weather page includes:
 3. **Optional Setup**
    - **WeatherAPI.com API key** for weather functionality (see [WEATHER_API_SETUP.md](WEATHER_API_SETUP.md))
    - **Keycloak** for authentication (see Authentication section below)
+   - **Database initialization** - The MasterDataService requires the `MasterDataDb` database to be created (see Troubleshooting section)
 
 ---
 
@@ -193,6 +194,8 @@ If you were using the old docker-compose files:
 2. **Start new infrastructure**: `cd infrastructure && ./start-aspire.sh`
 3. **Start Aspire AppHost**: `dotnet run --project AspireApp.AppHost`
 
+**Note**: The old `docker-compose.aspire.yml`, `docker-compose.docker.yml`, and `nginx.conf` files have been removed as they are no longer needed with the new modular infrastructure approach.
+
 ---
 
 ## 🔐 Authentication & Keycloak Setup
@@ -201,22 +204,120 @@ This project uses **Keycloak** for authentication and role-based access control 
 
 ### Starting Keycloak
 
-**Option 1: Use Full Docker Deployment**
+**Option 1: Use Infrastructure (Recommended)**
+```bash
+cd infrastructure
+./start-aspire.sh
+```
+This includes Keycloak automatically with all infrastructure services.
+
+**Option 2: Use Full Docker Deployment**
 ```bash
 cd infrastructure
 ./start-full-docker.sh
 ```
 This includes Keycloak automatically.
 
-**Option 2: Start Keycloak Separately**
-```bash
-# Start just Keycloak and PostgreSQL
-docker-compose -f docker-compose.docker.yml up -d keycloak postgres
-```
-
 ### Keycloak Access
-- **Keycloak Admin Console**: http://localhost:8080/admin
-- **Default admin credentials**: `admin` / `admin`
+- **Admin Console**: http://localhost:8080/admin
+- **Default Credentials**: admin/admin
+
+**Note**: If you encounter "HTTPS required" errors when trying to access the admin console, you can disable SSL requirements by updating the database directly:
+```sql
+UPDATE realm SET ssl_required = 'NONE' WHERE name = 'master';
+```
+This bypasses realm-level SSL enforcement that can't be overridden via configuration files.
+
+**Important**: If you create a new realm (like `AspireRealm`), you'll also need to disable SSL requirements for it:
+```sql
+UPDATE realm SET ssl_required = 'NONE' WHERE name = 'AspireRealm';
+```
+New realms inherit default SSL settings and will reject HTTP requests until this is updated.
+
+### HTTPS Configuration Notes
+
+**Why HTTPS Configuration Didn't Work:**
+The project initially attempted to configure Keycloak with HTTPS using various approaches:
+- Environment variables (`KC_HTTPS_ENABLED`, `KC_HTTPS_PORT`)
+- Command line options (`--https-port`, `--https-protocols`)
+- SPI configurations for SSL requirements
+
+However, these approaches failed because:
+1. **Realm-level SSL requirements** override server-level configurations
+2. **Keycloak 24.0** has stricter default security settings
+3. **Development mode** still enforces SSL at the realm level
+4. **Configuration precedence** favors realm settings over server settings
+
+**The Working Solution:**
+The database update approach works because it directly modifies the realm configuration stored in PostgreSQL, bypassing all configuration file limitations.
+
+### Keycloak Configuration
+
+After starting the infrastructure, you'll need to configure Keycloak:
+
+#### Create Realm, Client, and Roles
+
+**1. Login to Keycloak Admin Console** at [http://localhost:8080/admin](http://localhost:8080/admin)
+
+**2. Create a new Realm** (e.g., `AspireRealm`)
+
+**3. Create a new Client**:
+   - Client ID: `aspire-blazor-client`
+   - Protocol: `openid-connect`
+   - Next
+   - Authentication flow - only have Standard flow selected
+   - Next 
+   - Root URL: `http://localhost:5071`
+   - Valid Redirect URIs: `http://localhost:5071/*`
+   - Valid Post Logout Redirect URIs: `http://localhost:5071/`
+   - Web Origins: `http://localhost:5071`
+   - Save
+   - Client authentication: **OFF** (public client)
+   - Standard flow: **ON**
+   - Save
+
+**4. Create Realm Roles** (`godmode`) (Is casesensitive)
+   - Go to Roles > Create Role
+   - Name: `godmode` (repeat for other roles as needed)
+
+**5. Create a Test User**
+   - Go to Users > Add user
+   - Set username, email, etc. and save
+   - Go to Credentials tab, set a password, and disable 'Temporary'
+   - Go to Role mapping tab, assign `godmode` (or other roles) to the user
+
+**6. (If Using Realm Roles) Add a Protocol Mapper**
+   - If you assign roles under the Realm (not as client roles), you must add a protocol mapper to include them in the token:
+   1. Go to **Clients** > select your client (`aspire-blazor-client`).
+   2. Go to the **Client scopes** tab.
+   3. Click on `aspire-blazor-client-dedicated`
+   4. Click **Create Mapper**, by configuration
+   5. Select **User Realm Role**
+   6. Set:
+      - **Name:** `realm roles`
+      - **Mapper Type:** `User Realm Role`
+      - **Token Claim Name:** `realm_access.roles`
+      - **Full group path:** OFF
+   7. Save
+
+**7. (If Using Client Roles) Add a Protocol Mapper**
+   - If you assign roles under the client (not as realm roles), you must add a protocol mapper to include them in the token:
+   1. Go to **Clients** > select your client (`aspire-blazor-client`).
+   2. Go to the **Client scopes** tab.
+   3. Click on `aspire-blazor-client-dedicated`
+   4. Click **Create Mapper**, by configuration
+   5. Select **User Client Role**
+   6. Set:
+      - **Name:** `admin roles`
+      - **Mapper Type:** `User Client Role`
+      - **Token Claim Name:** `role`
+      - **Claim JSON Type:** Array
+      - **Add to ID token:** ON
+      - **Add to access token:** ON
+      - **Add to userinfo:** ON
+   7. Save
+
+Now, roles assigned under the client will appear in the token as a `role` claim.
 
 ---
 
@@ -336,6 +437,24 @@ docker rm $(docker ps -aq)
 3. **Check Credentials**: Verify database and Redis credentials
 4. **View AppHost Logs**: Check the terminal running the AppHost
 
+### Database Connection Issues
+If you get 500 errors on the locations API, the database may not be initialized:
+
+1. **Check if database exists**:
+   ```bash
+   cd infrastructure
+   docker exec aspire-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P P@ssword123! -Q "SELECT name FROM sys.databases WHERE name = 'MasterDataDb'"
+   ```
+
+2. **Initialize database if missing**:
+   ```bash
+   cd infrastructure
+   docker cp ../scripts/location.sql aspire-sqlserver:/tmp/location.sql
+   docker exec aspire-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P P@ssword123! -i /tmp/location.sql -C
+   ```
+
+This will create the `MasterDataDb` database and populate it with sample location data.
+
 ---
 
 ## 🏗 CQRS & Wolverine Architecture
@@ -404,6 +523,7 @@ This application includes comprehensive observability with **OpenTelemetry**, **
 - **Process Metrics**: CPU, memory usage, garbage collection
 - **Runtime Metrics**: Thread pool, exception counts
 - **Custom Metrics**: Business-specific metrics (when added)
+- **Infrastructure Health**: Redis, RabbitMQ, SQL Server status
 
 ### Accessing Monitoring Tools
 
@@ -444,6 +564,35 @@ The infrastructure scripts automatically:
 - ✅ Configure health checks
 
 **No manual configuration required!** The monitoring services are pre-configured and ready to use.
+
+### 🆕 Enterprise Dashboards
+
+This project now includes **production-ready, enterprise-grade dashboards** designed for operations teams:
+
+#### **1. Enterprise Aspire Dashboard**
+- **Service Health**: Real-time UP/DOWN status for all .NET services
+- **Performance Metrics**: Request rates, response times, error rates
+- **Resource Utilization**: CPU, memory, threads, GC collections
+- **Template Variables**: Filter by service and route
+- **Thresholds**: Color-coded alerts (green/yellow/red)
+
+#### **2. Infrastructure Health Dashboard**
+- **Infrastructure Services**: Redis, RabbitMQ, Prometheus monitoring
+- **Redis Metrics**: Connected clients, memory usage, performance
+- **RabbitMQ Metrics**: Queue depths, message rates, connections
+- **Health Timeline**: Historical service availability
+
+#### **3. Basic Metrics Debug**
+- **Simple Monitoring**: Basic service status and HTTP metrics
+- **Quick Troubleshooting**: For developers and basic operations
+
+### **Operations Team Benefits**
+- **Immediate Issue Detection**: Color-coded thresholds show problems at a glance
+- **Performance Trending**: Historical data for capacity planning
+- **Root Cause Analysis**: Correlate application and infrastructure metrics
+- **Production Ready**: Enterprise-level monitoring suitable for customer deployments
+
+For detailed dashboard documentation and usage guides, see [infrastructure/monitoring/grafana/DASHBOARDS_README.md](infrastructure/monitoring/grafana/DASHBOARDS_README.md).
 
 For detailed observability documentation, see [OpenTelemetry-README.md](OpenTelemetry-README.md).
 

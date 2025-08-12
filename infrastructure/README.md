@@ -47,13 +47,15 @@ docker-compose -f docker-compose.base.yml -f docker-compose.monitoring.yml -f do
 
 | Service | Port | URL | Credentials |
 |---------|------|-----|-------------|
-| SQL Server | 1433 | - | `sa`/`${SQLSERVER_SA_PASSWORD}` |
-| Redis | 6379 | - | Password: `${REDIS_PASSWORD}` |
-| Redis Insight | 8001 | http://localhost:8001 | - |
-| RabbitMQ | 5672 | - | `${RABBITMQ_USER}`/`${RABBITMQ_PASSWORD}` |
-| RabbitMQ Management | 15672 | http://localhost:15672 | `${RABBITMQ_USER}`/`${RABBITMQ_PASSWORD}` |
+| PostgreSQL | 5432 | localhost:5432 | keycloak/secret |
+| Keycloak | 8443 | https://localhost:8443 | admin/admin |
+| SQL Server | 1433 | localhost:1433 | sa/YourStrong@Passw0rd |
+| Redis | 6379 | localhost:6379 | devpassword |
+| RabbitMQ | 5672 | localhost:5672 | devuser/devpassword |
+| RabbitMQ Management | 15672 | http://localhost:15672 | devuser/devpassword |
 | Prometheus | 9090 | http://localhost:9090 | - |
-| Grafana | 3000 | http://localhost:3000 | `admin`/`${GRAFANA_ADMIN_PASSWORD}` |
+| Grafana | 3000 | http://localhost:3000 | admin/admin |
+| Redis Insight | 8001 | http://localhost:8001 | - |
 
 ## 🔧 Configuration
 
@@ -70,6 +72,9 @@ cp env.example .env
 - `RABBITMQ_USER=devuser`
 - `RABBITMQ_PASSWORD=devpassword`
 - `GRAFANA_ADMIN_PASSWORD=admin`
+- `POSTGRES_PASSWORD=secret`
+- `KEYCLOAK_ADMIN=admin`
+- `KEYCLOAK_ADMIN_PASSWORD=admin`
 - `ENVIRONMENT=development`
 
 ### Prometheus
