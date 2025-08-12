@@ -1,0 +1,87 @@
+version: '3.8'
+
+# Base infrastructure services that are common across all scenarios
+services:
+  # SQL Server (Common across all scenarios)
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64
+    container_name: aspire-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "${SQLSERVER_SA_PASSWORD:-P@ssword123!}"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql-data:/var/opt/mssql
+    healthcheck:
+      test: [ "CMD-SHELL", "timeout 1 bash -c '</dev/tcp/localhost/1433' || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # Redis Cache
+  redis:
+    image: redis:7.4
+    container_name: aspire-redis
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_ARGS=--requirepass ${REDIS_PASSWORD:-devpassword}
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: aspire-rabbitmq
+    ports:
+      - "5672:5672"   # AMQP
+      - "15672:15672" # Management UI
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER:-devuser}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD:-devpassword}
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # SQL Init (Common across all scenarios)
+  sql-init:
+    image: mcr.microsoft.com/mssql-tools
+    platform: linux/amd64
+    container_name: aspire-sql-init
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ../../scripts:/scripts
+    entrypoint: >
+      bash -c "
+        echo 'Waiting for SQL Server...';
+        sleep 10;
+        /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P ${SQLSERVER_SA_PASSWORD:-P@ssword123!} -i /scripts/location.sql;
+        echo 'Database script executed';
+      "
+
+volumes:
+  sql-data:
+  redis-data:
+  rabbitmq-data:
+
+networks:
+  default:
+    name: aspire-infrastructure
+    driver: bridge
+

@@ -1,0 +1,110 @@
+version: '3.8'
+
+# Application services that extend the base infrastructure
+services:
+  masterdataservice:
+    build:
+      context: ../..
+      dockerfile: AspireApp.MasterDataService/Dockerfile
+    container_name: aspire-masterdataservice
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=MasterDataDb;User Id=sa;Password=${SQLSERVER_SA_PASSWORD:-P@ssword123!};"
+      ConnectionStrings__Redis: "redis:6379,password=${REDIS_PASSWORD:-devpassword}"
+      ConnectionStrings__rabbitmq: "amqp://${RABBITMQ_USER:-devuser}:${RABBITMQ_PASSWORD:-devpassword}@rabbitmq:5672/"
+      ASPNETCORE_ENVIRONMENT: ${ENVIRONMENT:-development}
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "5316:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  notificationhubservice:
+    build:
+      context: ../..
+      dockerfile: AspireApp.NotificationHubService/Dockerfile
+    container_name: aspire-notificationhubservice
+    environment:
+      ConnectionStrings__rabbitmq: "amqp://${RABBITMQ_USER:-devuser}:${RABBITMQ_PASSWORD:-devpassword}@rabbitmq:5672/"
+      ASPNETCORE_ENVIRONMENT: ${ENVIRONMENT:-development}
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "5275:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  weatherapi:
+    build:
+      context: ../..
+      dockerfile: AspireApp.WeatherAPI/Dockerfile
+    container_name: aspire-weatherapi
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ENVIRONMENT:-development}
+    ports:
+      - "5062:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/weather/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  webwasm:
+    build:
+      context: ../..
+      dockerfile: AspireApp.WebWasm/Dockerfile
+    container_name: aspire-webwasm
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ENVIRONMENT:-development}
+    ports:
+      - "5071:80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+  
+  yarpgateway:
+    build:
+      context: ../..
+      dockerfile: YarpGateway/Dockerfile
+    container_name: aspire-yarpgateway
+    environment:
+      ReverseProxy__Clusters__myweather-cluster__Destinations__myweatherapi-destination__Address: "http://weatherapi:8080/"
+      ReverseProxy__Clusters__masterdata-cluster__Destinations__masterdataapi-destination__Address: "http://masterdataservice:8080/"
+      ASPNETCORE_ENVIRONMENT: ${ENVIRONMENT:-development}
+    depends_on:
+      - masterdataservice
+      - weatherapi
+    ports:
+      - "5211:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+networks:
+  default:
+    name: aspire-infrastructure
+    external: true
+
+
+

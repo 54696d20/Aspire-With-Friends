@@ -26,11 +26,11 @@
 - **Grafana** for metrics visualization and dashboards
 - **Real-time monitoring** of all .NET services
 
-### Planned Integrations
-
-- **Handlebars** templating
-- **Serilog** logging
-- **Elsa Workflows**
+### External Integrations
+- **WeatherAPI.com** for real-time weather data
+- **Handlebars** templating (planned)
+- **Serilog** logging (planned)
+- **Elsa Workflows** (planned)
 
 ---
 
@@ -41,7 +41,7 @@ Aspire-With-Friends/
 ├── AspireApp.AppHost/               # Entry point that orchestrates services
 ├── AspireApp.MasterDataService/     # API with SQL Server + Wolverine
 ├── AspireApp.NotificationHubService/# Publishes SignalR notifications
-├── AspireApp.WeatherAPI/            # Example weather service
+├── AspireApp.WeatherAPI/            # Real-time weather service with WeatherAPI.com
 ├── AspireApp.ServiceDefaults/       # Shared infrastructure helpers
 ├── AspireApp.WebWasm/               # Blazor WebAssembly frontend
 ├── YarpGateway/                     # Reverse proxy using YARP
@@ -62,7 +62,7 @@ The YARP gateway provides:
 
 - **API Routing**: Routes requests to appropriate microservices
   - `/masterdata-api/*` → MasterDataService (CQRS with validation)
-  - `/myweather-api/*` → WeatherAPI
+  - `/myweather-api/*` → WeatherAPI (real-time weather data)
 - **CORS Support**: Allows Blazor WebAssembly to make cross-origin requests
 - **Request/Response Logging**: Comprehensive logging for debugging
 - **Health Checks**: `/health` endpoint for monitoring (basic health check)
@@ -75,6 +75,9 @@ The YARP gateway provides:
 - `GET http://localhost:5211/masterdata-api/api/locations` - Get all locations
 - `PUT http://localhost:5211/masterdata-api/api/locations/{id}` - Update location (with validation)
 - `DELETE http://localhost:5211/masterdata-api/api/locations/{id}` - Delete location
+- `GET http://localhost:5211/myweather-api/api/weather/current/{query}` - Current weather
+- `GET http://localhost:5211/myweather-api/api/weather/forecast/{query}?days=7` - 7-day forecast
+- `GET http://localhost:5211/myweather-api/api/weather/search/{query}` - Location search
 
 ---
 
@@ -88,98 +91,107 @@ The YARP gateway provides:
 - **CQRS pattern** with Wolverine and FluentValidation
 - **Domain events** for event-driven architecture
 - **Comprehensive observability** with OpenTelemetry, Prometheus, and Grafana
+- **Real-time weather data** integration with WeatherAPI.com
+- **Interactive weather dashboard** with current conditions, forecasts, and location search
+- **Secure API key management** using .NET user secrets and environment variables
+
+---
+
+## 🌤️ Weather API Integration
+
+This project now includes a comprehensive weather service that provides real-time weather data:
+
+### Features
+- **Current Weather**: Real-time temperature, conditions, wind, humidity, and visibility
+- **7-Day Forecast**: Extended weather predictions
+- **Location Search**: Find weather for any city, zip code, or location
+- **Responsive Dashboard**: Beautiful MudBlazor-based weather interface
+- **Temperature Units**: Displays in both Fahrenheit and Celsius
+- **Error Handling**: Graceful fallbacks and user-friendly error messages
+
+### Setup Required
+To use the weather functionality, you'll need to:
+1. Get a free API key from [WeatherAPI.com](https://www.weatherapi.com/)
+2. Configure it using .NET user secrets or environment variables
+3. See [WEATHER_API_SETUP.md](WEATHER_API_SETUP.md) for detailed setup instructions
+
+### Weather Dashboard
+The weather page includes:
+- Search functionality for any location
+- Current weather display with detailed metrics
+- Responsive grid layout for weather information
+- Loading states and error handling
+- Real-time data from WeatherAPI.com
 
 ---
 
 ## 💻 Getting Started
 
-1. Clone the repository
-2. Ensure the **.NET 9 SDK** and **Docker Desktop** are installed
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd Aspire-With-Friends
+   ```
+
+2. **Prerequisites**
+   - **.NET 9 SDK** installed
+   - **Docker Desktop** running
+   - **Git** for version control
+
+3. **Optional Setup**
+   - **WeatherAPI.com API key** for weather functionality (see [WEATHER_API_SETUP.md](WEATHER_API_SETUP.md))
+   - **Keycloak** for authentication (see Authentication section below)
 
 ---
 
-## Running the Project: Two Approaches
+## 🚀 Running the Project
 
-This project supports two main ways to run the full stack for local development:
+This project now uses a **modular infrastructure approach** that separates infrastructure services from application code, providing enterprise-level flexibility.
 
-### 1. AppHost (Aspire) Way
-- Uses .NET Aspire’s AppHost to orchestrate .NET services and infrastructure.
-- Best for rapid development, debugging, and using the Aspire dashboard.
-- External dependencies like Keycloak must be started separately (e.g., with a dedicated Docker Compose file).
+### 🏗️ Infrastructure-First Architecture
 
-### 2. Docker Compose Way
-- Uses Docker Compose to start all services (including .NET apps, Keycloak, databases, etc.) in containers.
-- Best for simulating a production-like environment or running everything with a single command.
-- May start more services than you need for development.
+The project has been restructured to use external infrastructure services that can be:
+- **Started independently** of the application
+- **Scaled separately** from the application
+- **Used across multiple environments** (dev, staging, production)
+- **Managed independently** by DevOps teams
 
-**Choose the approach that best fits your workflow!**
+### 📁 Project Structure
 
----
-
-## 🚀 Running with AppHost (Aspire)
-
-1. Start only the required infrastructure (e.g., Keycloak) with:
-   ```bash
-   docker compose -f docker-compose.Aspire.yml up -d
-   ```
-2. In a separate terminal, run:
-   ```bash
-   dotnet run --project AspireApp.AppHost
-   ```
-3. Access the services:
-   - **Aspire Dashboard**: http://localhost:15262
-   - **Blazor Web App**: http://localhost:5071
-   - **Prometheus**: http://localhost:9090
-   - **Grafana**: http://localhost:3000 (admin/admin)
-   - **Jaeger**: http://localhost:16686
-
-### Observability Setup (First Time Only)
-
-The application includes comprehensive observability with OpenTelemetry, Prometheus, and Grafana. On first run:
-
-1. **Configure Grafana Datasource**:
-   - Go to http://localhost:3000
-   - Login: admin/admin
-   - Configuration → Data Sources → Add data source
-   - Select Prometheus, URL: `http://prometheus:9090`
-   - Save & test
-
-2. **Import Dashboards** (Optional):
-   - Dashboards → Import
-   - Upload JSON files from `AspireApp.AppHost/grafana/dashboards/`
-
-For detailed observability documentation, see [OpenTelemetry-README.md](OpenTelemetry-README.md).
-
-### Troubleshooting Port Conflicts
-
-If you encounter port conflicts when restarting the AppHost (especially after stopping it in Rider), run the cleanup script:
-
-```bash
-./scripts/cleanup-aspire.sh
+```
+Aspire-With-Friends/
+├── infrastructure/                    # 🆕 Infrastructure services (Docker)
+│   ├── start-aspire.sh              # Start infrastructure for Aspire development
+│   ├── start-full-docker.sh         # Start everything in Docker
+│   ├── start-infrastructure.sh      # Start just infrastructure
+│   └── stop-all.sh                  # Stop all services
+├── AspireApp.AppHost/               # .NET Aspire orchestration
+├── AspireApp.MasterDataService/     # API with SQL Server + Wolverine
+├── AspireApp.NotificationHubService/# SignalR notifications
+├── AspireApp.WeatherAPI/            # Real-time weather service
+├── AspireApp.WebWasm/               # Blazor WebAssembly frontend
+├── YarpGateway/                     # Reverse proxy
+└── AspireApp.Shared/                # Shared contracts
 ```
 
-This will stop and remove all Aspire containers and free up the ports.
-
 ---
 
-## 🐳 Running with Docker Compose
+## 🚨 Why This New Approach?
 
-1. Start all services (including .NET apps, Keycloak, databases, etc.):
-   ```bash
-   docker compose -f docker-compose.Docker.yml up -d
-   ```
-2. Access the Blazor app at [http://localhost:5071](http://localhost:5071).
+### Benefits
+- **Separation of Concerns**: Infrastructure separate from application code
+- **Flexible Deployment**: Choose your deployment scenario
+- **Environment Configuration**: Easy to customize per environment
+- **Independent Scaling**: Monitoring can scale independently
+- **Easier Maintenance**: Infrastructure changes don't require app rebuilds
+- **Production Ready**: Same setup can be used in production
+- **Security**: Infrastructure services can be secured independently
 
----
-
-## Why Two Ways?
-
-- **AppHost (Aspire) Way:**  
-  Great for .NET-centric development, debugging, and using Aspire’s orchestration features.  
-  Lets you control which infra services are running. AND... Keycloak at this time doesn't in within Aspire (07/2025)
-- **Docker Compose Way:**  
-  Great for full-stack integration testing, demos, or when you want to run everything in containers.  
-  Easiest for onboarding or “one command to run it all.”
+### Migration from Old Setup
+If you were using the old docker-compose files:
+1. **Stop old services**: `docker-compose down` (in project root)
+2. **Start new infrastructure**: `cd infrastructure && ./start-aspire.sh`
+3. **Start Aspire AppHost**: `dotnet run --project AspireApp.AppHost`
 
 ---
 
@@ -187,64 +199,142 @@ This will stop and remove all Aspire containers and free up the ports.
 
 This project uses **Keycloak** for authentication and role-based access control in the Blazor WebAssembly app.
 
-### 1. Start Keycloak (via Docker Compose)
+### Starting Keycloak
 
-Keycloak is included in the `docker-compose.docker.yml`. To start Keycloak:
-
+**Option 1: Use Full Docker Deployment**
 ```bash
-docker compose up -d keycloak postgres
+cd infrastructure
+./start-full-docker.sh
 ```
-- Keycloak will be available at [http://localhost:8080](http://localhost:8080)
-- Default admin credentials: `admin` / `admin`
+This includes Keycloak automatically.
 
-### 2. Create Realm, Client, and Roles
+**Option 2: Start Keycloak Separately**
+```bash
+# Start just Keycloak and PostgreSQL
+docker-compose -f docker-compose.docker.yml up -d keycloak postgres
+```
 
-1. **Login to Keycloak Admin Console** at [http://localhost:8080/admin](http://localhost:8080/admin)
-2. **Create a new Realm** (e.g., `AspireRealm`)
-3. **Create a new Client**:
-   - Client ID: `aspire-blazor-client`
-   - Protocol: `openid-connect`
-   - Next
-   - Authentication flow - only have Standard flow selected
-   - Next 
-   - Root URL: `http://localhost:5071`
-   - Valid Redirect URIs: `http://localhost:5071/*`
-   - Valid Post Logout Redirect URIs: `http://localhost:5071/`
-   - Web Origins: `http://localhost:5071`
-   - Save
-   - Client authentication: **OFF** (public client)
-   - Standard flow: **ON**
-   - Save
-4. **Create Realm Roles** (`godmode`) (Is casesensitive)
-   - Go to Roles > Create Role
-   - Name: `godmode` (repeat for other roles as needed)
-   
-5. **Create a Test User**
-   - Go to Users > Create user
-   - Set username, email, etc. and save
-   - Go to Credentials tab, set a password, and disable 'Temporary'
-   - Go to Role mapping tab, assign `godmode` (or other roles) to the user
+### Keycloak Access
+- **Keycloak Admin Console**: http://localhost:8080/admin
+- **Default admin credentials**: `admin` / `admin`
 
-6. **(If Using Realm Roles) Add a Protocol Mapper**
-   - If you assign roles under the Realm (not as client roles), you must add a protocol mapper to include them in the token:
-   1. Go to **Clients** > select your client (`aspire-blazor-client`).
-   2. Go to the **Client scopes** tab.
-   3. Clink on aspire-blazor-client-dedicated
-   3. Click **Create Mapper**, by configuration
-   4. Select User Real Role
-   4. Set:
-      - **Name:** admin roles
-      - **Mapper Type:** User Client Role
-      - **Token Claim Name:** `role`
-      - **Claim JSON Type:** Array
-      - **Add to ID token:** ON
-      - **Add to access token:** ON
-      - **Add to userinfo:** ON
-   5. Save.
+---
 
-   Now, roles assigned under the client will appear in the token as a `role` claim.
+## 🎯 Two Ways to Run
 
-At this point you should be able to login with that user
+### 1. **Aspire Development** (Recommended for .NET Developers)
+
+**Best for**: .NET development, debugging, using Aspire dashboard
+
+1. **Start Infrastructure Services**
+   ```bash
+   cd infrastructure
+   ./start-aspire.sh
+   ```
+   This starts: SQL Server, Redis, RabbitMQ, Prometheus, Grafana
+
+2. **Start Aspire AppHost** (in a new terminal)
+   ```bash
+   # From project root
+   dotnet run --project AspireApp.AppHost
+   ```
+
+3. **Access Services**
+   - **Aspire Dashboard**: http://localhost:15262
+   - **Blazor Web App**: http://localhost:5071
+   - **Infrastructure Services**: See URLs displayed by start-aspire.sh
+
+### 2. **Full Docker Deployment**
+
+**Best for**: Full-stack demos, production-like environment, "one command to run it all"
+
+1. **Start Everything**
+   ```bash
+   cd infrastructure
+   ./start-full-docker.sh
+   ```
+   This starts: All infrastructure + all .NET applications
+
+2. **Access Services**
+   - **Blazor Web App**: http://localhost:5071
+   - **Gateway**: http://localhost:5211
+   - **MasterDataService**: http://localhost:5316
+   - **WeatherAPI**: http://localhost:5062
+   - **Infrastructure Services**: See URLs displayed by start-full-docker.sh
+
+---
+
+## 🔧 Infrastructure Configuration
+
+### Environment Setup
+
+1. **Copy Environment Template**
+   ```bash
+   cd infrastructure
+   cp env.example .env
+   ```
+
+2. **Customize .env** (optional - defaults work for development)
+   ```bash
+   # Edit .env with your preferred values
+   nano .env
+   ```
+
+### Default Credentials
+
+| Service | Username | Password | URL |
+|---------|----------|----------|-----|
+| SQL Server | `sa` | `P@ssword123!` | localhost:1433 |
+| Redis | - | `devpassword` | localhost:6379 |
+| RabbitMQ | `devuser` | `devpassword` | localhost:5672 |
+| Grafana | `admin` | `admin` | http://localhost:3000 |
+
+---
+
+## 🛑 Stopping Services
+
+### Stop Infrastructure Only
+```bash
+cd infrastructure
+docker-compose -f docker-compose.base.yml -f docker-compose.monitoring.yml down
+```
+
+### Stop Everything
+```bash
+cd infrastructure
+./stop-all.sh
+```
+
+### Stop Aspire AppHost
+- Use `Ctrl+C` in the terminal running the AppHost
+- Or use the cleanup script: `./scripts/cleanup-aspire.sh`
+
+---
+
+## 🔍 Troubleshooting
+
+### Port Conflicts
+If you encounter port conflicts:
+```bash
+# Clean up all Aspire containers
+./scripts/cleanup-aspire.sh
+
+# Or manually stop and remove
+docker stop $(docker ps -q)
+docker rm $(docker ps -aq)
+```
+
+### Infrastructure Not Starting
+1. **Check Docker**: Ensure Docker Desktop is running
+2. **Check Ports**: Ensure required ports are available
+3. **Check .env**: Verify environment configuration
+4. **View Logs**: `docker-compose logs [service-name]`
+
+### Aspire Can't Connect
+1. **Verify Infrastructure**: Check if infrastructure services are running
+2. **Check URLs**: Ensure service URLs match configuration
+3. **Check Credentials**: Verify database and Redis credentials
+4. **View AppHost Logs**: Check the terminal running the AppHost
 
 ---
 
@@ -262,7 +352,7 @@ This project uses the **CQRS (Command Query Responsibility Segregation)** patter
 - Handlers encapsulate all business logic and side effects (like event publishing)
 
 ### How it Works
-- **Controller** receives an HTTP request and sends a command/query via Wolverine’s bus:
+- **Controller** receives an HTTP request and sends a command/query via Wolverine's bus:
   ```csharp
   var result = await _bus.InvokeAsync<TResult>(commandOrQuery);
   ```
@@ -316,17 +406,48 @@ This application includes comprehensive observability with **OpenTelemetry**, **
 - **Custom Metrics**: Business-specific metrics (when added)
 
 ### Accessing Monitoring Tools
+
+**When using Aspire Development mode:**
 - **Prometheus**: http://localhost:9090 - Raw metrics and query interface
 - **Grafana**: http://localhost:3000 - Dashboards and visualizations
-- **Jaeger**: http://localhost:16686 - Distributed tracing and request flows
 - **Aspire Dashboard**: http://localhost:15262 - Service health and logs
 
-### Quick Start
-1. Start the AppHost: `dotnet run --project AspireApp.AppHost`
-2. Configure Grafana datasource (one-time setup)
-3. Import dashboards for comprehensive monitoring
+**When using Full Docker mode:**
+- **Prometheus**: http://localhost:9090 - Raw metrics and query interface
+- **Grafana**: http://localhost:3000 - Dashboards and visualizations
+- **All services**: Accessible via the URLs displayed by start-full-docker.sh
 
-For detailed setup instructions and troubleshooting, see [OpenTelemetry-README.md](OpenTelemetry-README.md).
+### Quick Start
+
+1. **Start Infrastructure** (includes monitoring):
+   ```bash
+   cd infrastructure
+   ./start-aspire.sh
+   ```
+
+2. **Start Aspire AppHost**:
+   ```bash
+   dotnet run --project AspireApp.AppHost
+   ```
+
+3. **Access Monitoring**:
+   - Grafana: http://localhost:3000 (admin/admin)
+   - Prometheus: http://localhost:9090
+   - Aspire Dashboard: http://localhost:15262
+
+### Monitoring Setup (Automatic)
+
+The infrastructure scripts automatically:
+- ✅ Start Prometheus and Grafana
+- ✅ Configure service discovery
+- ✅ Set up basic dashboards
+- ✅ Configure health checks
+
+**No manual configuration required!** The monitoring services are pre-configured and ready to use.
+
+For detailed observability documentation, see [OpenTelemetry-README.md](OpenTelemetry-README.md).
+
+**💡 Tip**: For detailed infrastructure information, see [infrastructure/README.md](infrastructure/README.md) - it contains comprehensive details about all infrastructure services, deployment scenarios, and enterprise benefits.
 
 ---
 
@@ -374,6 +495,11 @@ This project includes comprehensive Postman collections for testing the API endp
 - ✅ Create Location (Valid & Invalid)
 - ✅ Update Location (Valid & Invalid)
 - ✅ Delete Location
+
+**Weather API Tests:**
+- ✅ Current Weather (`GET /myweather-api/api/weather/current/{query}`)
+- ✅ Weather Forecast (`GET /myweather-api/api/weather/forecast/{query}?days=7`)
+- ✅ Location Search (`GET /myweather-api/api/weather/search/{query}`)
 
 **Validation Test Cases:**
 - ❌ Empty name validation
