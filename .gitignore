@@ -6,6 +6,26 @@ obj/
 *.userosscache
 *.sln.docstates
 
+# Additional .NET build artifacts
+*.dll
+*.exe
+*.pdb
+*.cache
+*.dll.config
+*.exe.config
+*.runtimeconfig.json
+*.runtimeconfig.dev.json
+
+# Build output directories
+**/bin/
+**/obj/
+**/Debug/
+**/Release/
+**/x64/
+**/x86/
+**/ARM/
+**/ARM64/
+
 # User-specific files
 *.rsuser
 *.userprefs
