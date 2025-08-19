@@ -211,7 +211,7 @@
 
         try
         {
-            weatherData = await WeatherService.GetForecastAsync(searchQuery, 7);
+            weatherData = await WeatherService.GetForecastAsync(searchQuery, 3);
             
             if (weatherData == null)
             {
